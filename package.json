@@ -1,0 +1,8 @@
+﻿{
+  "name": "unity-prediction-rollback",
+  "version": "0.1.0",
+  "type": "library",
+  "displayName": "Unity prediction-rollback",
+  "unity": "2021.2",
+  "description": "Deterministic prediction-rollback netcode library for Unity."
+}

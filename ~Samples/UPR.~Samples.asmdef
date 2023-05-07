@@ -1,0 +1,16 @@
+{
+    "name": "UPR.~Samples",
+    "rootNamespace": "UPR.Samples",
+    "references": [
+        "GUID:10813fe237f8d254ebb9db6f59cab3de"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
