@@ -12,12 +12,12 @@ namespace UPR
             _commandRouter = commandRouter;
         }
 
-        public void RemoveCommand(long tick, EntityId entityId)
+        public void RemoveCommand(int tick, EntityId entityId)
         {
             _timeline[tick].RemoveAll(command => command.Entity == entityId);
         }
 
-        public void InsertCommand(long tick, in TCommand command, EntityId entityId)
+        public void InsertCommand(int tick, in TCommand command, EntityId entityId)
         {
             if (_timeline.TryGetValue(tick, out var commands))
             {
@@ -32,7 +32,7 @@ namespace UPR
             }
         }
 
-        public void ExecuteCommands(long tick)
+        public void ExecuteCommands(int tick)
         {
             if (_timeline.TryGetValue(tick, out var commands))
             {

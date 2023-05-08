@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace UPR
 {
-    public class WorldTimeline
+    public class WorldTimeline : IWorldTimeline
     {
         private readonly IStateHistory _worldStateHistory;
         private readonly ISimulation _worldSimulation;
         private readonly Dictionary<Type, ICommandTimeline> _commandTimelines;
 
-        private long _latestApprovedTick;
+        private int _latestApprovedTick;
 
         public WorldTimeline(IStateHistory worldStateHistory, ISimulation worldSimulation)
         {
@@ -22,7 +22,7 @@ namespace UPR
             _commandTimelines.Add(typeof(TCommand), commandTimeline);
         }
 
-        public void RemoveCommand<TCommand>(long tick, EntityId entityId)
+        public void RemoveCommand<TCommand>(int tick, EntityId entityId)
         {
             ICommandTimeline<TCommand> commandTimeline = (ICommandTimeline<TCommand>)_commandTimelines[typeof(TCommand)];
 
@@ -34,7 +34,7 @@ namespace UPR
             }
         }
 
-        public void InsertCommand<TCommand>(long tick, in TCommand command, EntityId entityId)
+        public void InsertCommand<TCommand>(int tick, in TCommand command, EntityId entityId)
         {
             ICommandTimeline<TCommand> commandTimeline = (ICommandTimeline<TCommand>)_commandTimelines[typeof(TCommand)];
 
@@ -46,15 +46,15 @@ namespace UPR
             }
         }
 
-        public void Simulate(long currentTick)
+        public void Simulate(int currentTick)
         {
             if (currentTick < 0)
                 throw new ArgumentOutOfRangeException(nameof(currentTick), "Simulated tick should not be negative!");
 
-            long ticksDelta = currentTick - _latestApprovedTick;
-            _worldStateHistory.Rollback((int)ticksDelta);
+            var framesToRollback = currentTick - _latestApprovedTick;
+            _worldStateHistory.Rollback(framesToRollback);
 
-            for (long tick = _latestApprovedTick; tick <= currentTick; tick++)
+            for (var tick = _latestApprovedTick; tick <= currentTick; tick++)
             {
                 foreach (var commandTimeline in _commandTimelines.Values)
                     commandTimeline.ExecuteCommands(tick);
