@@ -2,6 +2,6 @@
 {
     public interface ISimulation
     {
-        void StepForward(float deltaTime);
+        void StepForward(long currentTick);
     }
 }

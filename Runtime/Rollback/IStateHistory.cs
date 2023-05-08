@@ -2,8 +2,10 @@
 {
     public interface IStateHistory
     {
+        int HistoryLength { get; }
+
         void SaveStep();
 
-        void Rollback(int steps);
+        void Rollback(int ticks);
     }
 }

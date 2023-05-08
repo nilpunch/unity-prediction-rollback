@@ -1,5 +1,19 @@
 ﻿namespace UPR.Samples
 {
+    public class Session
+    {
+        public Session()
+        {
+            var game = new Game();
+
+            var worldTimeline = new WorldTimeline(game, game);
+
+            worldTimeline.RegisterTimeline(
+                new CommandTimeline<CharacterMoveCommand>(
+                    new CommandRouter<CharacterMoveCommand>()));
+        }
+    }
+
     public class Game : ISimulation, IStateHistory
     {
         private readonly Simulations _simulations;
@@ -24,19 +38,21 @@
             _stateHistories.AddHistory(character);
         }
 
-        public void StepForward(float deltaTime)
+        public void StepForward(long currentTick)
         {
-            _simulations.StepForward(deltaTime);
+            _simulations.StepForward(currentTick);
         }
+
+        public int HistoryLength => _stateHistories.HistoryLength;
 
         public void SaveStep()
         {
             _stateHistories.SaveStep();
         }
 
-        public void Rollback(int steps)
+        public void Rollback(int ticks)
         {
-            _stateHistories.Rollback(steps);
+            _stateHistories.Rollback(ticks);
         }
     }
 }

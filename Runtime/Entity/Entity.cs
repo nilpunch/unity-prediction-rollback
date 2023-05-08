@@ -14,19 +14,21 @@ namespace UPR
 
         public EntityId Id { get; }
 
-        public void StepForward(float deltaTime)
+        public void StepForward(long currentTick)
         {
-            LocalSimulations.StepForward(deltaTime);
+            LocalSimulations.StepForward(currentTick);
         }
+
+        public int HistoryLength => LocalStateHistories.HistoryLength;
 
         public void SaveStep()
         {
             LocalStateHistories.SaveStep();
         }
 
-        public void Rollback(int steps)
+        public void Rollback(int ticks)
         {
-            LocalStateHistories.Rollback(steps);
+            LocalStateHistories.Rollback(ticks);
         }
     }
 }

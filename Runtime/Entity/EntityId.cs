@@ -11,6 +11,16 @@ namespace UPR
             Id = id;
         }
 
+        public static bool operator ==(EntityId a, EntityId b)
+        {
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(EntityId a, EntityId b)
+        {
+            return !(a == b);
+        }
+
         public override int GetHashCode()
         {
             return Id.GetHashCode();
