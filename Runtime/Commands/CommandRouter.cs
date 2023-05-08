@@ -2,14 +2,16 @@
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {
-        public void AddTarget(ICommandTarget<TCommand> target, EntityId entityId)
+        private readonly ITargetsCollection<TCommand> _targetsCollection;
+
+        public CommandRouter(ITargetsCollection<TCommand> targetsCollection)
         {
-            throw new System.NotImplementedException();
+            _targetsCollection = targetsCollection;
         }
 
         public void ForwardCommand(in TCommand command, EntityId entityId)
         {
-            throw new System.NotImplementedException();
+            _targetsCollection.FindTarget(entityId).ExecuteCommand(command);
         }
     }
 }

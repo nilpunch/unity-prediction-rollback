@@ -10,7 +10,7 @@ namespace UPR.Tests
     public class StateHistoryTests
     {
         [Test]
-        public void RollbackWithEmptyHistoryShouldRollbackToOriginal()
+        public void RollbackWithNotFilledHistoryShouldThrow()
         {
             // Arrange
             int originalValue = 11;
@@ -19,30 +19,46 @@ namespace UPR.Tests
 
             // Act
             simpleObject.ChangeValue(0);
-            stateHistory.Rollback(1);
-            stateHistory.Rollback(2);
+            TestDelegate performZeroRollback = () => stateHistory.Rollback(0);
+            TestDelegate performRollback = () => stateHistory.Rollback(1);
 
             // Assert
-            Assert.Equals(simpleObject.Value, originalValue);
+            Assert.DoesNotThrow(performZeroRollback);
+            Assert.Throws<Exception>(performRollback);
         }
 
         [Test]
-        public void RollbackZeroAppliesLastSaveState()
+        public void RollbackZeroAppliesLastSavedState()
         {
             // Arrange
-            var simpleObject = new SimpleObject(11);
+            int originalValue = 11;
+            var simpleObject = new SimpleObject(originalValue);
             var stateHistory = new StateHistory<SimpleMemory>(simpleObject);
-
-            int lastSavedValue = 0;
-            simpleObject.ChangeValue(lastSavedValue);
-            stateHistory.SaveStep();
 
             // Act
             simpleObject.ChangeValue(3);
             stateHistory.Rollback(0);
 
             // Assert
-            Assert.Equals(simpleObject.Value, lastSavedValue);
+            Assert.AreEqual(originalValue, simpleObject.Value);
+        }
+
+        [Test]
+        public void RollbackAppliesState()
+        {
+            // Arrange
+            int originalValue = 11;
+            var simpleObject = new SimpleObject(originalValue);
+            var stateHistory = new StateHistory<SimpleMemory>(simpleObject);
+
+            // Act
+            simpleObject.ChangeValue(0);
+            stateHistory.SaveStep();
+            stateHistory.SaveStep();
+            stateHistory.Rollback(2);
+
+            // Assert
+            Assert.AreEqual(originalValue, simpleObject.Value);
         }
     }
 }

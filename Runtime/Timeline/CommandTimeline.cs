@@ -14,7 +14,7 @@ namespace UPR
 
         public void RemoveCommand(long tick, EntityId entityId)
         {
-            _timeline[tick].RemoveAll(command => command.Target == entityId);
+            _timeline[tick].RemoveAll(command => command.Entity == entityId);
         }
 
         public void InsertCommand(long tick, in TCommand command, EntityId entityId)
@@ -38,7 +38,7 @@ namespace UPR
             {
                 foreach (var command in commands)
                 {
-                    _commandRouter.ForwardCommand(command.Command, command.Target);
+                    _commandRouter.ForwardCommand(command.Command, command.Entity);
                 }
             }
         }

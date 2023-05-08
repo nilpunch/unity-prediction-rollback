@@ -1,42 +1,27 @@
 ﻿namespace UPR.Samples
 {
-    public class Session
-    {
-        public Session()
-        {
-            var game = new Game();
-
-            var worldTimeline = new WorldTimeline(game, game);
-
-            worldTimeline.RegisterTimeline(
-                new CommandTimeline<CharacterMoveCommand>(
-                    new CommandRouter<CharacterMoveCommand>()));
-        }
-    }
-
     public class Game : ISimulation, IStateHistory
     {
-        private readonly Simulations _simulations;
-        private readonly StateHistories _stateHistories;
+        private readonly Simulations _simulations = new Simulations();
+        private readonly StateHistories _stateHistories = new StateHistories();
+        private readonly UniqueIdGenerator _idGenerator = new UniqueIdGenerator();
 
         public Game()
         {
-            _simulations = new Simulations();
-            _stateHistories = new StateHistories();
+            CharacterMoveCommandTargets = new TargetsCollection<CharacterMoveCommand>();
+            CharacterInventoryCommandTargets = new TargetsCollection<CharacterInventoryCommand>();
 
-            var characterMoveCommandRouter = new CommandRouter<CharacterMoveCommand>();
-            var characterInventoryCommandRouter = new CommandRouter<CharacterInventoryCommand>();
-
-            var idGenerator = new UniqueIdGenerator();
-
-            var character = new Character(idGenerator.Generate());
-
-            characterMoveCommandRouter.AddTarget(character, character.Id);
-            characterInventoryCommandRouter.AddTarget(character, character.Id);
+            var character = new Character(_idGenerator.Generate());
+            CharacterMoveCommandTargets.AddTarget(character.Id, character);
+            CharacterInventoryCommandTargets.AddTarget(character.Id, character);
 
             _simulations.AddSimulation(character);
             _stateHistories.AddHistory(character);
         }
+
+        public TargetsCollection<CharacterInventoryCommand> CharacterInventoryCommandTargets { get; }
+
+        public TargetsCollection<CharacterMoveCommand> CharacterMoveCommandTargets { get; }
 
         public void StepForward(long currentTick)
         {

@@ -3,12 +3,12 @@
     public struct EntityCommand<TCommand>
     {
         public TCommand Command { get; }
-        public EntityId Target { get; }
+        public EntityId Entity { get; }
 
-        public EntityCommand(TCommand command, EntityId target)
+        public EntityCommand(TCommand command, EntityId entity)
         {
             Command = command;
-            Target = target;
+            Entity = entity;
         }
     }
 }

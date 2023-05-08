@@ -28,7 +28,7 @@ namespace UPR
                 throw new Exception($"Can't rollback that far. {nameof(HistoryLength)}: {HistoryLength}, Rollbacking: {ticks}.");
 
             if (HistoryLength != 0)
-                _history.RemoveRange(_history.Count - 1 - ticks, ticks);
+                _history.RemoveRange(_history.Count - ticks, ticks);
 
             _memory.Load(_history.Last());
         }
