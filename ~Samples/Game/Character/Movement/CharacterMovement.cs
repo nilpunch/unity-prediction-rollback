@@ -11,7 +11,7 @@ namespace UPR.Samples
             _characterMovementMemory.MoveDirection = moveDirection;
         }
 
-        public void StepForward(long currentTick)
+        public void StepForward(int currentTick)
         {
             _characterMovementMemory.Position += _characterMovementMemory.MoveDirection * 0.1f;
         }

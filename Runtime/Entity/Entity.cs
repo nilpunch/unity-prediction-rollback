@@ -1,6 +1,6 @@
 ﻿namespace UPR
 {
-    public abstract class Entity : IEntity, ISimulation, IStateHistory
+    public abstract class Entity : IEntity
     {
         protected readonly Simulations LocalSimulations = new Simulations();
         protected readonly StateHistories LocalStateHistories = new StateHistories();
@@ -14,14 +14,14 @@
 
         public int HistoryLength => LocalStateHistories.HistoryLength;
 
-        public void StepForward(long currentTick)
+        public void StepForward(int currentTick)
         {
             LocalSimulations.StepForward(currentTick);
         }
 
-        public void SaveStep()
+        public void SaveState()
         {
-            LocalStateHistories.SaveStep();
+            LocalStateHistories.SaveState();
         }
 
         public void Rollback(int ticks)

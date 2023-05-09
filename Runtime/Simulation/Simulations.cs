@@ -11,7 +11,7 @@ namespace UPR
             _simulations.Add(simulation);
         }
 
-        public void StepForward(long currentTick)
+        public void StepForward(int currentTick)
         {
             foreach (var simulation in _simulations)
             {

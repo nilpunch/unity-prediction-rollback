@@ -60,7 +60,7 @@ namespace UPR
                     commandTimeline.ExecuteCommands(tick);
 
                 _worldSimulation.StepForward(tick);
-                _worldStateHistory.SaveStep();
+                _worldStateHistory.SaveState();
             }
 
             _latestApprovedTick = currentTick;

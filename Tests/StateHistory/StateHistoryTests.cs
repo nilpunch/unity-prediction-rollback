@@ -44,7 +44,7 @@ namespace UPR.Tests
         }
 
         [Test]
-        public void RollbackAppliesState()
+        public void RollbackWorksAsIntended()
         {
             // Arrange
             int originalValue = 11;
@@ -53,8 +53,8 @@ namespace UPR.Tests
 
             // Act
             simpleObject.ChangeValue(0);
-            stateHistory.SaveStep();
-            stateHistory.SaveStep();
+            stateHistory.SaveState();
+            stateHistory.SaveState();
             stateHistory.Rollback(2);
 
             // Assert

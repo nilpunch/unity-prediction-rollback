@@ -17,7 +17,7 @@ namespace UPR
 
         public int HistoryLength => _history.Count - 1;
 
-        public void SaveStep()
+        public void SaveState()
         {
             _history.Add(_memory.Save());
         }

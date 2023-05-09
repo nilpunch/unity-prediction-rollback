@@ -1,4 +1,6 @@
-﻿namespace UPR.Samples
+﻿using System.Collections.Generic;
+
+namespace UPR.Samples
 {
     public class Game : ISimulation, IStateHistory
     {
@@ -23,16 +25,16 @@
 
         public TargetsCollection<CharacterMoveCommand> CharacterMoveCommandTargets { get; }
 
-        public void StepForward(long currentTick)
+        public void StepForward(int currentTick)
         {
             _simulations.StepForward(currentTick);
         }
 
         public int HistoryLength => _stateHistories.HistoryLength;
 
-        public void SaveStep()
+        public void SaveState()
         {
-            _stateHistories.SaveStep();
+            _stateHistories.SaveState();
         }
 
         public void Rollback(int ticks)

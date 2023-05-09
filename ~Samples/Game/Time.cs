@@ -4,7 +4,7 @@
     {
         private long _tick;
         
-        public void StepForward(long currentTick)
+        public void StepForward(int currentTick)
         {
             _tick = currentTick;
         }

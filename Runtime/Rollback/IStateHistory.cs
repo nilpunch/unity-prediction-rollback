@@ -4,7 +4,7 @@
     {
         int HistoryLength { get; }
 
-        void SaveStep();
+        void SaveState();
 
         void Rollback(int ticks);
     }

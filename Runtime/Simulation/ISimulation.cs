@@ -2,6 +2,6 @@
 {
     public interface ISimulation
     {
-        void StepForward(long currentTick);
+        void StepForward(int currentTick);
     }
 }
