@@ -6,14 +6,21 @@ namespace UPR.Samples
     {
         private CharacterMovementMemory _characterMovementMemory;
 
-        public void Move(Vector3 moveDirection)
+        private readonly SimulationSpeed _simulationSpeed;
+
+        public CharacterMovement(SimulationSpeed simulationSpeed)
+        {
+            _simulationSpeed = simulationSpeed;
+        }
+
+        public void SetMovement(Vector3 moveDirection)
         {
             _characterMovementMemory.MoveDirection = moveDirection;
         }
 
         public void StepForward()
         {
-            _characterMovementMemory.Position += _characterMovementMemory.MoveDirection * 0.1f;
+            _characterMovementMemory.Position += _characterMovementMemory.MoveDirection * _simulationSpeed.SecondsPerTick;
         }
 
         public CharacterMovementMemory Save()

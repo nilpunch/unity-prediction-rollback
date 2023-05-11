@@ -12,15 +12,15 @@ namespace UPR.Samples
         public Character(EntityId id) : base(id)
         {
             _characterInventory = new CharacterInventory();
-            _characterMovement = new CharacterMovement();
+            _characterMovement = new CharacterMovement(new SimulationSpeed(60));
 
             var characterInventoryReversibleHistory = new ReversibleMemoryHistory<CharacterInventoryMemory>(_characterInventory);
             var characterMovementReversibleHistory = new ReversibleMemoryHistory<CharacterInventoryMemory>(_characterInventory);
 
             LocalSimulations.AddSimulation(_characterMovement);
 
-            LocalHistories.AddHistory(characterInventoryReversibleHistory);
-            LocalHistories.AddHistory(characterMovementReversibleHistory);
+            LocalReversibleHistories.AddHistory(characterInventoryReversibleHistory);
+            LocalReversibleHistories.AddHistory(characterMovementReversibleHistory);
 
             LocalRollbacks.AddRollback(characterInventoryReversibleHistory);
             LocalRollbacks.AddRollback(characterMovementReversibleHistory);
@@ -28,7 +28,7 @@ namespace UPR.Samples
 
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
-            _characterMovement.Move(command.MoveDirection);
+            _characterMovement.SetMovement(command.MoveDirection);
         }
 
         public void ExecuteCommand(in CharacterInventoryCommand command)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UPR
 {
-    public class EntityWorld : IHistory, ISimulation, IRollback, IEntityWorld
+    public class EntityWorld : IEntityWorld, IHistory, ISimulation, IRollback
     {
         private readonly Dictionary<EntityId, EntityLifetime> _entities = new Dictionary<EntityId, EntityLifetime>();
 
@@ -11,7 +11,12 @@ namespace UPR
 
         public void RegisterEntity(IEntity entity)
         {
-            _entities.Add(entity.Id, new EntityLifetime(entity, CurrentStep));
+            RegisterEntityAtStep(CurrentStep, entity);
+        }
+
+        public void RegisterEntityAtStep(int step, IEntity entity)
+        {
+            _entities.Add(entity.Id, new EntityLifetime(entity, step));
         }
 
         public void KillEntity(EntityId entityId)
@@ -97,6 +102,8 @@ namespace UPR
                     lifetime.Entity.Rollback(steps);
                 }
             }
+
+            CurrentStep -= steps;
         }
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace UPR
 {
-    public class Histories : IHistory
+    public class ReversibleHistories : IReversibleHistory
     {
-        private readonly List<IHistory> _histories = new List<IHistory>();
+        private readonly List<IReversibleHistory> _histories = new List<IReversibleHistory>();
 
         public int CurrentStep { get; private set; }
 
-        public void AddHistory(IHistory history)
+        public void AddHistory(IReversibleHistory history)
         {
             if (history.CurrentStep != CurrentStep)
                 throw new Exception($"Can't add history: {nameof(CurrentStep)}'s are not synchronised.");
@@ -25,6 +25,16 @@ namespace UPR
             }
 
             CurrentStep += 1;
+        }
+
+        public void Rollback(int steps)
+        {
+            foreach (var history in _histories)
+            {
+                history.Rollback(steps);
+            }
+
+            CurrentStep -= steps;
         }
     }
 }

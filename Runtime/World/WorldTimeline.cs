@@ -8,7 +8,8 @@ namespace UPR
         private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
         private readonly IRollback _worldRollback;
-        private readonly Dictionary<Type, ICommandTimeline> _commandTimelines;
+        private readonly Dictionary<Type, ICommandTimeline> _commandTimelines = new Dictionary<Type, ICommandTimeline>();
+        private readonly List<ICommandTimeline> _commandTimelinesInOrder = new List<ICommandTimeline>();
 
         private int _latestApprovedTick;
 
@@ -22,6 +23,7 @@ namespace UPR
         public void RegisterTimeline<TCommand>(ICommandTimeline<TCommand> commandTimeline)
         {
             _commandTimelines.Add(typeof(TCommand), commandTimeline);
+            _commandTimelinesInOrder.Add(commandTimeline);
         }
 
         public void RemoveCommand<TCommand>(int tick, EntityId entityId)
@@ -55,11 +57,12 @@ namespace UPR
 
             int earliestTick = Math.Min(targetTick, _latestApprovedTick);
             int stepsToRollback = _worldHistory.CurrentStep - earliestTick;
+
             _worldRollback.Rollback(stepsToRollback);
 
             for (int currentTick = _worldHistory.CurrentStep; currentTick <= targetTick; currentTick++)
             {
-                foreach (var commandTimeline in _commandTimelines.Values)
+                foreach (var commandTimeline in _commandTimelinesInOrder)
                     commandTimeline.ExecuteCommands(currentTick);
 
                 _worldSimulation.StepForward();

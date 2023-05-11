@@ -1,17 +1,13 @@
-﻿namespace UPR
+﻿using UnityEngine;
+
+namespace UPR.Samples
 {
-    public abstract class Entity : IEntity
+    public abstract class UnityEntity : MonoBehaviour, IEntity
     {
         protected readonly Simulations LocalSimulations = new Simulations();
         protected readonly ReversibleHistories LocalReversibleHistories = new ReversibleHistories();
-        protected readonly Rollbacks LocalRollbacks = new Rollbacks();
 
-        protected Entity(EntityId id)
-        {
-            Id = id;
-        }
-
-        public EntityId Id { get; }
+        public EntityId Id { get; set; }
 
         public int CurrentStep => LocalReversibleHistories.CurrentStep;
 
@@ -27,7 +23,7 @@
 
         public void Rollback(int steps)
         {
-            LocalRollbacks.Rollback(steps);
+            LocalReversibleHistories.Rollback(steps);
         }
     }
 }
