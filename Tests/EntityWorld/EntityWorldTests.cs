@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace UPR.Tests
 {
-    public class EntitiesTimelineTests
+    public class EntityWorldTests
     {
         [Test]
         public void RollbackZeroAppliesLastSavedState()
@@ -11,14 +11,15 @@ namespace UPR.Tests
             // Arrange
             var entitiesTimeline = new EntityWorld();
             int originalValue = 11;
-            var testEntity = new TestEntity(new EntityId(0), originalValue);
-
-            entitiesTimeline.RegisterEntity(testEntity);
+            var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
 
             // Act
+            entitiesTimeline.RegisterEntity(testEntity);
+            entitiesTimeline.SaveStep();
             testEntity.SimpleObject.ChangeValue(22);
             entitiesTimeline.Rollback(0);
 
+            // Assert
             Assert.AreEqual(originalValue, testEntity.SimpleObject.Value);
         }
 
@@ -28,11 +29,12 @@ namespace UPR.Tests
             // Arrange
             var entitiesTimeline = new EntityWorld();
             int originalValue = 11;
-            var testEntity = new TestEntity(new EntityId(0), originalValue);
-
-            entitiesTimeline.RegisterEntity(testEntity);
+            var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
 
             // Act
+            entitiesTimeline.RegisterEntity(testEntity);
+            entitiesTimeline.SaveStep();
+
             int newValue = 22;
             testEntity.SimpleObject.ChangeValue(newValue);
             entitiesTimeline.SaveStep();
@@ -42,6 +44,7 @@ namespace UPR.Tests
 
             entitiesTimeline.Rollback(1);
 
+            // Assert
             Assert.AreEqual(newValue, testEntity.SimpleObject.Value);
         }
     }

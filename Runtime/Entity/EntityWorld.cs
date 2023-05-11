@@ -72,7 +72,7 @@ namespace UPR
             // Lose track of entities that just born or not even born at target tick
             foreach (var lifetime in _entities.Values)
             {
-                if (lifetime.BirthStep <= targetTick)
+                if (lifetime.BirthStep >= targetTick)
                 {
                     s_entitiesToRemove.Add(lifetime.Entity.Id);
                 }
@@ -85,7 +85,7 @@ namespace UPR
 
             foreach (var lifetime in _entities.Values)
             {
-                if (lifetime.IsAliveAtStep(targetTick) && lifetime.IsDeadAtTick(CurrentStep)) // Currently dead, but was alive
+                if (lifetime.IsAliveAtStep(targetTick) && lifetime.IsDeadAtStep(CurrentStep)) // Currently dead, but was alive
                 {
                     int entityAgeAtTargetTick = targetTick - lifetime.BirthStep;
                     int entityAgeAtDeath = lifetime.DeathStep - lifetime.BirthStep;

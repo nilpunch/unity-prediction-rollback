@@ -35,19 +35,19 @@
             DeathStep = int.MaxValue;
         }
 
-        public bool IsAliveAtStep(int tick)
+        public bool IsAliveAtStep(int step)
         {
-            return tick >= BirthStep && tick < DeathStep;
+            return step >= BirthStep && step < DeathStep;
         }
 
-        public bool IsDeadAtTick(int tick)
+        public bool IsDeadAtStep(int step)
         {
-            return tick >= DeathStep;
+            return step >= DeathStep;
         }
 
-        public bool IsBornAtStep(int tick)
+        public bool IsBornAtStep(int step)
         {
-            return tick == BirthStep;
+            return step == BirthStep;
         }
     }
 }
