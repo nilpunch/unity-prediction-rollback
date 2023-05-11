@@ -8,6 +8,6 @@ Deterministic prediction-rollback netcode library for Unity.
 3. Traditional client-side visualisation with Unity (no ECS)
 4. Cross-platform determinism
 
-## Current progress
+## Recent progress
 
 ![](https://github.com/nilpunch/unity-prediction-rollback/blob/master/Graphics/timeline.gif)
