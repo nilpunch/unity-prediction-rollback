@@ -3,7 +3,8 @@
     public abstract class Entity : IEntity
     {
         protected readonly Simulations LocalSimulations = new Simulations();
-        protected readonly StateHistories LocalStateHistories = new StateHistories();
+        protected readonly Histories LocalHistories = new Histories();
+        protected readonly Rollbacks LocalRollbacks = new Rollbacks();
 
         protected Entity(EntityId id)
         {
@@ -12,21 +13,21 @@
 
         public EntityId Id { get; }
 
-        public int HistoryLength => LocalStateHistories.HistoryLength;
+        public int CurrentStep => LocalHistories.CurrentStep;
 
-        public void StepForward(int currentTick)
+        public void StepForward()
         {
-            LocalSimulations.StepForward(currentTick);
+            LocalSimulations.StepForward();
         }
 
-        public void SaveState()
+        public void SaveStep()
         {
-            LocalStateHistories.SaveState();
+            LocalHistories.SaveStep();
         }
 
-        public void Rollback(int ticks)
+        public void Rollback(int steps)
         {
-            LocalStateHistories.Rollback(ticks);
+            LocalRollbacks.Rollback(steps);
         }
     }
 }

@@ -3,10 +3,10 @@
     public class Time : ISimulation
     {
         private long _tick;
-        
-        public void StepForward(int currentTick)
+
+        public void StepForward()
         {
-            _tick = currentTick;
+            _tick += 1;
         }
     }
 }

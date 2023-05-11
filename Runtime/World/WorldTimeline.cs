@@ -5,16 +5,18 @@ namespace UPR
 {
     public class WorldTimeline : IWorldTimeline
     {
-        private readonly IStateHistory _worldStateHistory;
+        private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
+        private readonly IRollback _worldRollback;
         private readonly Dictionary<Type, ICommandTimeline> _commandTimelines;
 
         private int _latestApprovedTick;
 
-        public WorldTimeline(IStateHistory worldStateHistory, ISimulation worldSimulation)
+        public WorldTimeline(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback)
         {
-            _worldStateHistory = worldStateHistory;
+            _worldHistory = worldHistory;
             _worldSimulation = worldSimulation;
+            _worldRollback = worldRollback;
         }
 
         public void RegisterTimeline<TCommand>(ICommandTimeline<TCommand> commandTimeline)
@@ -46,24 +48,25 @@ namespace UPR
             }
         }
 
-        public void Simulate(int currentTick)
+        public void FastForwardToTick(int targetTick)
         {
-            if (currentTick < 0)
-                throw new ArgumentOutOfRangeException(nameof(currentTick), "Simulated tick should not be negative!");
+            if (targetTick < 0)
+                throw new ArgumentOutOfRangeException(nameof(targetTick), "Target tick should not be negative!");
 
-            var framesToRollback = currentTick - _latestApprovedTick;
-            _worldStateHistory.Rollback(framesToRollback);
+            int earliestTick = Math.Min(targetTick, _latestApprovedTick);
+            int stepsToRollback = _worldHistory.CurrentStep - earliestTick;
+            _worldRollback.Rollback(stepsToRollback);
 
-            for (var tick = _latestApprovedTick; tick <= currentTick; tick++)
+            for (int currentTick = _worldHistory.CurrentStep; currentTick <= targetTick; currentTick++)
             {
                 foreach (var commandTimeline in _commandTimelines.Values)
-                    commandTimeline.ExecuteCommands(tick);
+                    commandTimeline.ExecuteCommands(currentTick);
 
-                _worldSimulation.StepForward(tick);
-                _worldStateHistory.SaveState();
+                _worldSimulation.StepForward();
+                _worldHistory.SaveStep();
             }
 
-            _latestApprovedTick = currentTick;
+            _latestApprovedTick = targetTick;
         }
     }
 }

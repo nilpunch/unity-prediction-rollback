@@ -21,9 +21,9 @@
             return _memory;
         }
 
-        public void Load(in SimpleMemory snapshot)
+        public void Load(in SimpleMemory memory)
         {
-            _memory = snapshot;
+            _memory = memory;
         }
     }
 }

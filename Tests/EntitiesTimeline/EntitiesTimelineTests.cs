@@ -9,7 +9,7 @@ namespace UPR.Tests
         public void RollbackZeroAppliesLastSavedState()
         {
             // Arrange
-            var entitiesTimeline = new EntitiesTimeline();
+            var entitiesTimeline = new EntityWorld();
             int originalValue = 11;
             var testEntity = new TestEntity(new EntityId(0), originalValue);
 
@@ -23,10 +23,10 @@ namespace UPR.Tests
         }
 
         [Test]
-        public void RollbackWorksAsIntended()
+        public void RollbackAliveEntityRollbackIt()
         {
             // Arrange
-            var entitiesTimeline = new EntitiesTimeline();
+            var entitiesTimeline = new EntityWorld();
             int originalValue = 11;
             var testEntity = new TestEntity(new EntityId(0), originalValue);
 
@@ -35,12 +35,10 @@ namespace UPR.Tests
             // Act
             int newValue = 22;
             testEntity.SimpleObject.ChangeValue(newValue);
-            entitiesTimeline.StepForward(0);
-            entitiesTimeline.SaveState();
+            entitiesTimeline.SaveStep();
 
             testEntity.SimpleObject.ChangeValue(33);
-            entitiesTimeline.StepForward(1);
-            entitiesTimeline.SaveState();
+            entitiesTimeline.SaveStep();
 
             entitiesTimeline.Rollback(1);
 

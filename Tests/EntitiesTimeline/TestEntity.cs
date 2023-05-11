@@ -5,8 +5,8 @@
         public TestEntity(EntityId id, int value) : base(id)
         {
             SimpleObject = new SimpleObject(value);
-            
-            LocalStateHistories.AddHistory(new StateHistory<SimpleMemory>(SimpleObject));
+
+            LocalHistories.AddHistory(new ReversibleMemoryHistory<SimpleMemory>(SimpleObject));
         }
 
         public SimpleObject SimpleObject { get; }

@@ -1,6 +1,6 @@
 ﻿namespace UPR
 {
-    public interface IEntity : IStateHistory, ISimulation
+    public interface IEntity : IHistory, ISimulation, IRollback
     {
         EntityId Id { get; }
     }

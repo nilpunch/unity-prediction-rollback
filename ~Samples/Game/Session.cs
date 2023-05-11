@@ -6,17 +6,17 @@
         {
             var game = new Game();
 
-            var worldTimeline = new WorldTimeline(game, game);
+            var worldTimeline = new WorldTimeline(game.EntityWorld, game.EntityWorld, game.EntityWorld);
 
             worldTimeline.RegisterTimeline(
                 new CommandTimeline<CharacterMoveCommand>(
                     new CommandRouter<CharacterMoveCommand>(
-                        game.CharacterMoveCommandTargets)));
+                        game.EntityWorld)));
 
             worldTimeline.RegisterTimeline(
                 new CommandTimeline<CharacterInventoryCommand>(
                     new CommandRouter<CharacterInventoryCommand>(
-                        game.CharacterInventoryCommandTargets)));
+                        game.EntityWorld)));
         }
     }
 }

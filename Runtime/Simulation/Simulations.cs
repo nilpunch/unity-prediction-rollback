@@ -11,11 +11,11 @@ namespace UPR
             _simulations.Add(simulation);
         }
 
-        public void StepForward(int currentTick)
+        public void StepForward()
         {
             foreach (var simulation in _simulations)
             {
-                simulation.StepForward(currentTick);
+                simulation.StepForward();
             }
         }
     }

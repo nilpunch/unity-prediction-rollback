@@ -14,9 +14,9 @@
             return _memory;
         }
 
-        public void Load(in CharacterInventoryMemory snapshot)
+        public void Load(in CharacterInventoryMemory memory)
         {
-            _memory = snapshot;
+            _memory = memory;
         }
     }
 }

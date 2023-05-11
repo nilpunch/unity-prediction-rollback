@@ -10,12 +10,26 @@ namespace UPR.Tests
     public class StateHistoryTests
     {
         [Test]
+        public void SimpleObjectChangesValue()
+        {
+            // Arrange
+            int originalValue = 11;
+            var simpleObject = new SimpleObject(originalValue);
+
+            // Act
+            simpleObject.ChangeValue(0);
+
+            // Assert
+            Assert.AreNotEqual(originalValue, simpleObject.Value);
+        }
+
+        [Test]
         public void RollbackWithNotFilledHistoryShouldThrow()
         {
             // Arrange
             int originalValue = 11;
             var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new StateHistory<SimpleMemory>(simpleObject);
+            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(0);
@@ -33,7 +47,7 @@ namespace UPR.Tests
             // Arrange
             int originalValue = 11;
             var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new StateHistory<SimpleMemory>(simpleObject);
+            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(3);
@@ -49,12 +63,12 @@ namespace UPR.Tests
             // Arrange
             int originalValue = 11;
             var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new StateHistory<SimpleMemory>(simpleObject);
+            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(0);
-            stateHistory.SaveState();
-            stateHistory.SaveState();
+            stateHistory.SaveStep();
+            stateHistory.SaveStep();
             stateHistory.Rollback(2);
 
             // Assert

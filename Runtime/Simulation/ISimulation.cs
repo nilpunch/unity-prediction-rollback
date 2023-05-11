@@ -1,7 +1,10 @@
 ﻿namespace UPR
 {
+    /// <summary>
+    /// Stepper for general simulated objects and for reversible simulation.
+    /// </summary>
     public interface ISimulation
     {
-        void StepForward(int currentTick);
+        void StepForward();
     }
 }
