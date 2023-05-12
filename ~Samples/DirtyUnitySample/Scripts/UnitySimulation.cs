@@ -10,7 +10,8 @@ namespace UPR.Samples
 
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
-        public static WorldTimeline WorldTimeline { get; private set; }
+        public static TimeTravelMachine TimeTravelMachine { get; private set; }
+        public static ICommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
 
         public static IEntityWorld<IEntity> EntityWorld { get; private set; }
 
@@ -25,11 +26,11 @@ namespace UPR.Samples
             EntityWorld = charactersEntityWorld;
 
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
-            WorldTimeline = new WorldTimeline(charactersEntityWorld, charactersEntityWorld, charactersEntityWorld);
+            TimeTravelMachine = new TimeTravelMachine(charactersEntityWorld, charactersEntityWorld, charactersEntityWorld);
+            CharacterMovement = new CommandTimeline<CharacterMoveCommand>(
+                new CommandRouter<CharacterMoveCommand>(new EntityFinderAdapter<IEntity, UnityCharacter>(EntityWorld)));
 
-            WorldTimeline.RegisterTimeline(
-                new CommandTimeline<CharacterMoveCommand>(
-                    new CommandRouter<CharacterMoveCommand>(new EntityFinderAdapter<IEntity, UnityCharacter>(EntityWorld))));
+            TimeTravelMachine.AddCommandsTimeline(CharacterMovement);
 
             int startingEntities = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
@@ -50,7 +51,7 @@ namespace UPR.Samples
         {
             ElapsedTime += Time.deltaTime;
 
-            WorldTimeline.FastForwardToTick(CurrentTick);
+            TimeTravelMachine.FastForwardToTick(CurrentTick);
         }
     }
 }

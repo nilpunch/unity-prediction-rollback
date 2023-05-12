@@ -33,7 +33,7 @@ namespace UPR.Samples
             }
 
             if (_simulationStopped)
-                UnitySimulation.WorldTimeline.FastForwardToTick(Mathf.RoundToInt(_slider.value));
+                UnitySimulation.TimeTravelMachine.FastForwardToTick(Mathf.RoundToInt(_slider.value));
         }
     }
 }

@@ -12,9 +12,32 @@ namespace UPR
             _commandRouter = commandRouter;
         }
 
+        public int EarliestCommandChange { get; private set; }
+
+        public void ApproveChangesUpTo(int tick)
+        {
+            EarliestCommandChange = tick;
+        }
+
+        public void ExecuteCommands(int tick)
+        {
+            if (_timeline.TryGetValue(tick, out var commands))
+            {
+                foreach (var command in commands)
+                {
+                    _commandRouter.ForwardCommand(command.Command, command.Entity);
+                }
+            }
+        }
+
         public void RemoveCommand(int tick, EntityId entityId)
         {
             _timeline[tick].RemoveAll(command => command.Entity == entityId);
+
+            if (tick < EarliestCommandChange)
+            {
+                EarliestCommandChange = tick;
+            }
         }
 
         public void InsertCommand(int tick, in TCommand command, EntityId entityId)
@@ -30,16 +53,10 @@ namespace UPR
                     new EntityCommand<TCommand>(command, entityId)
                 });
             }
-        }
 
-        public void ExecuteCommands(int tick)
-        {
-            if (_timeline.TryGetValue(tick, out var commands))
+            if (tick < EarliestCommandChange)
             {
-                foreach (var command in commands)
-                {
-                    _commandRouter.ForwardCommand(command.Command, command.Entity);
-                }
+                EarliestCommandChange = tick;
             }
         }
     }

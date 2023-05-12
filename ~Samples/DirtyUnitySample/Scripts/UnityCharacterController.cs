@@ -4,7 +4,6 @@ namespace UPR.Samples
 {
     public class UnityCharacterController : MonoBehaviour
     {
-        [SerializeField] private UnitySimulation _unitySimulation;
         [SerializeField] private UnityCharacter _unityCharacter;
 
         private void Update()
@@ -28,7 +27,7 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
-            UnitySimulation.WorldTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), _unityCharacter.Id);
+            UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), _unityCharacter.Id);
 
             // if (input.sqrMagnitude < 0.001f)
             // {

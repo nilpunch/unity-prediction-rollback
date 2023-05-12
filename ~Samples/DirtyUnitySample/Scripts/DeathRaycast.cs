@@ -6,15 +6,19 @@ namespace UPR.Samples
     {
         [SerializeField] private Vector3 _dimensions;
 
+        private readonly Collider[] _castResults = new Collider[100];
+
         public void StepForward()
         {
             Physics.SyncTransforms();
 
-            var overlaps = Physics.OverlapBox(transform.position, _dimensions / 2f);
+            int overlaps = Physics.OverlapBoxNonAlloc(transform.position, _dimensions / 2f, _castResults);
 
-            foreach (var overlap in overlaps)
+            for (int i = 0; i < overlaps; i++)
             {
-                if (overlap.TryGetComponent(out UnityEntity unityEntity) && UnitySimulation.EntityWorld.IsAlive(unityEntity.Id))
+                var result = _castResults[i];
+
+                if (result.TryGetComponent(out UnityEntity unityEntity) && UnitySimulation.EntityWorld.IsAlive(unityEntity.Id))
                 {
                     UnitySimulation.EntityWorld.KillEntity(unityEntity.Id);
                 }

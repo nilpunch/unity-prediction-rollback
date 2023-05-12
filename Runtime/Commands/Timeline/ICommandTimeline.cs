@@ -2,6 +2,10 @@
 {
     public interface ICommandTimeline
     {
+        int EarliestCommandChange { get; }
+
+        void ApproveChangesUpTo(int tick);
+
         void ExecuteCommands(int tick);
     }
 
