@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695adda3846873f4bb63ab6761acf93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ticksPerSecond: 10
+  _ticksPerSecond: 30
 --- !u!4 &310218686
 Transform:
   m_ObjectHideFlags: 0
