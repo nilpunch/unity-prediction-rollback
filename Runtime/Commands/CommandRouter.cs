@@ -2,20 +2,18 @@
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {
-        private readonly IEntityWorld _entityWorld;
+        private readonly IEntityFinder<ICommandTarget<TCommand>> _entityWorld;
 
-        public CommandRouter(IEntityWorld entityWorld)
+        public CommandRouter(IEntityFinder<ICommandTarget<TCommand>> entityWorld)
         {
             _entityWorld = entityWorld;
         }
 
         public void ForwardCommand(in TCommand command, EntityId entityId)
         {
-            var entity = _entityWorld.FindAliveEntity(entityId);
-
-            if (entity is ICommandTarget<TCommand> target)
+            if (_entityWorld.IsAlive(entityId))
             {
-                target.ExecuteCommand(command);
+                _entityWorld.FindAliveEntity(entityId).ExecuteCommand(command);
             }
         }
     }

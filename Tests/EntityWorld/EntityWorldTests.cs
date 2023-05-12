@@ -9,7 +9,7 @@ namespace UPR.Tests
         public void RollbackZeroAppliesLastSavedState()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld();
+            var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
             int originalValue = 11;
             var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
 
@@ -27,7 +27,7 @@ namespace UPR.Tests
         public void RollbackAliveEntityRollbackIt()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld();
+            var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
             int originalValue = 11;
             var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
 

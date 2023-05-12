@@ -1,25 +1,23 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace UPR
 {
-    public class EntityWorld : IEntityWorld, IHistory, ISimulation, IRollback
+    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
     {
         private struct EntityRegistration
         {
-            public EntityRegistration(IEntity entity, int birthStep)
+            public EntityRegistration(TEntity entity, int birthStep)
             {
                 Entity = entity;
                 BirthStep = birthStep;
             }
 
-            public IEntity Entity { get; }
+            public TEntity Entity { get; }
             public int BirthStep { get; }
         }
 
-        private readonly Dictionary<EntityId, IEntity> _entities = new Dictionary<EntityId, IEntity>();
+        private readonly Dictionary<EntityId, TEntity> _entities = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<EntityId, int> _entityDeath = new Dictionary<EntityId, int>();
         private readonly Dictionary<EntityId, int> _entityBirth = new Dictionary<EntityId, int>();
 
@@ -27,12 +25,12 @@ namespace UPR
 
         public int CurrentStep { get; private set; }
 
-        public void RegisterEntity(IEntity entity)
+        public void RegisterEntity(TEntity entity)
         {
             RegisterEntityAtStep(CurrentStep, entity);
         }
 
-        public void RegisterEntityAtStep(int step, IEntity entity)
+        public void RegisterEntityAtStep(int step, TEntity entity)
         {
             _entitiesToAdd.Add(entity.Id, new EntityRegistration(entity, step));
         }
@@ -82,7 +80,7 @@ namespace UPR
             return false;
         }
 
-        public IEntity FindAliveEntity(EntityId entityId)
+        public TEntity FindAliveEntity(EntityId entityId)
         {
             if (_entities.TryGetValue(entityId, out var entity) && IsAlive(entityId))
             {
@@ -94,7 +92,7 @@ namespace UPR
                 return registration.Entity;
             }
 
-            return null;
+            return default;
         }
 
         public void StepForward()
@@ -142,8 +140,8 @@ namespace UPR
                 if (IsAliveAtStep(entityId, targetTick) && !IsAliveAtStep(entityId, CurrentStep)) // Currently dead, but was alive
                 {
                     int howLongEntityDead = CurrentStep - _entityDeath[entityId];
-                    _entityDeath.Remove(entityId);
                     entity.Rollback(steps - howLongEntityDead);
+                    _entityDeath.Remove(entityId);
                 }
                 else if (IsAliveAtStep(entityId, targetTick)) // Was alive and currently alive
                 {

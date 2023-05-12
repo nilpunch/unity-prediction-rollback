@@ -12,7 +12,7 @@ namespace UPR.Samples
 
         public static WorldTimeline WorldTimeline { get; private set; }
 
-        public static EntityWorld EntityWorld { get; private set; }
+        public static IEntityWorld<IEntity> EntityWorld { get; private set; }
 
         public static float ElapsedTime { get; private set; }
 
@@ -21,14 +21,15 @@ namespace UPR.Samples
 
         private void Start()
         {
-            EntityWorld = new EntityWorld();
+            var charactersEntityWorld = new EntityWorld<IEntity>();
+            EntityWorld = charactersEntityWorld;
 
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
-            WorldTimeline = new WorldTimeline(EntityWorld, EntityWorld, EntityWorld);
+            WorldTimeline = new WorldTimeline(charactersEntityWorld, charactersEntityWorld, charactersEntityWorld);
 
             WorldTimeline.RegisterTimeline(
                 new CommandTimeline<CharacterMoveCommand>(
-                    new CommandRouter<CharacterMoveCommand>(EntityWorld)));
+                    new CommandRouter<CharacterMoveCommand>(new EntityFinderAdapter<IEntity, UnityCharacter>(EntityWorld))));
 
             int startingEntities = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
