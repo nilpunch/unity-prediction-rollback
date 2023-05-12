@@ -12,7 +12,7 @@ namespace UPR
         public void AddHistory(IReversibleHistory history)
         {
             if (history.CurrentStep != CurrentStep)
-                throw new Exception($"Can't add history: {nameof(CurrentStep)}'s are not synchronised.");
+                throw new Exception($"Can't add history: {nameof(CurrentStep)}'s are not synchronised. Current: " + CurrentStep + ", Added: " + history.CurrentStep);
 
             _histories.Add(history);
         }

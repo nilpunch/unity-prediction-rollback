@@ -7,7 +7,7 @@ namespace UPR.Samples
     {
         [SerializeField] private Slider _slider;
         [SerializeField] private UnitySimulation _unitySimulation;
-        [SerializeField] private UnityCharacterController _unityCharacterController;
+        [SerializeField] private CharacterController _unityCharacterController;
 
         private bool _simulationStopped;
 

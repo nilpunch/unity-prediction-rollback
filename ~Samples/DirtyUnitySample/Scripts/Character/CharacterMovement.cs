@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class UnityCharacterMovement : MonoBehaviour, ISimulation, IMemory<CharacterMovementMemory>
+    public class CharacterMovement : MonoBehaviour, ISimulation, IMemory<CharacterMovementMemory>
     {
         [SerializeField] private float _speed = 5f;
 

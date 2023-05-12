@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1919176250937436991}
   - component: {fileID: 1919176250937436988}
   - component: {fileID: 1919176250937436989}
-  - component: {fileID: 1919176250937436866}
   - component: {fileID: 1919176250937436867}
+  - component: {fileID: 6325370493486618588}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1919176250937436864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,19 +99,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1919176250937436866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919176250937436864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8003f258d793436d8a865d3bab34b67c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UnityCharacterMovement: {fileID: 1919176250937436867}
 --- !u!114 &1919176250937436867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +112,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
+--- !u!114 &6325370493486618588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919176250937436864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1145e02f0334ec3ab203e4b793406a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 1919176250937436988}
+  _unityCharacterMovement: {fileID: 1919176250937436867}

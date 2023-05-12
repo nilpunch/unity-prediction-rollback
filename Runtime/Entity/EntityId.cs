@@ -4,12 +4,12 @@ namespace UPR
 {
     public readonly struct EntityId : IEquatable<EntityId>
     {
-        public int Value { get; }
-
         public EntityId(int value)
         {
             Value = value;
         }
+
+        public int Value { get; }
 
         public static bool operator ==(EntityId a, EntityId b)
         {

@@ -955,6 +955,7 @@ GameObject:
   - component: {fileID: 1521243470}
   - component: {fileID: 1521243473}
   - component: {fileID: 1521243475}
+  - component: {fileID: 1521243476}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -974,8 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitySimulation: {fileID: 310218685}
-  _unityCharacter: {fileID: 1521243471}
+  _character: {fileID: 1521243471}
 --- !u!114 &1521243471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,6 +990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1483905964}
   _unityCharacterMovement: {fileID: 1521243473}
+  _characterShooting: {fileID: 1521243476}
 --- !u!4 &1521243472
 Transform:
   m_ObjectHideFlags: 0
@@ -1032,6 +1033,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1521243476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521243469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44543b235dc43888a9375c95be9bcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 6325370493486618588, guid: ef9eb86cd85d44f468d19b8dd59535cd, type: 3}
+  _characterMovement: {fileID: 1521243473}
 --- !u!1 &1892181427
 GameObject:
   m_ObjectHideFlags: 0

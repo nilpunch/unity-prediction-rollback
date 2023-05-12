@@ -1,29 +1,24 @@
-﻿using System;
+using Tools;
 using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class UnityCharacter : UnityEntity,
-        ICommandTarget<CharacterMoveCommand>
+    public class Bullet : UnityEntity
     {
         [SerializeField] private Renderer _renderer;
-        [SerializeField] private UnityCharacterMovement _unityCharacterMovement;
+        [SerializeField] private CharacterMovement _unityCharacterMovement;
 
-        private void Start()
+        public CharacterMovement Movement => _unityCharacterMovement;
+
+        private void Awake()
         {
             var characterInventoryReversibleHistory = new ReversibleMemoryHistory<CharacterMovementMemory>(_unityCharacterMovement);
 
             LocalSimulations.AddSimulation(_unityCharacterMovement);
-
             LocalReversibleHistories.AddHistory(characterInventoryReversibleHistory);
         }
 
-        public void ExecuteCommand(in CharacterMoveCommand command)
-        {
-            _unityCharacterMovement.SetMovement(command.MoveDirection);
-        }
-
-        private void LateUpdate()
+        public void LateUpdate()
         {
             _renderer.enabled = UnitySimulation.EntityWorld.IsAlive(Id);
         }
