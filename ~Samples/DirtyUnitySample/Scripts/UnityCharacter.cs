@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UPR.Samples
 {
     public class UnityCharacter : UnityEntity,
         ICommandTarget<CharacterMoveCommand>
     {
+        [SerializeField] private Renderer _renderer;
         [SerializeField] private UnityCharacterMovement _unityCharacterMovement;
 
         private void Start()
@@ -19,6 +21,11 @@ namespace UPR.Samples
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
             _unityCharacterMovement.SetMovement(command.MoveDirection);
+        }
+
+        private void LateUpdate()
+        {
+            _renderer.enabled = IsAlive;
         }
     }
 }

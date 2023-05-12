@@ -4,16 +4,28 @@
     {
         protected readonly Simulations LocalSimulations = new Simulations();
         protected readonly ReversibleHistories LocalReversibleHistories = new ReversibleHistories();
-        protected readonly Rollbacks LocalRollbacks = new Rollbacks();
 
         protected Entity(EntityId id)
         {
             Id = id;
+            IsAlive = true;
         }
 
         public EntityId Id { get; }
 
+        public bool IsAlive { get; private set; }
+
         public int CurrentStep => LocalReversibleHistories.CurrentStep;
+
+        public void Kill()
+        {
+            IsAlive = false;
+        }
+
+        public void Resurrect()
+        {
+            IsAlive = true;
+        }
 
         public void StepForward()
         {
@@ -27,7 +39,7 @@
 
         public void Rollback(int steps)
         {
-            LocalRollbacks.Rollback(steps);
+            LocalReversibleHistories.Rollback(steps);
         }
     }
 }

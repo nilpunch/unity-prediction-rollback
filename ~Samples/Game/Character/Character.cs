@@ -21,9 +21,6 @@ namespace UPR.Samples
 
             LocalReversibleHistories.AddHistory(characterInventoryReversibleHistory);
             LocalReversibleHistories.AddHistory(characterMovementReversibleHistory);
-
-            LocalRollbacks.AddRollback(characterInventoryReversibleHistory);
-            LocalRollbacks.AddRollback(characterMovementReversibleHistory);
         }
 
         public void ExecuteCommand(in CharacterMoveCommand command)

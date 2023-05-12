@@ -26,14 +26,14 @@ namespace UPR.Samples
                 _unityCharacterController.enabled = false;
 
                 _slider.gameObject.SetActive(true);
-                _slider.maxValue = _unitySimulation.CurrentTick;
+                _slider.maxValue = UnitySimulation.CurrentTick;
                 _slider.minValue = 0f;
                 _slider.wholeNumbers = true;
-                _slider.value = _unitySimulation.CurrentTick;
+                _slider.value = UnitySimulation.CurrentTick;
             }
 
             if (_simulationStopped)
-                _unitySimulation.WorldTimeline.FastForwardToTick(Mathf.RoundToInt(_slider.value));
+                UnitySimulation.WorldTimeline.FastForwardToTick(Mathf.RoundToInt(_slider.value));
         }
     }
 }

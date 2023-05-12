@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UPR
+﻿namespace UPR
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {
@@ -18,10 +16,6 @@ namespace UPR
             if (entity is ICommandTarget<TCommand> target)
             {
                 target.ExecuteCommand(command);
-            }
-            else
-            {
-                throw new InvalidOperationException("Trying to execute " + typeof(TCommand).Name + " on entity " + entityId.Id);
             }
         }
     }

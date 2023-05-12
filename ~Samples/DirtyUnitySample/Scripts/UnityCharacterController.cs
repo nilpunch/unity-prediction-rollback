@@ -28,7 +28,17 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
-            _unitySimulation.WorldTimeline.InsertCommand(_unitySimulation.CurrentTick + 1, new CharacterMoveCommand(input.normalized), _unityCharacter.Id);
+            UnitySimulation.WorldTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), _unityCharacter.Id);
+
+            // if (input.sqrMagnitude < 0.001f)
+            // {
+            //     input = Vector3.up;
+            // }
+            //
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     UnitySimulation.WorldTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(input.normalized), _unityCharacter.Id);
+            // }
         }
     }
 }

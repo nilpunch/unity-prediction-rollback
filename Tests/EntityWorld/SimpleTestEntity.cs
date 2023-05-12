@@ -9,7 +9,6 @@
             var simpleObjectReversibleHistory = new ReversibleMemoryHistory<SimpleMemory>(SimpleObject);
 
             LocalReversibleHistories.AddHistory(simpleObjectReversibleHistory);
-            LocalRollbacks.AddRollback(simpleObjectReversibleHistory);
         }
 
         public SimpleObject SimpleObject { get; }

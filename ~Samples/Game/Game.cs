@@ -4,7 +4,7 @@ namespace UPR.Samples
 {
     public class Game
     {
-        private readonly UniqueIdGenerator _idGenerator = new UniqueIdGenerator();
+        private readonly IdGenerator _idGenerator = new IdGenerator(0);
 
         public Game()
         {

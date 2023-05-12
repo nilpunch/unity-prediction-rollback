@@ -4,11 +4,11 @@ namespace UPR
 {
     public readonly struct EntityId : IEquatable<EntityId>
     {
-        public int Id { get; }
+        public int Value { get; }
 
-        public EntityId(int id)
+        public EntityId(int value)
         {
-            Id = id;
+            Value = value;
         }
 
         public static bool operator ==(EntityId a, EntityId b)
@@ -23,12 +23,12 @@ namespace UPR
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public bool Equals(EntityId other)
         {
-            return Id.Equals(other.Id);
+            return Value.Equals(other.Value);
         }
 
         public override bool Equals(object obj)
