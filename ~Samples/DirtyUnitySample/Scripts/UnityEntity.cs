@@ -9,19 +9,7 @@ namespace UPR.Samples
 
         public EntityId Id { get; set; }
 
-        public bool IsAlive { get; private set; } = true;
-
         public int CurrentStep => LocalReversibleHistories.CurrentStep;
-
-        public void Kill()
-        {
-            IsAlive = false;
-        }
-
-        public void Resurrect()
-        {
-            IsAlive = true;
-        }
 
         public void StepForward()
         {

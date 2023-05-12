@@ -16,6 +16,11 @@ namespace UPR.Samples
             _memory.Position = transform.position;
         }
 
+        private void LateUpdate()
+        {
+            SyncTransform();
+        }
+
         public void SetMovement(Vector3 moveDirection)
         {
             _memory.MoveDirection = moveDirection;

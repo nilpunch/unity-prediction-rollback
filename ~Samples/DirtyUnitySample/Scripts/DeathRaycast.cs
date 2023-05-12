@@ -14,14 +14,9 @@ namespace UPR.Samples
 
             foreach (var overlap in overlaps)
             {
-                if (overlap.TryGetComponent(out UnityEntity unityEntity))
+                if (overlap.TryGetComponent(out UnityEntity unityEntity) && UnitySimulation.EntityWorld.IsAlive(unityEntity.Id))
                 {
-                    Debug.Log("Founded!");
-                    if (unityEntity.IsAlive)
-                    {
-                        unityEntity.Kill();
-                        Debug.Log("Killed!");
-                    }
+                    UnitySimulation.EntityWorld.KillEntity(unityEntity.Id);
                 }
             }
         }
