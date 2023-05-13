@@ -6,6 +6,8 @@ namespace UPR
         void RegisterEntityAtStep(int step, TEntity entity);
         void KillEntity(EntityId entityId);
 
-        public void SubmitEntities();
+        bool IsExistsInHistory(EntityId entityId);
+
+        public void SubmitRegistration();
     }
 }

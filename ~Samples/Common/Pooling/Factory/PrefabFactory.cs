@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tools
 {
-    public class PrefabPoolFactory<T> : IPoolFactory<T> where T : Object
+    public class PrefabFactory<T> : IFactory<T> where T : Object
     {
         private readonly Transform _parent;
         private readonly T _prefab;
@@ -12,7 +12,7 @@ namespace Tools
 
         private int _objectIndex = 0;
 
-        public PrefabPoolFactory(T prefab, Transform parent, string name)
+        public PrefabFactory(T prefab, Transform parent, string name)
         {
             _prefab = prefab;
             _name = name;
@@ -20,15 +20,15 @@ namespace Tools
             _nameBuilder = new StringBuilder();
         }
 
-        public PrefabPoolFactory(T prefab, Transform parent) : this(prefab, parent, prefab.name)
+        public PrefabFactory(T prefab, Transform parent) : this(prefab, parent, prefab.name)
         {
         }
 
-        public PrefabPoolFactory(T prefab) : this(prefab, null, prefab.name)
+        public PrefabFactory(T prefab) : this(prefab, null, prefab.name)
         {
         }
 
-        T IPoolFactory<T>.Create()
+        T IFactory<T>.Create()
         {
             T instance = _parent ? Object.Instantiate(_prefab, _parent) : Object.Instantiate(_prefab);
             instance.name = _nameBuilder.Append(_name).Append(' ').Append(_objectIndex).ToString();

@@ -23,9 +23,9 @@ namespace UPR.Samples
                     UnitySimulation.CharacterWorld.KillEntity(character.Id);
                 }
 
-                if (result.TryGetComponent(out Bullet bullet) && UnitySimulation.BulletWorld.IsAlive(bullet.Id))
+                if (result.TryGetComponent(out Bullet bullet) && UnitySimulation.BulletsWorld.IsAlive(bullet.Id))
                 {
-                    UnitySimulation.BulletWorld.KillEntity(bullet.Id);
+                    UnitySimulation.BulletsWorld.KillEntity(bullet.Id);
                 }
             }
         }

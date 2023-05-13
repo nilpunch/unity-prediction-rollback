@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Bullet : UnityEntity
+    public class Bullet : UnityEntity, ICachedEntity
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private CharacterMovement _unityCharacterMovement;
@@ -20,7 +20,24 @@ namespace UPR.Samples
 
         public void LateUpdate()
         {
-            _renderer.enabled = UnitySimulation.BulletWorld.IsAlive(Id);
+            Debug.Log(LocalReversibleHistories.CurrentStep);
+            _renderer.enabled = UnitySimulation.BulletsWorld.IsAlive(Id);
+        }
+
+        public void Launch(Vector3 position, Vector3 direction)
+        {
+            Movement.SetPosition(position);
+            Movement.SetMoveDirection(direction);
+        }
+
+        public void ChangeId(EntityId entityId)
+        {
+            Id = entityId;
+        }
+
+        public void ResetHistory()
+        {
+            Rollback(CurrentStep);
         }
     }
 }

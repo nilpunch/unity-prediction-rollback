@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Tools;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -8,6 +9,7 @@ namespace UPR.Samples
     public class UnitySimulation : MonoBehaviour
     {
         [SerializeField] private int _ticksPerSecond = 30;
+        [SerializeField] private Bullet _bulletPrefab;
 
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
@@ -16,8 +18,10 @@ namespace UPR.Samples
         public static ICommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
 
         public static IEntityWorld<Character> CharacterWorld { get; private set; }
-        public static IEntityWorld<Bullet> BulletWorld { get; private set; }
         public static IEntityWorld<DeathSpike> DeathSpikeWorld { get; private set; }
+        public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
+
+        public static IFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; private set; }
 
@@ -31,7 +35,7 @@ namespace UPR.Samples
             var charactersWorld = new EntityWorld<Character>();
             CharacterWorld = charactersWorld;
             var bulletWorld = new EntityWorld<Bullet>();
-            BulletWorld = bulletWorld;
+            BulletsWorld = bulletWorld;
             var deathSpikeWorld = new EntityWorld<DeathSpike>();
             DeathSpikeWorld = deathSpikeWorld;
 
@@ -52,10 +56,13 @@ namespace UPR.Samples
                 }
             }
 
-            CharacterWorld.SubmitEntities();
-            DeathSpikeWorld.SubmitEntities();
+            CharacterWorld.SubmitRegistration();
+            DeathSpikeWorld.SubmitRegistration();
 
             IdGenerator = new IdGenerator(entityIndex);
+
+            var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
+            BulletsFactory = bulletsFactory;
 
             var worldReversibleHistory = new ReversibleHistories();
             worldReversibleHistory.AddHistory(new ReversibleHistoryAdapter(IdGenerator, IdGenerator));
@@ -68,6 +75,7 @@ namespace UPR.Samples
             worldSimulation.AddSimulation(charactersWorld);
             worldSimulation.AddSimulation(bulletWorld);
             worldSimulation.AddSimulation(deathSpikeWorld);
+            worldSimulation.AddSimulation(bulletsFactory);
 
             TimeTravelMachine = new TimeTravelMachine(worldReversibleHistory, worldSimulation, worldReversibleHistory);
 

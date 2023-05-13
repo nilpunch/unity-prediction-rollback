@@ -8,18 +8,18 @@ namespace Tools
         private readonly HashSet<TItem> _allCreatedItems = new HashSet<TItem>();
         private readonly Stack<TItem> _availableItems = new Stack<TItem>();
 
-        private readonly IPoolFactory<TItem> _poolFactory;
+        private readonly IFactory<TItem> _factory;
         
-        public Pool(IPoolFactory<TItem> factory)
+        public Pool(IFactory<TItem> factory)
         {
-            _poolFactory = factory;
+            _factory = factory;
         }
 
-        public Pool(IPoolFactory<TItem> factory, int prewarm) : this(factory)
+        public Pool(IFactory<TItem> factory, int prewarm) : this(factory)
         {
             for (int i = 0; i < prewarm; i++)
             {
-                TItem poolable = _poolFactory.Create();
+                TItem poolable = _factory.Create();
                 _allCreatedItems.Add(poolable);
                 _availableItems.Push(poolable);
             }
@@ -35,7 +35,7 @@ namespace Tools
             }
             else
             {
-                poolable = _poolFactory.Create();
+                poolable = _factory.Create();
                 _allCreatedItems.Add(poolable);
             }
             

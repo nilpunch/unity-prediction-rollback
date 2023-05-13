@@ -52,7 +52,12 @@ namespace UPR
             throw new Exception("Trying to kill unknown entity. EntityID: " + entityId);
         }
 
-        public void SubmitEntities()
+        public bool IsExistsInHistory(EntityId entityId)
+        {
+            return _entities.ContainsKey(entityId) || _entitiesToAdd.ContainsKey(entityId);
+        }
+
+        public void SubmitRegistration()
         {
             foreach (var (entityId, registration) in _entitiesToAdd)
             {
@@ -108,7 +113,7 @@ namespace UPR
 
         public void SaveStep()
         {
-            SubmitEntities();
+            SubmitRegistration();
 
             foreach (var entity in _entities.Values)
             {

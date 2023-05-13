@@ -1,6 +1,6 @@
 ﻿namespace UPR.Samples
 {
-    public class IdGenerator : Entity, IMemory<IdGeneratorMemory>
+    public class IdGenerator : Entity, IIdGenerator, IMemory<IdGeneratorMemory>
     {
         private IdGeneratorMemory _memory;
 

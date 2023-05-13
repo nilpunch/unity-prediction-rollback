@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ticksPerSecond: 60
+  _bulletPrefab: {fileID: 6325370493486618588, guid: ef9eb86cd85d44f468d19b8dd59535cd, type: 3}
 --- !u!4 &310218686
 Transform:
   m_ObjectHideFlags: 0
@@ -1045,7 +1046,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44543b235dc43888a9375c95be9bcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 6325370493486618588, guid: ef9eb86cd85d44f468d19b8dd59535cd, type: 3}
   _characterMovement: {fileID: 1521243473}
 --- !u!1 &1892181427
 GameObject:

@@ -1,6 +1,6 @@
 ﻿namespace Tools
 {
-    public interface IPoolFactory<out T>
+    public interface IFactory<out T>
     {
         T Create();
     }

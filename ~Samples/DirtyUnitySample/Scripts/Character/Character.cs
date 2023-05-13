@@ -22,7 +22,7 @@ namespace UPR.Samples
 
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
-            _unityCharacterMovement.SetMovement(command.MoveDirection);
+            _unityCharacterMovement.SetMoveDirection(command.MoveDirection);
         }
 
         private void LateUpdate()

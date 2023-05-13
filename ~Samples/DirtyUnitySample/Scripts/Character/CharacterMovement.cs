@@ -9,7 +9,7 @@ namespace UPR.Samples
 
         private CharacterMovementMemory _memory;
 
-        private readonly SimulationSpeed _simulationSpeed;
+        public Vector3 Position => _memory.Position;
 
         private void Awake()
         {
@@ -21,9 +21,15 @@ namespace UPR.Samples
             SyncTransform();
         }
 
-        public void SetMovement(Vector3 moveDirection)
+        public void SetMoveDirection(Vector3 moveDirection)
         {
             _memory.MoveDirection = moveDirection;
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            _memory.Position = position;
+            SyncTransform();
         }
 
         public void StepForward()
