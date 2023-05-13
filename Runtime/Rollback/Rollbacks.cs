@@ -1,10 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UPR
 {
     public class Rollbacks : IRollback
     {
-        private readonly List<IRollback> _rollback = new List<IRollback>();
+        private readonly List<IRollback> _rollback;
+
+        public Rollbacks() : this(Enumerable.Empty<IRollback>())
+        {
+        }
+
+        public Rollbacks(IEnumerable<IRollback> rollbacks)
+        {
+            _rollback = new List<IRollback>(rollbacks);
+        }
 
         public void AddRollback(IRollback simulation)
         {
@@ -13,9 +23,9 @@ namespace UPR
 
         public void Rollback(int steps)
         {
-            foreach (var simulation in _rollback)
+            foreach (var rollback in _rollback)
             {
-                simulation.Rollback(steps);
+                rollback.Rollback(steps);
             }
         }
     }

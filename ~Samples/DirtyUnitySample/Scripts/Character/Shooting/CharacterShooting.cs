@@ -38,7 +38,7 @@ namespace UPR.Samples
             };
             bullet.Movement.Load(bulletMovementMemory);
             bullet.Id = bulletId;
-            UnitySimulation.EntityWorld.RegisterEntity(bullet);
+            UnitySimulation.BulletWorld.RegisterEntity(bullet);
         }
     }
 }

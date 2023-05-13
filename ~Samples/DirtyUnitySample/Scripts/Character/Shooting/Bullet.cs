@@ -20,7 +20,7 @@ namespace UPR.Samples
 
         public void LateUpdate()
         {
-            _renderer.enabled = UnitySimulation.EntityWorld.IsAlive(Id);
+            _renderer.enabled = UnitySimulation.BulletWorld.IsAlive(Id);
         }
     }
 }

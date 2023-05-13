@@ -18,9 +18,14 @@ namespace UPR.Samples
             {
                 var result = _castResults[i];
 
-                if (result.TryGetComponent(out UnityEntity unityEntity) && UnitySimulation.EntityWorld.IsAlive(unityEntity.Id))
+                if (result.TryGetComponent(out Character character) && UnitySimulation.CharacterWorld.IsAlive(character.Id))
                 {
-                    UnitySimulation.EntityWorld.KillEntity(unityEntity.Id);
+                    UnitySimulation.CharacterWorld.KillEntity(character.Id);
+                }
+
+                if (result.TryGetComponent(out Bullet bullet) && UnitySimulation.BulletWorld.IsAlive(bullet.Id))
+                {
+                    UnitySimulation.BulletWorld.KillEntity(bullet.Id);
                 }
             }
         }

@@ -1,10 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UPR
 {
     public class Simulations : ISimulation
     {
-        private readonly List<ISimulation> _simulations = new List<ISimulation>();
+        private readonly List<ISimulation> _simulations;
+
+        public Simulations() : this(Enumerable.Empty<ISimulation>())
+        {
+        }
+
+        public Simulations(IEnumerable<ISimulation> rollbacks)
+        {
+            _simulations = new List<ISimulation>(rollbacks);
+        }
 
         public void AddSimulation(ISimulation simulation)
         {

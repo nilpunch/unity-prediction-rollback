@@ -12,7 +12,7 @@ namespace UPR
         public ReversibleMemoryHistory(IMemory<TSnapshot> memory)
         {
             _memory = memory;
-            _history = new List<TSnapshot> {_memory.Save()};
+            _history = new List<TSnapshot> { _memory.Save() };
         }
 
         public int CurrentStep => _history.Count - 1;

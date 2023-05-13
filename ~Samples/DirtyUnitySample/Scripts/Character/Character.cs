@@ -27,7 +27,7 @@ namespace UPR.Samples
 
         private void LateUpdate()
         {
-            _renderer.enabled = UnitySimulation.EntityWorld.IsAlive(Id);
+            _renderer.enabled = UnitySimulation.CharacterWorld.IsAlive(Id);
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)
