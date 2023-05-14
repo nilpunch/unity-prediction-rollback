@@ -1,4 +1,4 @@
-﻿namespace Tools
+﻿namespace UPR.Samples
 {
 	public interface IVariantPool<TVariant, TItem> : IPoolReturn<TItem>
 	{

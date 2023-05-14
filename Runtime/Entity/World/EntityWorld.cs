@@ -52,9 +52,9 @@ namespace UPR
             throw new Exception("Trying to kill unknown entity. EntityID: " + entityId);
         }
 
-        public bool IsExistsInHistory(EntityId entityId)
+        public bool IsLostInHistory(EntityId entityId)
         {
-            return _entities.ContainsKey(entityId) || _entitiesToAdd.ContainsKey(entityId);
+            return !_entities.ContainsKey(entityId) && !_entitiesToAdd.ContainsKey(entityId);
         }
 
         public void SubmitRegistration()
@@ -126,8 +126,6 @@ namespace UPR
             CurrentStep += 1;
         }
 
-        private static List<EntityId> s_entitiesToRemove = new List<EntityId>();
-
         public void Rollback(int steps)
         {
             if (steps > CurrentStep)
@@ -157,27 +155,6 @@ namespace UPR
             CurrentStep -= steps;
         }
 
-        private void LoseTrackOfEntitiesAfterTick(int targetStep)
-        {
-            foreach (var entity in _entities)
-            {
-                int birthStep = _entityBirth[entity.Key];
-                if (birthStep >= targetStep)
-                {
-                    s_entitiesToRemove.Add(entity.Key);
-                }
-            }
-
-            foreach (var entityId in s_entitiesToRemove)
-            {
-                _entities.Remove(entityId);
-                _entityBirth.Remove(entityId);
-                _entityDeath.Remove(entityId);
-            }
-
-            s_entitiesToRemove.Clear();
-        }
-
         private bool IsAliveAtStep(EntityId entityId, int step)
         {
             int birthStep = _entityBirth[entityId];
@@ -187,6 +164,29 @@ namespace UPR
             }
 
             return step >= birthStep;
+        }
+
+        private readonly List<EntityId> _bufferEntitiesToRemove = new List<EntityId>();
+
+        private void LoseTrackOfEntitiesAfterTick(int targetStep)
+        {
+            foreach (var entity in _entities)
+            {
+                int birthStep = _entityBirth[entity.Key];
+                if (birthStep >= targetStep)
+                {
+                    _bufferEntitiesToRemove.Add(entity.Key);
+                }
+            }
+
+            foreach (var entityId in _bufferEntitiesToRemove)
+            {
+                _entities.Remove(entityId);
+                _entityBirth.Remove(entityId);
+                _entityDeath.Remove(entityId);
+            }
+
+            _bufferEntitiesToRemove.Clear();
         }
     }
 }

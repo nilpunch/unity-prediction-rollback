@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Tools;
 using UnityEngine;
 
 namespace UPR.Samples

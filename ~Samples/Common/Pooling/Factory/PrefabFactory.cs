@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using UnityEngine;
 
-namespace Tools
+namespace UPR.Samples
 {
     public class PrefabFactory<T> : IFactory<T> where T : Object
     {

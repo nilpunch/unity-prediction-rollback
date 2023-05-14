@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace UPR.Samples
 {
@@ -28,6 +27,7 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
+            UnitySimulation.CharacterMovement.RemoveAllCommands(UnitySimulation.CurrentTick);
             UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), _character.Id);
 
             if (input.sqrMagnitude < 0.001f)
@@ -37,6 +37,7 @@ namespace UPR.Samples
 
             if (Input.GetMouseButtonDown(0))
             {
+                UnitySimulation.CharacterShooting.RemoveAllCommands(UnitySimulation.CurrentTick);
                 UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(input.normalized), _character.Id);
             }
         }

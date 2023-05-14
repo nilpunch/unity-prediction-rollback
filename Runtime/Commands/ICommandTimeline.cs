@@ -11,6 +11,8 @@
 
     public interface ICommandTimeline<TCommand> : ICommandTimeline
     {
+        void RemoveAllDownTo(int tick);
+        void RemoveAllCommands(int tick);
         void RemoveCommand(int tick, EntityId entityId);
         void InsertCommand(int tick, in TCommand command, EntityId entityId);
     }

@@ -1,11 +1,12 @@
-using System;
-using System.Collections;
-using Tools;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace UPR.Samples
 {
+    public class EntityWorlds
+    {
+
+    }
+
     public class UnitySimulation : MonoBehaviour
     {
         [SerializeField] private int _ticksPerSecond = 30;
@@ -23,7 +24,7 @@ namespace UPR.Samples
 
         public static IFactory<Bullet> BulletsFactory { get; private set; }
 
-        public static float ElapsedTime { get; private set; }
+        public static float ElapsedTime { get; set; }
 
         public static IdGenerator IdGenerator { get; private set; }
         public static int CurrentTick => Mathf.FloorToInt(ElapsedTime * SimulationSpeed.TicksPerSecond);
@@ -61,14 +62,14 @@ namespace UPR.Samples
 
             IdGenerator = new IdGenerator(entityIndex);
 
-            var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
+            var bulletsFactory = new TimelessFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
 
             var worldReversibleHistory = new ReversibleHistories();
-            worldReversibleHistory.AddHistory(new ReversibleHistoryAdapter(IdGenerator, IdGenerator));
-            worldReversibleHistory.AddHistory(new ReversibleHistoryAdapter(charactersWorld, charactersWorld));
-            worldReversibleHistory.AddHistory(new ReversibleHistoryAdapter(bulletWorld, bulletWorld));
-            worldReversibleHistory.AddHistory(new ReversibleHistoryAdapter(deathSpikeWorld, deathSpikeWorld));
+            worldReversibleHistory.AddHistory(new ReversibleHistory(IdGenerator, IdGenerator));
+            worldReversibleHistory.AddHistory(new ReversibleHistory(charactersWorld, charactersWorld));
+            worldReversibleHistory.AddHistory(new ReversibleHistory(bulletWorld, bulletWorld));
+            worldReversibleHistory.AddHistory(new ReversibleHistory(deathSpikeWorld, deathSpikeWorld));
 
             var worldSimulation = new Simulations();
             worldSimulation.AddSimulation(IdGenerator);

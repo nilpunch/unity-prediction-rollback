@@ -1,8 +1,7 @@
 ﻿namespace UPR.Samples
 {
-    public interface ICachedEntity
+    public interface IReusableEntity
     {
         public void ChangeId(EntityId entityId);
-        public void ResetHistory();
     }
 }

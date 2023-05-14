@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace UPR
 {
@@ -30,13 +31,40 @@ namespace UPR
             }
         }
 
+        public void RemoveAllDownTo(int tick)
+        {
+            foreach (var tickCommandPair in _timeline)
+            {
+                if (tickCommandPair.Key >= tick)
+                {
+                    tickCommandPair.Value.Clear();
+                }
+            }
+        }
+
+        public void RemoveAllCommands(int tick)
+        {
+            if (_timeline.TryGetValue(tick, out var commands))
+            {
+                commands.Clear();
+
+                if (tick < EarliestCommandChange)
+                {
+                    EarliestCommandChange = tick;
+                }
+            }
+        }
+
         public void RemoveCommand(int tick, EntityId entityId)
         {
-            _timeline[tick].RemoveAll(command => command.Entity == entityId);
-
-            if (tick < EarliestCommandChange)
+            if (_timeline.TryGetValue(tick, out var commands))
             {
-                EarliestCommandChange = tick;
+                commands.RemoveAll(command => command.Entity == entityId);
+
+                if (tick < EarliestCommandChange)
+                {
+                    EarliestCommandChange = tick;
+                }
             }
         }
 

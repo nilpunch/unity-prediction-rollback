@@ -1,9 +1,8 @@
-using Tools;
 using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Bullet : UnityEntity, ICachedEntity
+    public class Bullet : UnityEntity, IReusableEntity
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private CharacterMovement _unityCharacterMovement;
@@ -20,7 +19,6 @@ namespace UPR.Samples
 
         public void LateUpdate()
         {
-            Debug.Log(LocalReversibleHistories.CurrentStep);
             _renderer.enabled = UnitySimulation.BulletsWorld.IsAlive(Id);
         }
 
@@ -33,11 +31,6 @@ namespace UPR.Samples
         public void ChangeId(EntityId entityId)
         {
             Id = entityId;
-        }
-
-        public void ResetHistory()
-        {
-            Rollback(CurrentStep);
         }
     }
 }

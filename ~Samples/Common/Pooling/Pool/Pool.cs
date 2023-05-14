@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Tools
+namespace UPR.Samples
 {
     public class Pool<TItem> : IPool<TItem>
     {
