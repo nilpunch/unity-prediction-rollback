@@ -40,6 +40,11 @@ namespace UPR
                     tickCommandPair.Value.Clear();
                 }
             }
+
+            if (tick < EarliestCommandChange)
+            {
+                EarliestCommandChange = tick;
+            }
         }
 
         public void RemoveAllCommands(int tick)

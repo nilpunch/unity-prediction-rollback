@@ -125,4 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1919176250937436988}
+  _collider: {fileID: 1919176250937436989}
   _unityCharacterMovement: {fileID: 1919176250937436867}

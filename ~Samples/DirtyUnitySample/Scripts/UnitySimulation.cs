@@ -31,6 +31,8 @@ namespace UPR.Samples
 
         private void Start()
         {
+            Physics.autoSyncTransforms = true;
+
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
 
             var charactersWorld = new EntityWorld<Character>();

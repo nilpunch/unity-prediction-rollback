@@ -10,6 +10,8 @@ namespace UPR.Samples
         [SerializeField] private CharacterMovement _unityCharacterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
+        public CharacterMovement Movement => _unityCharacterMovement;
+
         private void Start()
         {
             var characterInventoryReversibleHistory = new ReversibleMemoryHistory<CharacterMovementMemory>(_unityCharacterMovement);

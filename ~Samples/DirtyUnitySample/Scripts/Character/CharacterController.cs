@@ -5,6 +5,7 @@ namespace UPR.Samples
     public class CharacterController : MonoBehaviour
     {
         [SerializeField] private Character _character;
+        [SerializeField] private Camera _camera;
 
         private void Update()
         {
@@ -37,8 +38,9 @@ namespace UPR.Samples
 
             if (Input.GetMouseButtonDown(0))
             {
+                Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.Movement.Position, Vector3.forward).normalized;
                 UnitySimulation.CharacterShooting.RemoveAllCommands(UnitySimulation.CurrentTick);
-                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(input.normalized), _character.Id);
+                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), _character.Id);
             }
         }
     }
