@@ -6,28 +6,31 @@ namespace UPR.Samples
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Collider _collider;
-        [SerializeField] private CharacterMovement _unityCharacterMovement;
-
-        public CharacterMovement Movement => _unityCharacterMovement;
+        [SerializeField] private EntityTransform _entityTransform;
+        [SerializeField] private CharacterMovement _characterMovement;
 
         private void Awake()
         {
-            var characterInventoryReversibleHistory = new ReversibleMemoryHistory<CharacterMovementMemory>(_unityCharacterMovement);
+            var transformReversibleHistory = new ReversibleMemoryHistory<EntityTransform.Memory>(_entityTransform);
+            LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
-            LocalSimulations.AddSimulation(_unityCharacterMovement);
-            LocalReversibleHistories.AddHistory(characterInventoryReversibleHistory);
+            var movementReversibleHistory = new ReversibleMemoryHistory<CharacterMovement.Memory>(_characterMovement);
+            LocalReversibleHistories.AddHistory(movementReversibleHistory);
+
+            LocalSimulations.AddSimulation(_characterMovement);
         }
 
         public void LateUpdate()
         {
             _renderer.enabled = UnitySimulation.BulletsWorld.IsAlive(Id);
-            _collider.enabled = UnitySimulation.BulletsWorld.IsAlive(Id);
+            // _collider.enabled = UnitySimulation.BulletsWorld.IsAlive(Id);
         }
 
         public void Launch(Vector3 position, Vector3 direction)
         {
-            Movement.SetPosition(position);
-            Movement.SetMoveDirection(direction);
+            _entityTransform.Position = position;
+            _characterMovement.SetMoveDirection(direction);
+            // _collider.enabled = true;
         }
 
         public void ChangeId(EntityId entityId)

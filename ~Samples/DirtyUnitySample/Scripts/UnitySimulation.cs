@@ -19,7 +19,7 @@ namespace UPR.Samples
         public static ICommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
 
         public static IEntityWorld<Character> CharacterWorld { get; private set; }
-        public static IEntityWorld<DeathSpike> DeathSpikeWorld { get; private set; }
+        public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
         public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
 
         public static IFactory<Bullet> BulletsFactory { get; private set; }
@@ -39,7 +39,7 @@ namespace UPR.Samples
             CharacterWorld = charactersWorld;
             var bulletWorld = new EntityWorld<Bullet>();
             BulletsWorld = bulletWorld;
-            var deathSpikeWorld = new EntityWorld<DeathSpike>();
+            var deathSpikeWorld = new EntityWorld<Enemy>();
             DeathSpikeWorld = deathSpikeWorld;
 
             int entityIndex = 0;
@@ -53,7 +53,7 @@ namespace UPR.Samples
                     case Character character:
                         CharacterWorld.RegisterEntityAtStep(-1, character);
                         break;
-                    case DeathSpike deathSpike:
+                    case Enemy deathSpike:
                         DeathSpikeWorld.RegisterEntityAtStep(-1, deathSpike);
                         break;
                 }

@@ -1,23 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace UPR
 {
     public class Rollbacks : IRollback
     {
-        private readonly List<IRollback> _rollback;
-
-        public Rollbacks() : this(Enumerable.Empty<IRollback>())
-        {
-        }
-
-        public Rollbacks(IEnumerable<IRollback> rollbacks)
-        {
-            _rollback = new List<IRollback>(rollbacks);
-        }
+        private readonly List<IRollback> _rollback = new List<IRollback>();
 
         public void AddRollback(IRollback simulation)
         {
+            if (simulation == null)
+                throw new ArgumentNullException(nameof(simulation));
+
             _rollback.Add(simulation);
         }
 

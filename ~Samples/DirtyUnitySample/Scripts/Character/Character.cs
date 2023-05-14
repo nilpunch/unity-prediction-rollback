@@ -7,23 +7,26 @@ namespace UPR.Samples
         ICommandTarget<CharacterShootCommand>
     {
         [SerializeField] private Renderer _renderer;
-        [SerializeField] private CharacterMovement _unityCharacterMovement;
+        [SerializeField] private EntityTransform _entityTransform;
+        [SerializeField] private CharacterMovement _characterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
-        public CharacterMovement Movement => _unityCharacterMovement;
+        public EntityTransform EntityTransform => _entityTransform;
 
         private void Start()
         {
-            var characterInventoryReversibleHistory = new ReversibleMemoryHistory<CharacterMovementMemory>(_unityCharacterMovement);
+            var transformReversibleHistory = new ReversibleMemoryHistory<EntityTransform.Memory>(_entityTransform);
+            LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
-            LocalSimulations.AddSimulation(_unityCharacterMovement);
+            var movementReversibleHistory = new ReversibleMemoryHistory<CharacterMovement.Memory>(_characterMovement);
+            LocalReversibleHistories.AddHistory(movementReversibleHistory);
 
-            LocalReversibleHistories.AddHistory(characterInventoryReversibleHistory);
+            LocalSimulations.AddSimulation(_characterMovement);
         }
 
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
-            _unityCharacterMovement.SetMoveDirection(command.MoveDirection);
+            _characterMovement.SetMoveDirection(command.MoveDirection);
         }
 
         private void LateUpdate()

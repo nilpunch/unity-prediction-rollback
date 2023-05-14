@@ -22,7 +22,7 @@
             return _memory;
         }
 
-        public void Load(in IdGeneratorMemory memory)
+        public void Load(IdGeneratorMemory memory)
         {
             _memory = memory;
         }

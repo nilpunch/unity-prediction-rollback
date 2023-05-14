@@ -2,7 +2,7 @@
 
 namespace UPR.Samples
 {
-    public class DeathRaycast : MonoBehaviour, ISimulation
+    public class DeathHit : MonoBehaviour, ISimulation
     {
         [SerializeField] private Vector3 _dimensions;
 
@@ -11,8 +11,6 @@ namespace UPR.Samples
         public void StepForward()
         {
             int overlaps = Physics.OverlapBoxNonAlloc(transform.position, _dimensions / 2f, _castResults);
-
-            Debug.Log(overlaps);
 
             for (int i = 0; i < overlaps; i++)
             {

@@ -21,7 +21,7 @@
             return _memory;
         }
 
-        public void Load(in SimpleMemory memory)
+        public void Load(SimpleMemory memory)
         {
             _memory = memory;
         }

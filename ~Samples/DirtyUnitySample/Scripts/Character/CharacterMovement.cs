@@ -2,55 +2,36 @@
 
 namespace UPR.Samples
 {
-    public class CharacterMovement : MonoBehaviour, ISimulation, IMemory<CharacterMovementMemory>
+    public class CharacterMovement : MonoBehaviour, ISimulation, IMemory<CharacterMovement.Memory>
     {
+        public struct Memory
+        {
+            public Vector3 MoveDirection { get; set; }
+        }
+
+        [SerializeField] private EntityTransform _entityTransform;
         [SerializeField] private float _speed = 5f;
 
-        private CharacterMovementMemory _memory;
-
-        public Vector3 Position => _memory.Position;
-
-        private void Awake()
-        {
-            _memory.Position = transform.position;
-        }
-
-        private void LateUpdate()
-        {
-            SyncTransform();
-        }
+        private Memory _memory;
 
         public void SetMoveDirection(Vector3 moveDirection)
         {
             _memory.MoveDirection = moveDirection;
         }
 
-        public void SetPosition(Vector3 position)
-        {
-            _memory.Position = position;
-            SyncTransform();
-        }
-
         public void StepForward()
         {
-            _memory.Position += _memory.MoveDirection * (UnitySimulation.SimulationSpeed.SecondsPerTick * _speed);
-            SyncTransform();
+            _entityTransform.Position += _memory.MoveDirection * (UnitySimulation.SimulationSpeed.SecondsPerTick * _speed);
         }
 
-        public CharacterMovementMemory Save()
+        public Memory Save()
         {
             return _memory;
         }
 
-        public void Load(in CharacterMovementMemory memory)
+        public void Load(Memory memory)
         {
             _memory = memory;
-            SyncTransform();
-        }
-
-        private void SyncTransform()
-        {
-            transform.position = _memory.Position;
         }
     }
 }

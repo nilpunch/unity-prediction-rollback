@@ -38,7 +38,7 @@ namespace UPR.Samples
 
             if (Input.GetMouseButtonDown(0))
             {
-                Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.Movement.Position, Vector3.forward).normalized;
+                Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.EntityTransform.Position, Vector3.forward).normalized;
                 UnitySimulation.CharacterShooting.RemoveAllCommands(UnitySimulation.CurrentTick);
                 UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), _character.Id);
             }

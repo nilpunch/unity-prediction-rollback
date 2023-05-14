@@ -5,6 +5,7 @@ namespace UPR.Samples
     public abstract class UnityEntity : MonoBehaviour, IEntity
     {
         protected readonly Simulations LocalSimulations = new Simulations();
+        protected readonly Rollbacks LocalRollbacks = new Rollbacks();
         protected readonly ReversibleHistories LocalReversibleHistories = new ReversibleHistories();
 
         public EntityId Id { get; set; }
@@ -24,6 +25,7 @@ namespace UPR.Samples
         public void Rollback(int steps)
         {
             LocalReversibleHistories.Rollback(steps);
+            LocalRollbacks.Rollback(steps);
         }
     }
 }

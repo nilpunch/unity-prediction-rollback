@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73de4225355a4a7283eeda06642d0905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathRaycast: {fileID: 732317330}
+  _deathHit: {fileID: 732317330}
 --- !u!23 &732317333
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -952,11 +952,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521243472}
-  - component: {fileID: 1521243471}
   - component: {fileID: 1521243470}
+  - component: {fileID: 1521243471}
   - component: {fileID: 1521243473}
   - component: {fileID: 1521243475}
   - component: {fileID: 1521243476}
+  - component: {fileID: 1521243477}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -991,7 +992,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1483905964}
-  _unityCharacterMovement: {fileID: 1521243473}
+  _entityTransform: {fileID: 1521243477}
+  _characterMovement: {fileID: 1521243473}
   _characterShooting: {fileID: 1521243476}
 --- !u!4 &1521243472
 Transform:
@@ -1021,6 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2520bc006c472b96cdcb11f118da0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entityTransform: {fileID: 1521243477}
   _speed: 5
 --- !u!65 &1521243475
 BoxCollider:
@@ -1047,7 +1050,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44543b235dc43888a9375c95be9bcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterMovement: {fileID: 1521243473}
+  _entityTransform: {fileID: 1521243477}
+--- !u!114 &1521243477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521243469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e716f1bfa4a4d62af44d927df0403f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1892181427
 GameObject:
   m_ObjectHideFlags: 0

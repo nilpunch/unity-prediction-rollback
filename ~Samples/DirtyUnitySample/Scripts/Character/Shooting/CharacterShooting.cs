@@ -4,12 +4,12 @@ namespace UPR.Samples
 {
     public class CharacterShooting : MonoBehaviour
     {
-        [SerializeField] private CharacterMovement _characterMovement;
+        [SerializeField] private EntityTransform _entityTransform;
 
         public void Shoot(Vector3 direction)
         {
             var bullet = UnitySimulation.BulletsFactory.Create();
-            bullet.Launch(_characterMovement.Position, direction);
+            bullet.Launch(_entityTransform.Position, direction);
         }
     }
 }
