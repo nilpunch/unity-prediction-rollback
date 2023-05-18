@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public abstract class UnityEntity : MonoBehaviour, IEntity
+    public abstract class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
     {
         private int _deathStep = int.MaxValue;
         private int _currentStep;
 
-        public EntityId Id { get; set; }
+        public EntityId Id { get; private set; }
 
         public bool IsAlive => _currentStep >= 0 && _currentStep < _deathStep;
         public bool IsVolatile => _currentStep <= 0;
@@ -21,11 +21,17 @@ namespace UPR.Samples
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
 
-        public void ResetEntity()
+        public void ResetLife(EntityId newId)
         {
+            Id = newId;
             _currentStep = 0;
-            _deathStep = int.MaxValue;
             LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);
+
+            if (_deathStep != int.MaxValue)
+            {
+                _deathStep = int.MaxValue;
+                OnResurrected();
+            }
         }
 
         public void Kill()

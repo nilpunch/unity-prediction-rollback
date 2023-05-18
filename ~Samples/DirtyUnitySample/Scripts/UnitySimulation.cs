@@ -40,7 +40,7 @@ namespace UPR.Samples
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
             {
-                unityEntity.Id = new EntityId(entityIndex);
+                unityEntity.ResetLife(new EntityId(entityIndex));
                 entityIndex += 1;
 
                 switch (unityEntity)

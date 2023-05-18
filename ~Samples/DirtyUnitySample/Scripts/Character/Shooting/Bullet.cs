@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Bullet : UnityEntity
+    public class Bullet : UnityEntity, IReusableEntity
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Collider _collider;

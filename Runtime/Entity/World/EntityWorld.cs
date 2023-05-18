@@ -6,35 +6,22 @@ namespace UPR
 {
     public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
     {
-        private readonly Dictionary<EntityId, TEntity> _entities = new Dictionary<EntityId, TEntity>();
-        private readonly Dictionary<EntityId, TEntity> _entitiesToAddLater = new Dictionary<EntityId, TEntity>();
-
-        private bool _isIteratingOverEntities;
+        private readonly List<TEntity> _entities = new List<TEntity>();
+        private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
 
         public int StepsSaved { get; private set; }
 
         public void RegisterEntity(TEntity entity)
         {
-            if (_isIteratingOverEntities)
-            {
-                _entitiesToAddLater.Add(entity.Id, entity);
-            }
-            else
-            {
-                _entities.Add(entity.Id, entity);
-            }
+            _entities.Add(entity);
+            _entitiesById.Add(entity.Id, entity);
         }
 
         public bool IsAlive(EntityId entityId)
         {
-            if (_entities.ContainsKey(entityId))
+            if (_entitiesById.ContainsKey(entityId))
             {
-                return _entities[entityId].IsAlive;
-            }
-
-            if (_entitiesToAddLater.ContainsKey(entityId))
-            {
-                return _entitiesToAddLater[entityId].IsAlive;
+                return _entitiesById[entityId].IsAlive;
             }
 
             return false;
@@ -42,12 +29,7 @@ namespace UPR
 
         public TEntity FindAliveEntity(EntityId entityId)
         {
-            if (_entities.TryGetValue(entityId, out var entity) && entity.IsAlive)
-            {
-                return entity;
-            }
-
-            if (_entitiesToAddLater.TryGetValue(entityId, out entity) && entity.IsAlive)
+            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.IsAlive)
             {
                 return entity;
             }
@@ -58,26 +40,15 @@ namespace UPR
 
         public void StepForward()
         {
-            _isIteratingOverEntities = true;
-            foreach (var entity in _entities.Values)
+            for (int i = 0; i < _entities.Count; i++)
             {
-                entity.StepForward();
+                _entities[i].StepForward();
             }
-            _isIteratingOverEntities = false;
-
-            foreach (var entity in _entitiesToAddLater)
-            {
-                if (entity.Value.IsAlive)
-                {
-                    _entities.Add(entity.Key, entity.Value);
-                }
-            }
-            _entitiesToAddLater.Clear();
         }
 
         public void SaveStep()
         {
-            foreach (var entity in _entities.Values)
+            foreach (var entity in _entities)
             {
                 entity.SaveStep();
             }
@@ -90,34 +61,27 @@ namespace UPR
             if (steps > StepsSaved)
                 throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
 
-            foreach (var entity in _entities.Values)
+            foreach (var entity in _entities)
             {
                 entity.Rollback(steps);
             }
 
-            LoseTrackOfVolatileEntities();
-
             StepsSaved -= steps;
-        }
 
-        private readonly List<EntityId> _bufferEntitiesToRemove = new List<EntityId>();
+            LoseTrackOfVolatileEntities();
+        }
 
         private void LoseTrackOfVolatileEntities()
         {
-            foreach (var entity in _entities)
+            for (int i = _entities.Count - 1; i >= 0; i--)
             {
-                if (entity.Value.IsVolatile)
+                var entity = _entities[i];
+                if (entity.IsVolatile)
                 {
-                    _bufferEntitiesToRemove.Add(entity.Key);
+                    _entities.RemoveAt(i);
+                    _entitiesById.Remove(entity.Id);
                 }
             }
-
-            foreach (var entityId in _bufferEntitiesToRemove)
-            {
-                _entities.Remove(entityId);
-            }
-
-            _bufferEntitiesToRemove.Clear();
         }
     }
 }
