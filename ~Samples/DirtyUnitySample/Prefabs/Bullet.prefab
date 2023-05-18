@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityTransform: {fileID: 2814053551434500880}
-  _speed: 10
+  _speed: 20
 --- !u!114 &6325370493486618588
 MonoBehaviour:
   m_ObjectHideFlags: 0

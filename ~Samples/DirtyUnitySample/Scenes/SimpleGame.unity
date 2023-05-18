@@ -1024,7 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityTransform: {fileID: 1521243477}
-  _speed: 5
+  _speed: 10
 --- !u!65 &1521243475
 BoxCollider:
   m_ObjectHideFlags: 0

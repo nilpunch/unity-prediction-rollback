@@ -5,13 +5,13 @@ namespace UPR.Samples
 {
     public abstract class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
     {
-        private int _deathStep = int.MaxValue;
-        private int _currentStep;
+        private readonly Lifetime _lifetime = new Lifetime();
 
         public EntityId Id { get; private set; }
 
-        public bool IsAlive => _currentStep >= 0 && _currentStep < _deathStep;
-        public bool IsVolatile => _currentStep <= 0;
+        public bool IsAlive => _lifetime.IsAlive;
+
+        public bool IsVolatile => _lifetime.IsVolatile;
 
         public int StepsSaved => LocalReversibleHistories.StepsSaved;
 
@@ -24,23 +24,19 @@ namespace UPR.Samples
         public void ResetLife(EntityId newId)
         {
             Id = newId;
-            _currentStep = 0;
             LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);
 
-            if (_deathStep != int.MaxValue)
+            bool wasDead = !_lifetime.IsAlive;
+            _lifetime.Reset();
+            if (wasDead)
             {
-                _deathStep = int.MaxValue;
                 OnResurrected();
             }
         }
 
         public void Kill()
         {
-            if (!IsAlive)
-                throw new Exception("What's dead can't be killed.");
-
-            _deathStep = StepsSaved;
-
+            _lifetime.Kill();
             OnKilled();
         }
 
@@ -61,29 +57,19 @@ namespace UPR.Samples
                 LocalReversibleHistories.SaveStep();
             }
 
-            _currentStep += 1;
+            _lifetime.SaveStep();
         }
 
         public void Rollback(int steps)
         {
-            if (!IsAlive)
-            {
-                int howLongWeAreDead = _currentStep - _deathStep;
-                int needToRollback = steps - howLongWeAreDead;
-                int canRollbackSteps = Mathf.Max(0, Mathf.Min(needToRollback, LocalReversibleHistories.StepsSaved));
-                LocalReversibleHistories.Rollback(canRollbackSteps);
-            }
-            else
-            {
-                int canRollbackSteps = Mathf.Min(steps, LocalReversibleHistories.StepsSaved);
-                LocalReversibleHistories.Rollback(canRollbackSteps);
-            }
+            int aliveStepsToRollback = _lifetime.AliveStepsToRollback(steps);
+            LocalRollbacks.Rollback(aliveStepsToRollback);
+            LocalReversibleHistories.Rollback(aliveStepsToRollback);
 
-            _currentStep -= steps;
-
-            if (_deathStep != int.MaxValue && _currentStep <= _deathStep)
+            bool wasDead = !_lifetime.IsAlive;
+            _lifetime.Rollback(steps);
+            if (wasDead && _lifetime.IsAlive)
             {
-                _deathStep = int.MaxValue;
                 OnResurrected();
             }
         }
