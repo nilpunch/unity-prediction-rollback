@@ -1,85 +1,40 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UPR
 {
     public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
     {
-        private struct EntityRegistration
-        {
-            public EntityRegistration(TEntity entity, int birthStep)
-            {
-                Entity = entity;
-                BirthStep = birthStep;
-            }
-
-            public TEntity Entity { get; }
-            public int BirthStep { get; }
-        }
-
         private readonly Dictionary<EntityId, TEntity> _entities = new Dictionary<EntityId, TEntity>();
-        private readonly Dictionary<EntityId, int> _entityDeath = new Dictionary<EntityId, int>();
-        private readonly Dictionary<EntityId, int> _entityBirth = new Dictionary<EntityId, int>();
+        private readonly Dictionary<EntityId, TEntity> _entitiesToAddLater = new Dictionary<EntityId, TEntity>();
 
-        private readonly Dictionary<EntityId, EntityRegistration> _entitiesToAdd = new Dictionary<EntityId, EntityRegistration>();
+        private bool _isIteratingOverEntities;
 
-        public int CurrentStep { get; private set; }
+        public int StepsSaved { get; private set; }
 
         public void RegisterEntity(TEntity entity)
         {
-            RegisterEntityAtStep(CurrentStep, entity);
-        }
-
-        public void RegisterEntityAtStep(int step, TEntity entity)
-        {
-            _entitiesToAdd.Add(entity.Id, new EntityRegistration(entity, step));
-        }
-
-        public void KillEntity(EntityId entityId)
-        {
-            if (_entities.ContainsKey(entityId))
+            if (_isIteratingOverEntities)
             {
-                _entityDeath.Add(entityId, CurrentStep);
-                return;
+                _entitiesToAddLater.Add(entity.Id, entity);
             }
-
-            if (_entitiesToAdd.ContainsKey(entityId))
+            else
             {
-                _entitiesToAdd.Remove(entityId);
-                return;
+                _entities.Add(entity.Id, entity);
             }
-
-            throw new Exception("Trying to kill unknown entity. EntityID: " + entityId);
-        }
-
-        public bool IsLostInHistory(EntityId entityId)
-        {
-            return !_entities.ContainsKey(entityId) && !_entitiesToAdd.ContainsKey(entityId);
-        }
-
-        public void SubmitRegistration()
-        {
-            foreach (var (entityId, registration) in _entitiesToAdd)
-            {
-                if (_entities.ContainsKey(entityId))
-                    throw new Exception("Trying to register already registered entity. EntityID: " + entityId);
-
-                _entities.Add(entityId, registration.Entity);
-                _entityBirth.Add(entityId, registration.BirthStep);
-            }
-            _entitiesToAdd.Clear();
         }
 
         public bool IsAlive(EntityId entityId)
         {
             if (_entities.ContainsKey(entityId))
             {
-                return IsAliveAtStep(entityId, CurrentStep);
+                return _entities[entityId].IsAlive;
             }
 
-            if (_entitiesToAdd.ContainsKey(entityId))
+            if (_entitiesToAddLater.ContainsKey(entityId))
             {
-                return true;
+                return _entitiesToAddLater[entityId].IsAlive;
             }
 
             return false;
@@ -87,93 +42,71 @@ namespace UPR
 
         public TEntity FindAliveEntity(EntityId entityId)
         {
-            if (_entities.TryGetValue(entityId, out var entity) && IsAlive(entityId))
+            if (_entities.TryGetValue(entityId, out var entity) && entity.IsAlive)
             {
                 return entity;
             }
 
-            if (_entitiesToAdd.TryGetValue(entityId, out var registration))
+            if (_entitiesToAddLater.TryGetValue(entityId, out entity) && entity.IsAlive)
             {
-                return registration.Entity;
+                return entity;
             }
 
             return default;
         }
 
+
         public void StepForward()
         {
+            _isIteratingOverEntities = true;
             foreach (var entity in _entities.Values)
             {
-                if (IsAlive(entity.Id))
+                entity.StepForward();
+            }
+            _isIteratingOverEntities = false;
+
+            foreach (var entity in _entitiesToAddLater)
+            {
+                if (entity.Value.IsAlive)
                 {
-                    entity.StepForward();
+                    _entities.Add(entity.Key, entity.Value);
                 }
             }
+            _entitiesToAddLater.Clear();
         }
 
         public void SaveStep()
         {
-            SubmitRegistration();
-
             foreach (var entity in _entities.Values)
             {
-                if (IsAlive(entity.Id))
-                {
-                    entity.SaveStep();
-                }
+                entity.SaveStep();
             }
 
-            CurrentStep += 1;
+            StepsSaved += 1;
         }
 
         public void Rollback(int steps)
         {
-            if (steps > CurrentStep)
-                throw new Exception($"Can't rollback that far. {nameof(CurrentStep)}: {CurrentStep}, Rollbacking: {steps}.");
+            if (steps > StepsSaved)
+                throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
 
-            var targetTick = CurrentStep - steps;
-
-            LoseTrackOfEntitiesAfterTick(targetTick);
-
-            foreach (var pair in _entities)
+            foreach (var entity in _entities.Values)
             {
-                var entityId = pair.Key;
-                var entity = pair.Value;
-
-                if (IsAliveAtStep(entityId, targetTick) && !IsAliveAtStep(entityId, CurrentStep)) // Currently dead, but was alive
-                {
-                    int howLongEntityDead = CurrentStep - _entityDeath[entityId];
-                    entity.Rollback(steps - howLongEntityDead);
-                    _entityDeath.Remove(entityId);
-                }
-                else if (IsAliveAtStep(entityId, targetTick)) // Was alive and currently alive
-                {
-                    entity.Rollback(steps);
-                }
+                entity.Rollback(steps);
             }
 
-            CurrentStep -= steps;
-        }
+            LoseTrackOfVolatileEntities();
 
-        private bool IsAliveAtStep(EntityId entityId, int step)
-        {
-            int birthStep = _entityBirth[entityId];
-            if (_entityDeath.TryGetValue(entityId, out int deathStep))
-            {
-                return step >= birthStep && step < deathStep;
-            }
-
-            return step >= birthStep;
+            StepsSaved -= steps;
         }
 
         private readonly List<EntityId> _bufferEntitiesToRemove = new List<EntityId>();
 
-        private void LoseTrackOfEntitiesAfterTick(int targetStep)
+        private void LoseTrackOfVolatileEntities()
         {
             foreach (var entity in _entities)
             {
-                int birthStep = _entityBirth[entity.Key];
-                if (birthStep >= targetStep)
+                if (entity.Value.IsVolatile)
                 {
                     _bufferEntitiesToRemove.Add(entity.Key);
                 }
@@ -182,8 +115,6 @@ namespace UPR
             foreach (var entityId in _bufferEntitiesToRemove)
             {
                 _entities.Remove(entityId);
-                _entityBirth.Remove(entityId);
-                _entityDeath.Remove(entityId);
             }
 
             _bufferEntitiesToRemove.Clear();

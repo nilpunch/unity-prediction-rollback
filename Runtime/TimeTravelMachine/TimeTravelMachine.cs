@@ -30,11 +30,11 @@ namespace UPR
 
             int earliestCommandChange = EarliestCommandChange();
             int earliestTick = Math.Min(targetTick, earliestCommandChange);
-            int stepsToRollback = _worldHistory.CurrentStep - earliestTick;
+            int stepsToRollback = _worldHistory.StepsSaved - earliestTick;
 
             _worldRollback.Rollback(stepsToRollback);
 
-            for (int currentTick = _worldHistory.CurrentStep; currentTick <= targetTick; currentTick++)
+            for (int currentTick = _worldHistory.StepsSaved; currentTick <= targetTick; currentTick++)
             {
                 foreach (ICommandTimeline commandTimeline in _commandTimelines)
                     commandTimeline.ExecuteCommands(currentTick);

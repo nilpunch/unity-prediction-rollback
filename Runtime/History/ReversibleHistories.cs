@@ -7,12 +7,12 @@ namespace UPR
     {
         private readonly List<IReversibleHistory> _histories = new List<IReversibleHistory>();
 
-        public int CurrentStep { get; private set; }
+        public int StepsSaved { get; private set; }
 
         public void AddHistory(IReversibleHistory history)
         {
-            if (history.CurrentStep != CurrentStep)
-                throw new Exception($"Can't add history: {nameof(CurrentStep)}'s are not synchronised. Current: " + CurrentStep + ", Added: " + history.CurrentStep);
+            if (history.StepsSaved != StepsSaved)
+                throw new Exception($"Can't add history: {nameof(StepsSaved)}'s are not synchronised. Current: " + StepsSaved + ", Added: " + history.StepsSaved);
 
             _histories.Add(history);
         }
@@ -24,7 +24,7 @@ namespace UPR
                 history.SaveStep();
             }
 
-            CurrentStep += 1;
+            StepsSaved += 1;
         }
 
         public void Rollback(int steps)
@@ -34,7 +34,7 @@ namespace UPR
                 history.Rollback(steps);
             }
 
-            CurrentStep -= steps;
+            StepsSaved -= steps;
         }
     }
 }

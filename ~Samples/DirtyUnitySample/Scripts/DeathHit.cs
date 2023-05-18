@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace UPR.Samples
 {
@@ -16,15 +17,14 @@ namespace UPR.Samples
             {
                 var result = _castResults[i];
 
-                if (result.TryGetComponent(out Character character) && UnitySimulation.CharacterWorld.IsAlive(character.Id))
+                if (result.TryGetComponent(out Character character) && character.IsAlive)
                 {
-                    UnitySimulation.CharacterWorld.KillEntity(character.Id);
-                    continue;
+                    character.Kill();
                 }
 
-                if (result.TryGetComponent(out Bullet bullet) && UnitySimulation.BulletsWorld.IsAlive(bullet.Id))
+                if (result.TryGetComponent(out Bullet bullet) && bullet.IsAlive)
                 {
-                    UnitySimulation.BulletsWorld.KillEntity(bullet.Id);
+                    bullet.Kill();
                 }
             }
         }

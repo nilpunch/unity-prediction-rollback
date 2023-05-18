@@ -5,7 +5,7 @@ namespace UPR.Samples
     /// <summary>
     /// Use this to create entities at any time;
     /// </summary>
-    public class TimelessFactory<TEntity> : IFactory<TEntity>, ISimulation where TEntity : IEntity, IReusableEntity
+    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback where TEntity : UnityEntity
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
         private readonly IPool<TEntity> _pool;
@@ -13,7 +13,7 @@ namespace UPR.Samples
 
         private readonly Dictionary<EntityId, TEntity> _presentEntities = new Dictionary<EntityId, TEntity>();
 
-        public TimelessFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> pool)
+        public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> pool)
         {
             _entityWorld = entityWorld;
             _idGenerator = idGenerator;
@@ -28,41 +28,39 @@ namespace UPR.Samples
             if (_presentEntities.ContainsKey(entityId))
             {
                 entity = _presentEntities[entityId];
-                entity.ResetHistory();
             }
             else
             {
                 entity = _pool.Get();
-                entity.ChangeId(entityId);
                 _presentEntities.Add(entityId, entity);
             }
+
+            entity.ResetEntity();
+            entity.Id = entityId;
 
             _entityWorld.RegisterEntity(entity);
             return entity;
         }
 
-        public void StepForward()
+        public void Rollback(int steps)
         {
-            RepurposeLostEntities();
+            RepurposeVolatileEntities();
         }
 
         private readonly List<EntityId> _repurposeEntitiesBuffer = new List<EntityId>();
 
-        private void RepurposeLostEntities()
+        private void RepurposeVolatileEntities()
         {
             foreach (var entity in _presentEntities)
             {
-                if (_entityWorld.IsLostInHistory(entity.Key))
+                if (entity.Value.IsVolatile)
                 {
                     _repurposeEntitiesBuffer.Add(entity.Key);
                 }
             }
             foreach (var entityId in _repurposeEntitiesBuffer)
             {
-                var entity = _presentEntities[entityId];
-                entity.ResetHistory();
-                entity.ChangeId(new EntityId(-1));
-                _pool.Return(entity);
+                _pool.Return(_presentEntities[entityId]);
                 _presentEntities.Remove(entityId);
             }
             _repurposeEntitiesBuffer.Clear();

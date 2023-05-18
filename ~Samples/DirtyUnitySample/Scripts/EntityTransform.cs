@@ -32,7 +32,7 @@ namespace UPR.Samples
             }
         }
 
-        private void Awake()
+        public void Init()
         {
             _memory.Position = transform.position;
             _memory.Rotation = transform.rotation;

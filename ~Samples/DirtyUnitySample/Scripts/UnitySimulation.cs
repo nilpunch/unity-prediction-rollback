@@ -2,11 +2,6 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class EntityWorlds
-    {
-
-    }
-
     public class UnitySimulation : MonoBehaviour
     {
         [SerializeField] private int _ticksPerSecond = 30;
@@ -51,20 +46,20 @@ namespace UPR.Samples
                 switch (unityEntity)
                 {
                     case Character character:
-                        CharacterWorld.RegisterEntityAtStep(-1, character);
+                        CharacterWorld.RegisterEntity(character);
                         break;
                     case Enemy deathSpike:
-                        DeathSpikeWorld.RegisterEntityAtStep(-1, deathSpike);
+                        DeathSpikeWorld.RegisterEntity(deathSpike);
                         break;
                 }
-            }
 
-            CharacterWorld.SubmitRegistration();
-            DeathSpikeWorld.SubmitRegistration();
+                // Made entity persistent
+                unityEntity.SaveStep();
+            }
 
             IdGenerator = new IdGenerator(entityIndex);
 
-            var bulletsFactory = new TimelessFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
+            var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
 
             var worldReversibleHistory = new ReversibleHistories();
@@ -73,14 +68,17 @@ namespace UPR.Samples
             worldReversibleHistory.AddHistory(new ReversibleHistory(bulletWorld, bulletWorld));
             worldReversibleHistory.AddHistory(new ReversibleHistory(deathSpikeWorld, deathSpikeWorld));
 
+            var worldRollbacks = new Rollbacks();
+            worldRollbacks.AddRollback(worldReversibleHistory);
+            worldRollbacks.AddRollback(bulletsFactory);
+
             var worldSimulation = new Simulations();
             worldSimulation.AddSimulation(IdGenerator);
             worldSimulation.AddSimulation(charactersWorld);
             worldSimulation.AddSimulation(bulletWorld);
             worldSimulation.AddSimulation(deathSpikeWorld);
-            worldSimulation.AddSimulation(bulletsFactory);
 
-            TimeTravelMachine = new TimeTravelMachine(worldReversibleHistory, worldSimulation, worldReversibleHistory);
+            TimeTravelMachine = new TimeTravelMachine(worldReversibleHistory, worldSimulation, worldRollbacks);
 
             CharacterMovement = new CommandTimeline<CharacterMoveCommand>(
                 new CommandRouter<CharacterMoveCommand>(CharacterWorld));

@@ -35,5 +35,10 @@ namespace UPR
         {
             return obj is EntityId other && Equals(other);
         }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

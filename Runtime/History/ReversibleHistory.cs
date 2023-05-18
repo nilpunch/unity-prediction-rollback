@@ -11,7 +11,7 @@
             _rollback = rollback;
         }
 
-        public int CurrentStep => _history.CurrentStep;
+        public int StepsSaved => _history.StepsSaved;
 
         public void SaveStep()
         {

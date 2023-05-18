@@ -15,7 +15,7 @@ namespace UPR
             _history = new List<TSnapshot> { _memory.Save() };
         }
 
-        public int CurrentStep => _history.Count - 1;
+        public int StepsSaved => _history.Count - 1;
 
         public void SaveStep()
         {
@@ -24,10 +24,10 @@ namespace UPR
 
         public void Rollback(int steps)
         {
-            if (steps > CurrentStep)
-                throw new Exception($"Can't rollback that far. {nameof(CurrentStep)}: {CurrentStep}, Rollbacking: {steps}.");
+            if (steps > StepsSaved)
+                throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
 
-            if (CurrentStep != 0)
+            if (StepsSaved != 0)
                 _history.RemoveRange(_history.Count - steps, steps);
 
             _memory.Load(_history.Last());

@@ -13,8 +13,10 @@ namespace UPR.Samples
 
         public EntityTransform EntityTransform => _entityTransform;
 
-        private void Start()
+        private void Awake()
         {
+            _entityTransform.Init();
+
             var transformReversibleHistory = new ReversibleMemoryHistory<EntityTransform.Memory>(_entityTransform);
             LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
@@ -31,7 +33,7 @@ namespace UPR.Samples
 
         private void LateUpdate()
         {
-            _renderer.enabled = UnitySimulation.CharacterWorld.IsAlive(Id);
+            _renderer.enabled = IsAlive;
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)
