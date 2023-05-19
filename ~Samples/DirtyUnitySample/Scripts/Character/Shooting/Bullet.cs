@@ -25,26 +25,30 @@ namespace UPR.Samples
             LocalSimulations.AddSimulation(_characterMovement);
         }
 
-        private void LateUpdate()
-        {
-            _renderer.enabled = IsAlive;
-        }
-
         public void Launch(Vector3 position, Vector3 direction)
         {
             _entityTransform.Position = position;
             _characterMovement.SetMoveDirection(direction);
             _collider.enabled = true;
+            _renderer.enabled = true;
         }
 
         protected override void OnKilled()
         {
             _collider.enabled = false;
+            _renderer.enabled = false;
         }
 
-        protected override void OnResurrected()
+        protected override void OnBeginExists()
+        {
+            _collider.enabled = false;
+            _renderer.enabled = false;
+        }
+
+        protected override void OnAlive()
         {
             _collider.enabled = true;
+            _renderer.enabled = true;
         }
     }
 }

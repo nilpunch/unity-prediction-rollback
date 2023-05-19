@@ -7,7 +7,7 @@ namespace UPR.Samples
     {
         private readonly Lifetime _lifetime = new Lifetime();
 
-        public int Age => _lifetime.Age;
+        public int Step => _lifetime.TotalSteps;
 
         public bool IsAlive => _lifetime.IsAlive;
 
@@ -20,13 +20,8 @@ namespace UPR.Samples
         public void ResetLife()
         {
             LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);
-
-            bool wasDead = !_lifetime.IsAlive;
             _lifetime.Reset();
-            if (wasDead)
-            {
-                OnResurrected();
-            }
+            OnBeginExists();
         }
 
         public void Kill()
@@ -34,8 +29,6 @@ namespace UPR.Samples
             _lifetime.Kill();
             OnKilled();
         }
-
-        protected virtual void OnKilled() { }
 
         public void StepForward()
         {
@@ -52,7 +45,7 @@ namespace UPR.Samples
                 LocalReversibleHistories.SaveStep();
             }
 
-            _lifetime.SaveStep();
+            _lifetime.NextStep();
         }
 
         public void Rollback(int steps)
@@ -60,22 +53,18 @@ namespace UPR.Samples
             int aliveStepsToRollback = _lifetime.AliveStepsToRollback(steps);
             LocalRollbacks.Rollback(aliveStepsToRollback);
             LocalReversibleHistories.Rollback(aliveStepsToRollback);
-
-            bool wasAlive = _lifetime.IsAlive;
             _lifetime.Rollback(steps);
-            if (wasAlive != _lifetime.IsAlive)
-            {
-                if (_lifetime.IsAlive)
-                {
-                    OnResurrected();
-                }
-                else
-                {
-                    OnKilled();
-                }
-            }
+
+            if (Step == 0)
+                OnBeginExists();
+            else if (_lifetime.IsAlive)
+                OnAlive();
+            else
+                OnKilled();
         }
 
-        protected virtual void OnResurrected() { }
+        protected virtual void OnAlive() { }
+        protected virtual void OnKilled() { }
+        protected virtual void OnBeginExists() { }
     }
 }

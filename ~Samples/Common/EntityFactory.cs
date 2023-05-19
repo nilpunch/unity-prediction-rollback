@@ -3,7 +3,7 @@
 namespace UPR.Samples
 {
     /// <summary>
-    /// Use this to create entities at any time;
+    /// Use this to create entities at any time.
     /// </summary>
     public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback where TEntity : IEntity, IReusableEntity
     {
@@ -40,7 +40,7 @@ namespace UPR.Samples
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {
                 var entity = _createdEntities[i];
-                if (entity.Age <= 0)
+                if (entity.Step <= 0)
                 {
                     _pool.Return(entity);
                     _createdEntities.RemoveAt(i);

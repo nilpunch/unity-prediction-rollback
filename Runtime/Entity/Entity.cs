@@ -6,11 +6,9 @@ namespace UPR
     {
         private readonly Lifetime _lifetime = new Lifetime();
 
-        public int Age => _lifetime.Age;
+        public int Step => _lifetime.TotalSteps;
 
         public bool IsAlive => _lifetime.IsAlive;
-
-        public int StepsSaved => LocalReversibleHistories.StepsSaved;
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -38,7 +36,7 @@ namespace UPR
                 LocalReversibleHistories.SaveStep();
             }
 
-            _lifetime.SaveStep();
+            _lifetime.NextStep();
         }
 
         public void Rollback(int steps)

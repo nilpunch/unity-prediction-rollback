@@ -74,7 +74,7 @@ namespace UPR
             for (int i = _entities.Count - 1; i >= 0; i--)
             {
                 var entity = _entities[i];
-                if (entity.Age <= 0)
+                if (entity.Step <= 0)
                 {
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);
