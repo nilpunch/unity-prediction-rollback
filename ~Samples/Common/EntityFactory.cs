@@ -23,11 +23,10 @@ namespace UPR.Samples
         public TEntity Create()
         {
             var entityId = _idGenerator.Generate();
-
             TEntity entity = _pool.Get();
+            entity.ResetLife();
             _createdEntities.Add(entity);
-            entity.ResetLife(entityId);
-            _entityWorld.RegisterEntity(entity);
+            _entityWorld.RegisterEntity(entity, entityId);
             return entity;
         }
 

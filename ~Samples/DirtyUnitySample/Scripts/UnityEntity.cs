@@ -1,13 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UPR.Samples
 {
     public abstract class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
     {
         private readonly Lifetime _lifetime = new Lifetime();
-
-        public EntityId Id { get; private set; }
 
         public bool IsAlive => _lifetime.IsAlive;
 
@@ -21,9 +18,8 @@ namespace UPR.Samples
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
 
-        public void ResetLife(EntityId newId)
+        public void ResetLife()
         {
-            Id = newId;
             LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);
 
             bool wasDead = !_lifetime.IsAlive;

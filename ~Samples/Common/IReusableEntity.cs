@@ -2,6 +2,6 @@
 {
     public interface IReusableEntity
     {
-        void ResetLife(EntityId newId);
+        void ResetLife();
     }
 }

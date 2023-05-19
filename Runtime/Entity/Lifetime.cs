@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UPR.Samples
+namespace UPR
 {
     public class Lifetime
     {

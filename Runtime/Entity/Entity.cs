@@ -4,21 +4,11 @@ namespace UPR
 {
     public abstract class Entity : IEntity
     {
-        private int _deathStep;
-        private int _currentStep;
+        private readonly Lifetime _lifetime = new Lifetime();
 
-        protected Entity(EntityId id)
-        {
-            Id = id;
-            _deathStep = int.MaxValue;
-        }
+        public bool IsAlive => _lifetime.IsAlive;
 
-
-        public EntityId Id { get; }
-
-        public bool IsAlive => _currentStep >= 0 && _currentStep < _deathStep;
-
-        public bool IsVolatile => _currentStep <= 0;
+        public bool IsVolatile => _lifetime.IsVolatile;
 
         public int StepsSaved => LocalReversibleHistories.StepsSaved;
 
@@ -30,10 +20,7 @@ namespace UPR
 
         public void Kill()
         {
-            if (!IsAlive)
-                throw new Exception("What's dead can't be killed.");
-
-            _deathStep = StepsSaved;
+            _lifetime.Kill();
         }
 
         public void StepForward()
@@ -51,30 +38,15 @@ namespace UPR
                 LocalReversibleHistories.SaveStep();
             }
 
-            _currentStep += 1;
+            _lifetime.SaveStep();
         }
 
         public void Rollback(int steps)
         {
-            if (!IsAlive)
-            {
-                int howLongWeAreDead = _currentStep - _deathStep;
-                int needToRollback = steps - howLongWeAreDead;
-                int canRollbackSteps = Math.Min(needToRollback, LocalReversibleHistories.StepsSaved);
-                LocalReversibleHistories.Rollback(canRollbackSteps);
-            }
-            else
-            {
-                int canRollbackSteps = Math.Min(steps, LocalReversibleHistories.StepsSaved);
-                LocalReversibleHistories.Rollback(canRollbackSteps);
-            }
-
-            _currentStep -= steps;
-
-            if (_currentStep <= _deathStep)
-            {
-                _deathStep = int.MaxValue;
-            }
+            int aliveStepsToRollback = _lifetime.AliveStepsToRollback(steps);
+            LocalRollbacks.Rollback(aliveStepsToRollback);
+            LocalReversibleHistories.Rollback(aliveStepsToRollback);
+            _lifetime.Rollback(steps);
         }
     }
 }

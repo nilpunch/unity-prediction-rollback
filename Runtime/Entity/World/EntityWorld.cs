@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace UPR
 {
@@ -8,13 +7,20 @@ namespace UPR
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
+        private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
         public int StepsSaved { get; private set; }
 
-        public void RegisterEntity(TEntity entity)
+        public void RegisterEntity(TEntity entity, EntityId entityId)
         {
             _entities.Add(entity);
-            _entitiesById.Add(entity.Id, entity);
+            _entitiesById.Add(entityId, entity);
+            _idsByEntity.Add(entity, entityId);
+        }
+
+        public EntityId GetEntityId(TEntity entity)
+        {
+            return _idsByEntity[entity];
         }
 
         public bool IsAlive(EntityId entityId)
@@ -79,7 +85,8 @@ namespace UPR
                 if (entity.IsVolatile)
                 {
                     _entities.RemoveAt(i);
-                    _entitiesById.Remove(entity.Id);
+                    _entitiesById.Remove(_idsByEntity[entity]);
+                    _idsByEntity.Remove(entity);
                 }
             }
         }

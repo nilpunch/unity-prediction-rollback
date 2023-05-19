@@ -40,21 +40,22 @@ namespace UPR.Samples
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
             {
-                unityEntity.ResetLife(new EntityId(entityIndex));
-                entityIndex += 1;
+                unityEntity.ResetLife();
 
                 switch (unityEntity)
                 {
                     case Character character:
-                        CharacterWorld.RegisterEntity(character);
+                        CharacterWorld.RegisterEntity(character, new EntityId(entityIndex));
                         break;
                     case Enemy deathSpike:
-                        DeathSpikeWorld.RegisterEntity(deathSpike);
+                        DeathSpikeWorld.RegisterEntity(deathSpike, new EntityId(entityIndex));
                         break;
                 }
 
                 // Made entity persistent
                 unityEntity.SaveStep();
+
+                entityIndex += 1;
             }
 
             IdGenerator = new IdGenerator(entityIndex);

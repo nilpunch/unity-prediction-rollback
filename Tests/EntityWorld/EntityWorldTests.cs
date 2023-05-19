@@ -11,10 +11,10 @@ namespace UPR.Tests
             // Arrange
             var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
             int originalValue = 11;
-            var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
+            var testEntity = new SimpleTestEntity(originalValue);
 
             // Act
-            entitiesTimeline.RegisterEntity(testEntity);
+            entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
             entitiesTimeline.SaveStep();
             testEntity.SimpleObject.ChangeValue(22);
             entitiesTimeline.Rollback(0);
@@ -29,10 +29,10 @@ namespace UPR.Tests
             // Arrange
             var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
             int originalValue = 11;
-            var testEntity = new SimpleTestEntity(new EntityId(0), originalValue);
+            var testEntity = new SimpleTestEntity(originalValue);
 
             // Act
-            entitiesTimeline.RegisterEntity(testEntity);
+            entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
             entitiesTimeline.SaveStep();
 
             int newValue = 22;
