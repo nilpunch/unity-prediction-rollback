@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UPR.Samples
 {
@@ -6,11 +7,9 @@ namespace UPR.Samples
     {
         private readonly Lifetime _lifetime = new Lifetime();
 
+        public int Age => _lifetime.Age;
+
         public bool IsAlive => _lifetime.IsAlive;
-
-        public bool IsVolatile => _lifetime.IsVolatile;
-
-        public int StepsSaved => LocalReversibleHistories.StepsSaved;
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -62,11 +61,18 @@ namespace UPR.Samples
             LocalRollbacks.Rollback(aliveStepsToRollback);
             LocalReversibleHistories.Rollback(aliveStepsToRollback);
 
-            bool wasDead = !_lifetime.IsAlive;
+            bool wasAlive = _lifetime.IsAlive;
             _lifetime.Rollback(steps);
-            if (wasDead && _lifetime.IsAlive)
+            if (wasAlive != _lifetime.IsAlive)
             {
-                OnResurrected();
+                if (_lifetime.IsAlive)
+                {
+                    OnResurrected();
+                }
+                else
+                {
+                    OnKilled();
+                }
             }
         }
 

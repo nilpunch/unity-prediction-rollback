@@ -32,15 +32,15 @@ namespace UPR.Samples
 
         public void Rollback(int steps)
         {
-            CollectVolatileEntities();
+            ReturnVolatileEntitiesToPool();
         }
 
-        private void CollectVolatileEntities()
+        private void ReturnVolatileEntitiesToPool()
         {
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {
                 var entity = _createdEntities[i];
-                if (entity.IsVolatile)
+                if (entity.Age <= 0)
                 {
                     _pool.Return(entity);
                     _createdEntities.RemoveAt(i);

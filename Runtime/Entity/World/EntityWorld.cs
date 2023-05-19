@@ -9,8 +9,6 @@ namespace UPR
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
-        public int StepsSaved { get; private set; }
-
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {
             _entities.Add(entity);
@@ -46,6 +44,7 @@ namespace UPR
 
         public void StepForward()
         {
+            // Using for loop to be able to register new entities during simulation
             for (int i = 0; i < _entities.Count; i++)
             {
                 _entities[i].StepForward();
@@ -58,21 +57,14 @@ namespace UPR
             {
                 entity.SaveStep();
             }
-
-            StepsSaved += 1;
         }
 
         public void Rollback(int steps)
         {
-            if (steps > StepsSaved)
-                throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
-
             foreach (var entity in _entities)
             {
                 entity.Rollback(steps);
             }
-
-            StepsSaved -= steps;
 
             LoseTrackOfVolatileEntities();
         }
@@ -82,7 +74,7 @@ namespace UPR
             for (int i = _entities.Count - 1; i >= 0; i--)
             {
                 var entity = _entities[i];
-                if (entity.IsVolatile)
+                if (entity.Age <= 0)
                 {
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);

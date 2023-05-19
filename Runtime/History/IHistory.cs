@@ -5,8 +5,6 @@
     /// </summary>
     public interface IHistory
     {
-        int StepsSaved { get; }
-
         void SaveStep();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace UPR
 {
@@ -10,6 +9,8 @@ namespace UPR
         private readonly ISimulation _worldSimulation;
         private readonly IRollback _worldRollback;
         private readonly List<ICommandTimeline> _commandTimelines = new List<ICommandTimeline>();
+
+        private int _currentTick;
 
         public TimeTravelMachine(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback)
         {
@@ -30,17 +31,19 @@ namespace UPR
 
             int earliestCommandChange = EarliestCommandChange();
             int earliestTick = Math.Min(targetTick, earliestCommandChange);
-            int stepsToRollback = _worldHistory.StepsSaved - earliestTick;
+            int stepsToRollback = _currentTick - earliestTick;
 
             _worldRollback.Rollback(stepsToRollback);
+            _currentTick -= stepsToRollback;
 
-            for (int currentTick = _worldHistory.StepsSaved; currentTick <= targetTick; currentTick++)
+            while (_currentTick <= targetTick)
             {
                 foreach (ICommandTimeline commandTimeline in _commandTimelines)
-                    commandTimeline.ExecuteCommands(currentTick);
+                    commandTimeline.ExecuteCommands(_currentTick);
 
                 _worldSimulation.StepForward();
                 _worldHistory.SaveStep();
+                _currentTick += 1;
             }
 
             foreach (ICommandTimeline commandTimeline in _commandTimelines)

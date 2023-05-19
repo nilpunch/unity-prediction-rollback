@@ -6,9 +6,9 @@ namespace UPR
     {
         private readonly Lifetime _lifetime = new Lifetime();
 
-        public bool IsAlive => _lifetime.IsAlive;
+        public int Age => _lifetime.Age;
 
-        public bool IsVolatile => _lifetime.IsVolatile;
+        public bool IsAlive => _lifetime.IsAlive;
 
         public int StepsSaved => LocalReversibleHistories.StepsSaved;
 

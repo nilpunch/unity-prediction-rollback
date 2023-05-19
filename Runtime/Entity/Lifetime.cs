@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace UPR
 {
@@ -9,9 +8,9 @@ namespace UPR
         private int _currentStep;
         private int _stepsAlive;
 
-        public bool IsAlive => _currentStep >= 0 && _currentStep < _deathStep;
+        public int Age => _currentStep;
 
-        public bool IsVolatile => _currentStep <= 0;
+        public bool IsAlive => _currentStep >= 0 && _currentStep < _deathStep;
 
         public void Reset()
         {
@@ -44,12 +43,12 @@ namespace UPR
             {
                 int howLongWeAreDead = _currentStep - _deathStep;
                 int needToRollback = steps - howLongWeAreDead;
-                int canRollbackSteps = Mathf.Max(0, Mathf.Min(needToRollback, _stepsAlive));
+                int canRollbackSteps = Math.Max(0, Math.Min(needToRollback, _stepsAlive));
                 return canRollbackSteps;
             }
             else
             {
-                int canRollbackSteps = Mathf.Min(steps, _stepsAlive);
+                int canRollbackSteps = Math.Min(steps, _stepsAlive);
                 return canRollbackSteps;
             }
         }
@@ -57,9 +56,7 @@ namespace UPR
         public void Rollback(int steps)
         {
             if (steps < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(steps));
-            }
 
             int aliveStepsToRollback = AliveStepsToRollback(steps);
             _stepsAlive -= aliveStepsToRollback;

@@ -11,16 +11,18 @@
             _rollback = rollback;
         }
 
-        public int StepsSaved => _history.StepsSaved;
+        public int StepsSaved { get; set; }
 
         public void SaveStep()
         {
             _history.SaveStep();
+            StepsSaved += 1;
         }
 
         public void Rollback(int steps)
         {
             _rollback.Rollback(steps);
+            StepsSaved -= steps;
         }
     }
 }

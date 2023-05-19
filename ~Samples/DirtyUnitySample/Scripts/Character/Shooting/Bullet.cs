@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Bullet : UnityEntity, IReusableEntity
+    public class Bullet : UnityEntity
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Collider _collider;
@@ -24,9 +25,9 @@ namespace UPR.Samples
             LocalSimulations.AddSimulation(_characterMovement);
         }
 
-        public void LateUpdate()
+        private void LateUpdate()
         {
-            _renderer.enabled = IsAlive && !IsVolatile;
+            _renderer.enabled = IsAlive;
         }
 
         public void Launch(Vector3 position, Vector3 direction)
