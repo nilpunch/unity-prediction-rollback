@@ -16,10 +16,10 @@ namespace UPR.Samples
         {
             _entityTransform.Init();
 
-            var transformReversibleHistory = new ReversibleMemoryHistory<EntityTransform.Memory>(_entityTransform);
+            var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
             LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
-            var movementReversibleHistory = new ReversibleMemoryHistory<CharacterMovement.Memory>(_characterMovement);
+            var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
             LocalReversibleHistories.AddHistory(movementReversibleHistory);
 
             LocalSimulations.AddSimulation(_characterMovement);
@@ -33,19 +33,19 @@ namespace UPR.Samples
             _renderer.enabled = true;
         }
 
-        protected override void OnKilled()
+        protected override void OnDeactivate()
         {
             _collider.enabled = false;
             _renderer.enabled = false;
         }
 
-        protected override void OnBeginExists()
+        protected override void OnBeginExist()
         {
             _collider.enabled = false;
             _renderer.enabled = false;
         }
 
-        protected override void OnAlive()
+        protected override void OnActivated()
         {
             _collider.enabled = true;
             _renderer.enabled = true;

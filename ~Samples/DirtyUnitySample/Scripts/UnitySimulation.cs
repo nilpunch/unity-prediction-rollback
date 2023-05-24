@@ -40,7 +40,7 @@ namespace UPR.Samples
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
             {
-                unityEntity.ResetLife();
+                unityEntity.ResetLife(-1);
 
                 switch (unityEntity)
                 {
@@ -53,12 +53,12 @@ namespace UPR.Samples
                 }
 
                 // Made entity persistent
-                unityEntity.SaveStep();
+                unityEntity.SubmitStep();
 
                 entityIndex += 1;
             }
 
-            IdGenerator = new IdGenerator(entityIndex);
+            IdGenerator = new IdGenerator(-1, entityIndex);
 
             var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
@@ -68,13 +68,12 @@ namespace UPR.Samples
             worldReversibleHistory.AddHistory(new ReversibleHistory(charactersWorld, charactersWorld));
             worldReversibleHistory.AddHistory(new ReversibleHistory(bulletWorld, bulletWorld));
             worldReversibleHistory.AddHistory(new ReversibleHistory(deathSpikeWorld, deathSpikeWorld));
+            worldReversibleHistory.AddHistory(new ReversibleHistory(bulletsFactory, bulletsFactory));
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.AddRollback(worldReversibleHistory);
-            worldRollbacks.AddRollback(bulletsFactory);
 
             var worldSimulation = new Simulations();
-            worldSimulation.AddSimulation(IdGenerator);
             worldSimulation.AddSimulation(charactersWorld);
             worldSimulation.AddSimulation(bulletWorld);
             worldSimulation.AddSimulation(deathSpikeWorld);

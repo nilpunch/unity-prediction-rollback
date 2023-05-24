@@ -1,8 +1,8 @@
 ﻿namespace UPR.Tests
 {
-    public struct SimpleMemory
+    public struct TestObjectMemory
     {
-        public SimpleMemory(int value)
+        public TestObjectMemory(int value)
         {
             Value = value;
         }

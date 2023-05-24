@@ -1,35 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace UPR.Tests
 {
-    public class StateHistoryTests
+    public class ReversibleMemoryTests
     {
-        [Test]
-        public void SimpleObjectChangesValue()
-        {
-            // Arrange
-            int originalValue = 11;
-            var simpleObject = new SimpleObject(originalValue);
-
-            // Act
-            simpleObject.ChangeValue(0);
-
-            // Assert
-            Assert.AreNotEqual(originalValue, simpleObject.Value);
-        }
-
         [Test]
         public void RollbackWithNotFilledHistoryShouldThrow()
         {
             // Arrange
             int originalValue = 11;
-            var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
+            var simpleObject = new TestObject(originalValue);
+            var stateHistory = new MemoryHistory<TestObjectMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(0);
@@ -46,8 +28,8 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
+            var simpleObject = new TestObject(originalValue);
+            var stateHistory = new MemoryHistory<TestObjectMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(3);
@@ -62,13 +44,13 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var simpleObject = new SimpleObject(originalValue);
-            var stateHistory = new ReversibleMemoryHistory<SimpleMemory>(simpleObject);
+            var simpleObject = new TestObject(originalValue);
+            var stateHistory = new MemoryHistory<TestObjectMemory>(simpleObject);
 
             // Act
             simpleObject.ChangeValue(0);
-            stateHistory.SaveStep();
-            stateHistory.SaveStep();
+            stateHistory.SubmitStep();
+            stateHistory.SubmitStep();
             stateHistory.Rollback(2);
 
             // Assert

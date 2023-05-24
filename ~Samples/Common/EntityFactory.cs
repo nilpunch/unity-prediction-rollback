@@ -5,13 +5,15 @@ namespace UPR.Samples
     /// <summary>
     /// Use this to create entities at any time.
     /// </summary>
-    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback where TEntity : IEntity, IReusableEntity
+    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback, IHistory where TEntity : IEntity, IReusableEntity
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
         private readonly IPool<TEntity> _pool;
         private readonly IIdGenerator _idGenerator;
 
         private readonly List<TEntity> _createdEntities = new List<TEntity>();
+
+        private int _currentStep;
 
         public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> pool)
         {
@@ -24,7 +26,7 @@ namespace UPR.Samples
         {
             var entityId = _idGenerator.Generate();
             TEntity entity = _pool.Get();
-            entity.ResetLife();
+            entity.ResetLife(_currentStep);
             _createdEntities.Add(entity);
             _entityWorld.RegisterEntity(entity, entityId);
             return entity;
@@ -32,15 +34,21 @@ namespace UPR.Samples
 
         public void Rollback(int steps)
         {
-            ReturnVolatileEntitiesToPool();
+            ReturnMissingEntitiesToPool();
+            _currentStep -= steps;
         }
 
-        private void ReturnVolatileEntitiesToPool()
+        public void SubmitStep()
+        {
+            _currentStep += 1;
+        }
+
+        private void ReturnMissingEntitiesToPool()
         {
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {
                 var entity = _createdEntities[i];
-                if (entity.Step <= 0)
+                if (entity.LocalStep <= 0)
                 {
                     _pool.Return(entity);
                     _createdEntities.RemoveAt(i);

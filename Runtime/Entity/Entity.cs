@@ -4,11 +4,24 @@ namespace UPR
 {
     public abstract class Entity : IEntity
     {
-        private readonly Lifetime _lifetime = new Lifetime();
+        private readonly ChangeHistory<EntityStatus> _activityHistory = new ChangeHistory<EntityStatus>(EntityStatus.Active);
+        private readonly int _birthStep;
 
-        public int Step => _lifetime.TotalSteps;
+        protected Entity(int birthStep)
+        {
+            _birthStep = birthStep;
+        }
 
-        public bool IsAlive => _lifetime.IsAlive;
+        public EntityStatus Status
+        {
+            get
+            {
+                return _activityHistory.LastSavedValue;
+            }
+        }
+
+        public int LocalStep { get; set; }
+        public int GlobalStep => _birthStep + LocalStep;
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -16,35 +29,47 @@ namespace UPR
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
 
-        public void Kill()
+        public void Sleep()
         {
-            _lifetime.Kill();
+            if (Status != EntityStatus.Active)
+            {
+                throw new InvalidOperationException("Entity must be wake to fall asleep!");
+            }
+
+            _activityHistory.Value = EntityStatus.Inactive;
         }
 
         public void StepForward()
         {
-            if (IsAlive)
+            if (Status != EntityStatus.Active)
             {
-                LocalSimulations.StepForward();
+                throw new InvalidOperationException("Entity must be wake!");
             }
+
+            LocalSimulations.StepForward();
         }
 
-        public void SaveStep()
+        public void SubmitStep()
         {
-            if (IsAlive)
+            if (Status != EntityStatus.Active)
             {
-                LocalReversibleHistories.SaveStep();
+                throw new InvalidOperationException("Entity must be wake!");
             }
 
-            _lifetime.NextStep();
+            LocalReversibleHistories.SubmitStep();
+            _activityHistory.SubmitStep();
+
+            LocalStep += 1;
         }
 
         public void Rollback(int steps)
         {
-            int aliveStepsToRollback = _lifetime.AliveStepsToRollback(steps);
-            LocalRollbacks.Rollback(aliveStepsToRollback);
-            LocalReversibleHistories.Rollback(aliveStepsToRollback);
-            _lifetime.Rollback(steps);
+            int stepsToRollback = Math.Min(LocalReversibleHistories.StepsSaved, steps);
+            LocalRollbacks.Rollback(stepsToRollback);
+            LocalReversibleHistories.Rollback(stepsToRollback);
+            _activityHistory.Rollback(stepsToRollback);
+
+            LocalStep -= steps;
         }
     }
 }

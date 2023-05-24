@@ -10,6 +10,7 @@ namespace UPR
         public int TotalSteps { get; private set; }
 
         public bool IsAlive => TotalSteps >= 0 && TotalSteps < _deathStep;
+        public bool IsExists => TotalSteps > 0;
 
         public void Reset()
         {
@@ -57,8 +58,7 @@ namespace UPR
             if (steps < 0)
                 throw new ArgumentOutOfRangeException(nameof(steps));
 
-            int aliveStepsToRollback = AliveStepsToRollback(steps);
-            _stepsAlive -= aliveStepsToRollback;
+            _stepsAlive -= AliveStepsToRollback(steps);;
             TotalSteps -= steps;
 
             if (TotalSteps <= _deathStep)

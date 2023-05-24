@@ -17,10 +17,10 @@ namespace UPR.Samples
         {
             _entityTransform.Init();
 
-            var transformReversibleHistory = new ReversibleMemoryHistory<EntityTransform.Memory>(_entityTransform);
+            var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
             LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
-            var movementReversibleHistory = new ReversibleMemoryHistory<CharacterMovement.Memory>(_characterMovement);
+            var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
             LocalReversibleHistories.AddHistory(movementReversibleHistory);
 
             LocalSimulations.AddSimulation(_characterMovement);
@@ -33,7 +33,7 @@ namespace UPR.Samples
 
         private void LateUpdate()
         {
-            _renderer.enabled = IsAlive;
+            _renderer.enabled = Status == EntityStatus.Active;
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)

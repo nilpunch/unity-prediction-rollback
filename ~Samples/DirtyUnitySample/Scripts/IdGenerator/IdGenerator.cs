@@ -4,10 +4,10 @@
     {
         private IdGeneratorMemory _memory;
 
-        public IdGenerator(int startId)
+        public IdGenerator(int birthStep, int startId) : base(birthStep)
         {
             _memory.IdCounter = startId;
-            LocalReversibleHistories.AddHistory(new ReversibleMemoryHistory<IdGeneratorMemory>(this));
+            LocalReversibleHistories.AddHistory(new MemoryHistory<IdGeneratorMemory>(this));
         }
 
         public EntityId Generate()

@@ -1,14 +1,14 @@
 ﻿namespace UPR.Tests
 {
-    public class SimpleObject : IMemory<SimpleMemory>
+    public class TestObject : IMemory<TestObjectMemory>
     {
-        private SimpleMemory _memory;
+        private TestObjectMemory _memory;
 
         public int Value => _memory.Value;
 
-        public SimpleObject(int value)
+        public TestObject(int value)
         {
-            _memory = new SimpleMemory(value);
+            _memory = new TestObjectMemory(value);
         }
 
         public void ChangeValue(int value)
@@ -16,12 +16,12 @@
             _memory.Value = value;
         }
 
-        public SimpleMemory Save()
+        public TestObjectMemory Save()
         {
             return _memory;
         }
 
-        public void Load(SimpleMemory memory)
+        public void Load(TestObjectMemory memory)
         {
             _memory = memory;
         }

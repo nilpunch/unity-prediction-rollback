@@ -2,7 +2,7 @@ namespace UPR
 {
     public interface IEntityFinder<out TEntity>
     {
-        TEntity FindAliveEntity(EntityId entityId);
-        bool IsAlive(EntityId entityId);
+        TEntity FindWakeEntity(EntityId entityId);
+        EntityStatus GetStatus(EntityId entityId);
     }
 }

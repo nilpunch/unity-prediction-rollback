@@ -9,6 +9,8 @@ namespace UPR
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
+        private int _currentStep;
+
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {
             _entities.Add(entity);
@@ -21,19 +23,18 @@ namespace UPR
             return _idsByEntity[entity];
         }
 
-        public bool IsAlive(EntityId entityId)
+        public EntityStatus GetStatus(EntityId entityId)
         {
             if (_entitiesById.ContainsKey(entityId))
             {
-                return _entitiesById[entityId].IsAlive;
+                return _entitiesById[entityId].Status;
             }
-
-            return false;
+            return EntityStatus.Inactive;
         }
 
-        public TEntity FindAliveEntity(EntityId entityId)
+        public TEntity FindWakeEntity(EntityId entityId)
         {
-            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.IsAlive)
+            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.Status == EntityStatus.Active)
             {
                 return entity;
             }
@@ -47,34 +48,53 @@ namespace UPR
             // Using for loop to be able to register new entities during simulation
             for (int i = 0; i < _entities.Count; i++)
             {
-                _entities[i].StepForward();
+                var entity = _entities[i];
+                if (entity.Status == EntityStatus.Active)
+                {
+                    entity.StepForward();
+                }
             }
         }
 
-        public void SaveStep()
+        public void SubmitStep()
         {
             foreach (var entity in _entities)
             {
-                entity.SaveStep();
+                if (entity.Status == EntityStatus.Active)
+                {
+                    entity.SubmitStep();
+                }
             }
+
+            _currentStep += 1;
         }
 
         public void Rollback(int steps)
         {
             foreach (var entity in _entities)
             {
-                entity.Rollback(steps);
+                if (entity.GlobalStep < _currentStep)
+                {
+                    int howLongEntityInactive = _currentStep - entity.GlobalStep;
+                    entity.Rollback(Math.Max(steps - howLongEntityInactive, 0));
+                }
+                else if (entity.GlobalStep >= _currentStep - steps)
+                {
+                    entity.Rollback(steps);
+                }
             }
 
-            LoseTrackOfVolatileEntities();
+            _currentStep -= steps;
+
+            LoseTrackOfMissingEntities();
         }
 
-        private void LoseTrackOfVolatileEntities()
+        private void LoseTrackOfMissingEntities()
         {
             for (int i = _entities.Count - 1; i >= 0; i--)
             {
                 var entity = _entities[i];
-                if (entity.Step <= 0)
+                if (entity.LocalStep <= 0)
                 {
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);

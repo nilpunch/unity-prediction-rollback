@@ -13,9 +13,9 @@
 
         public int StepsSaved { get; set; }
 
-        public void SaveStep()
+        public void SubmitStep()
         {
-            _history.SaveStep();
+            _history.SubmitStep();
             StepsSaved += 1;
         }
 

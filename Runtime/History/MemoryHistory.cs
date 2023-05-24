@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace UPR
 {
-    public class ReversibleMemoryHistory<TSnapshot> : IReversibleHistory
+    public class MemoryHistory<TSnapshot> : IReversibleHistory
     {
         private readonly List<TSnapshot> _history;
         private readonly IMemory<TSnapshot> _memory;
 
-        public ReversibleMemoryHistory(IMemory<TSnapshot> memory)
+        public MemoryHistory(IMemory<TSnapshot> memory)
         {
             _memory = memory;
             _history = new List<TSnapshot> { _memory.Save() };
@@ -17,7 +17,7 @@ namespace UPR
 
         public int StepsSaved => _history.Count - 1;
 
-        public void SaveStep()
+        public void SubmitStep()
         {
             _history.Add(_memory.Save());
         }

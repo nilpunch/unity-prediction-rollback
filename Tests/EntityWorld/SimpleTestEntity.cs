@@ -2,15 +2,15 @@
 {
     public class SimpleTestEntity : Entity
     {
-        public SimpleTestEntity(int value)
+        public SimpleTestEntity(int value) : base(0)
         {
-            SimpleObject = new SimpleObject(value);
+            TestObject = new TestObject(value);
 
-            var simpleObjectReversibleHistory = new ReversibleMemoryHistory<SimpleMemory>(SimpleObject);
+            var simpleObjectReversibleHistory = new MemoryHistory<TestObjectMemory>(TestObject);
 
             LocalReversibleHistories.AddHistory(simpleObjectReversibleHistory);
         }
 
-        public SimpleObject SimpleObject { get; }
+        public TestObject TestObject { get; }
     }
 }
