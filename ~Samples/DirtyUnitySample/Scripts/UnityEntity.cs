@@ -6,7 +6,6 @@ namespace UPR.Samples
     public abstract class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
     {
         private readonly ChangeHistory<EntityStatus> _activityHistory = new ChangeHistory<EntityStatus>(EntityStatus.Active);
-        private int _birthStep;
 
         public EntityStatus Status
         {
@@ -17,7 +16,6 @@ namespace UPR.Samples
         }
 
         public int LocalStep { get; set; }
-        public int GlobalStep => _birthStep + LocalStep;
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -25,9 +23,8 @@ namespace UPR.Samples
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
 
-        public void ResetLife(int birthStep)
+        public void ResetLife()
         {
-            _birthStep = birthStep;
             LocalStep = 0;
             LocalRollbacks.Rollback(LocalReversibleHistories.StepsSaved);
             LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);

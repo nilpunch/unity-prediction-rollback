@@ -2,6 +2,6 @@
 {
     public interface IReusableEntity
     {
-        void ResetLife(int birthStep);
+        void ResetLife();
     }
 }

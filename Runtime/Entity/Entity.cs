@@ -5,12 +5,6 @@ namespace UPR
     public abstract class Entity : IEntity
     {
         private readonly ChangeHistory<EntityStatus> _activityHistory = new ChangeHistory<EntityStatus>(EntityStatus.Active);
-        private readonly int _birthStep;
-
-        protected Entity(int birthStep)
-        {
-            _birthStep = birthStep;
-        }
 
         public EntityStatus Status
         {
@@ -21,7 +15,6 @@ namespace UPR
         }
 
         public int LocalStep { get; set; }
-        public int GlobalStep => _birthStep + LocalStep;
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 

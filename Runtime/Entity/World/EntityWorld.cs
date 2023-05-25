@@ -6,16 +6,18 @@ namespace UPR
     public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
+        private readonly Dictionary<TEntity, int> _entitiesRegistrationStep = new Dictionary<TEntity, int>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
-        private int _currentStep;
+        private int CurrentStep { get; set; }
 
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {
             _entities.Add(entity);
             _entitiesById.Add(entityId, entity);
             _idsByEntity.Add(entity, entityId);
+            _entitiesRegistrationStep.Add(entity, CurrentStep);
         }
 
         public EntityId GetEntityId(TEntity entity)
@@ -42,7 +44,6 @@ namespace UPR
             return default;
         }
 
-
         public void StepForward()
         {
             // Using for loop to be able to register new entities during simulation
@@ -66,25 +67,27 @@ namespace UPR
                 }
             }
 
-            _currentStep += 1;
+            CurrentStep += 1;
         }
 
         public void Rollback(int steps)
         {
             foreach (var entity in _entities)
             {
-                if (entity.GlobalStep < _currentStep)
+                int entityStep = _entitiesRegistrationStep[entity] + entity.LocalStep;
+                if (entityStep < CurrentStep)
                 {
-                    int howLongEntityInactive = _currentStep - entity.GlobalStep;
-                    entity.Rollback(Math.Max(steps - howLongEntityInactive, 0));
+                    int howLongEntityInactive = CurrentStep - entityStep;
+                    int stepsToRollback = Math.Max(steps - howLongEntityInactive, 0);
+                    entity.Rollback(stepsToRollback);
                 }
-                else if (entity.GlobalStep >= _currentStep - steps)
+                else
                 {
                     entity.Rollback(steps);
                 }
             }
 
-            _currentStep -= steps;
+            CurrentStep -= steps;
 
             LoseTrackOfMissingEntities();
         }
@@ -99,6 +102,7 @@ namespace UPR
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);
                     _idsByEntity.Remove(entity);
+                    _entitiesRegistrationStep.Remove(entity);
                 }
             }
         }

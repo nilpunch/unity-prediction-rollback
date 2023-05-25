@@ -5,7 +5,6 @@
         EntityStatus Status { get; }
 
         int LocalStep { get; }
-        int GlobalStep { get; }
 
         void Sleep();
     }

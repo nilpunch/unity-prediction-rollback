@@ -2,7 +2,7 @@
 {
     public class SimpleTestEntity : Entity
     {
-        public SimpleTestEntity(int value) : base(0)
+        public SimpleTestEntity(int value)
         {
             TestObject = new TestObject(value);
 

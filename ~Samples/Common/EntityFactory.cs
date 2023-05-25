@@ -26,7 +26,7 @@ namespace UPR.Samples
         {
             var entityId = _idGenerator.Generate();
             TEntity entity = _pool.Get();
-            entity.ResetLife(_currentStep);
+            entity.ResetLife();
             _createdEntities.Add(entity);
             _entityWorld.RegisterEntity(entity, entityId);
             return entity;

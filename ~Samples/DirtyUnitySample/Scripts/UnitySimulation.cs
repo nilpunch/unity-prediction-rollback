@@ -40,7 +40,7 @@ namespace UPR.Samples
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
             {
-                unityEntity.ResetLife(-1);
+                unityEntity.ResetLife();
 
                 switch (unityEntity)
                 {
@@ -58,7 +58,7 @@ namespace UPR.Samples
                 entityIndex += 1;
             }
 
-            IdGenerator = new IdGenerator(-1, entityIndex);
+            IdGenerator = new IdGenerator(entityIndex);
 
             var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
