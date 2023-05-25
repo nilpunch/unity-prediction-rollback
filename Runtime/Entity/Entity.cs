@@ -6,13 +6,9 @@ namespace UPR
     {
         private readonly ChangeHistory<EntityStatus> _activityHistory = new ChangeHistory<EntityStatus>(EntityStatus.Active);
 
-        public EntityStatus Status
-        {
-            get
-            {
-                return _activityHistory.LastSavedValue;
-            }
-        }
+        public EntityStatus CurrentStatus => _activityHistory.Value;
+
+        public EntityStatus LastSavedStatus => _activityHistory.LastSavedValue;
 
         public int LocalStep { get; set; }
 
@@ -24,7 +20,7 @@ namespace UPR
 
         public void Sleep()
         {
-            if (Status != EntityStatus.Active)
+            if (CurrentStatus != EntityStatus.Active)
             {
                 throw new InvalidOperationException("Entity must be wake to fall asleep!");
             }
@@ -32,11 +28,22 @@ namespace UPR
             _activityHistory.Value = EntityStatus.Inactive;
         }
 
+        public void Wake(int stepsAsleep)
+        {
+            if (CurrentStatus != EntityStatus.Inactive)
+            {
+                throw new InvalidOperationException("Entity must sleep before being waked!");
+            }
+
+            _activityHistory.Value = EntityStatus.Active;
+            LocalStep += stepsAsleep;
+        }
+
         public void StepForward()
         {
-            if (Status != EntityStatus.Active)
+            if (CurrentStatus != EntityStatus.Active)
             {
-                throw new InvalidOperationException("Entity must be wake!");
+                throw new InvalidOperationException("Entity must be wake during step!");
             }
 
             LocalSimulations.StepForward();
@@ -44,9 +51,9 @@ namespace UPR
 
         public void SubmitStep()
         {
-            if (Status != EntityStatus.Active)
+            if (LastSavedStatus != EntityStatus.Active)
             {
-                throw new InvalidOperationException("Entity must be wake!");
+                throw new InvalidOperationException("Entity must be wake at the beginning of the step!");
             }
 
             LocalReversibleHistories.SubmitStep();

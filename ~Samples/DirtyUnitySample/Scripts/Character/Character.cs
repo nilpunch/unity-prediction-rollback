@@ -33,7 +33,7 @@ namespace UPR.Samples
 
         private void LateUpdate()
         {
-            _renderer.enabled = Status == EntityStatus.Active;
+            _renderer.enabled = CurrentStatus == EntityStatus.Active;
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)

@@ -17,12 +17,12 @@ namespace UPR.Samples
             {
                 var result = _castResults[i];
 
-                if (result.TryGetComponent(out Character character) && character.Status == EntityStatus.Active)
+                if (result.TryGetComponent(out Character character) && character.CurrentStatus == EntityStatus.Active)
                 {
                     character.Sleep();
                 }
 
-                if (result.TryGetComponent(out Bullet bullet) && bullet.Status == EntityStatus.Active)
+                if (result.TryGetComponent(out Bullet bullet) && bullet.CurrentStatus == EntityStatus.Active)
                 {
                     bullet.Sleep();
                 }

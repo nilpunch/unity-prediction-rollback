@@ -29,14 +29,14 @@ namespace UPR
         {
             if (_entitiesById.ContainsKey(entityId))
             {
-                return _entitiesById[entityId].Status;
+                return _entitiesById[entityId].CurrentStatus;
             }
             return EntityStatus.Inactive;
         }
 
         public TEntity FindWakeEntity(EntityId entityId)
         {
-            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.Status == EntityStatus.Active)
+            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.CurrentStatus == EntityStatus.Active)
             {
                 return entity;
             }
@@ -50,7 +50,7 @@ namespace UPR
             for (int i = 0; i < _entities.Count; i++)
             {
                 var entity = _entities[i];
-                if (entity.Status == EntityStatus.Active)
+                if (entity.CurrentStatus == EntityStatus.Active)
                 {
                     entity.StepForward();
                 }
@@ -61,7 +61,8 @@ namespace UPR
         {
             foreach (var entity in _entities)
             {
-                if (entity.Status == EntityStatus.Active)
+                if (entity.LastSavedStatus == EntityStatus.Active
+                    || entity.LastSavedStatus == EntityStatus.Inactive && entity.CurrentStatus == EntityStatus.Active)
                 {
                     entity.SubmitStep();
                 }
