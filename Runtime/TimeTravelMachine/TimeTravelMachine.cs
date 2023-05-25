@@ -42,7 +42,7 @@ namespace UPR
                     commandTimeline.ExecuteCommands(_currentTick);
 
                 _worldSimulation.StepForward();
-                _worldHistory.SubmitStep();
+                _worldHistory.SaveStep();
                 _currentTick += 1;
             }
 

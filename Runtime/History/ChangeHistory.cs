@@ -31,7 +31,7 @@ namespace UPR
         public TValue Value { get; set; }
         public TValue LastSavedValue => _valueChanges.Peek().Value;
 
-        public void SubmitStep()
+        public void SaveStep()
         {
             StepsSaved += 1;
 

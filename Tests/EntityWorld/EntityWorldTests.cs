@@ -15,7 +15,7 @@ namespace UPR.Tests
 
             // Act
             entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
-            entitiesTimeline.SubmitStep();
+            entitiesTimeline.SaveStep();
             testEntity.TestObject.ChangeValue(22);
             entitiesTimeline.Rollback(0);
 
@@ -33,14 +33,14 @@ namespace UPR.Tests
 
             // Act
             entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
-            entitiesTimeline.SubmitStep();
+            entitiesTimeline.SaveStep();
 
             int newValue = 22;
             testEntity.TestObject.ChangeValue(newValue);
-            entitiesTimeline.SubmitStep();
+            entitiesTimeline.SaveStep();
 
             testEntity.TestObject.ChangeValue(33);
-            entitiesTimeline.SubmitStep();
+            entitiesTimeline.SaveStep();
 
             entitiesTimeline.Rollback(1);
 

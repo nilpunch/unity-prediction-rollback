@@ -5,6 +5,6 @@
     /// </summary>
     public interface IHistory
     {
-        void SubmitStep();
+        void SaveStep();
     }
 }

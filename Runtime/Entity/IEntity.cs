@@ -3,7 +3,7 @@
     public interface IEntity : IHistory, ISimulation, IRollback
     {
         EntityStatus CurrentStatus { get; }
-        EntityStatus LastSavedStatus { get; }
+        bool HasUnsavedChanges { get; }
 
         int LocalStep { get; }
 

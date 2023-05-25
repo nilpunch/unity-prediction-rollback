@@ -9,7 +9,7 @@ namespace UPR.Samples
 
         public EntityStatus CurrentStatus => _activityHistory.Value;
 
-        public EntityStatus LastSavedStatus => _activityHistory.LastSavedValue;
+        public bool HasUnsavedChanges { get; private set; }
 
         public int LocalStep { get; set; }
 
@@ -36,6 +36,7 @@ namespace UPR.Samples
             }
 
             _activityHistory.Value = EntityStatus.Inactive;
+            HasUnsavedChanges = true;
             OnDeactivate();
         }
 
@@ -48,6 +49,7 @@ namespace UPR.Samples
 
             _activityHistory.Value = EntityStatus.Active;
             LocalStep += stepsAsleep;
+            HasUnsavedChanges = true;
         }
 
         public void StepForward()
@@ -58,19 +60,16 @@ namespace UPR.Samples
             }
 
             LocalSimulations.StepForward();
+            HasUnsavedChanges = true;
         }
 
-        public void SubmitStep()
+        public void SaveStep()
         {
-            if (LastSavedStatus != EntityStatus.Active && (LastSavedStatus != EntityStatus.Inactive || CurrentStatus != EntityStatus.Active))
-            {
-                throw new InvalidOperationException("Entity must be wake at the beginning of the step or awake during this step!");
-            }
-
-            LocalReversibleHistories.SubmitStep();
-            _activityHistory.SubmitStep();
+            LocalReversibleHistories.SaveStep();
+            _activityHistory.SaveStep();
 
             LocalStep += 1;
+            HasUnsavedChanges = false;
         }
 
         public void Rollback(int steps)
@@ -81,6 +80,7 @@ namespace UPR.Samples
             _activityHistory.Rollback(stepsToRollback);
 
             LocalStep -= steps;
+            HasUnsavedChanges = false;
 
             if (LocalReversibleHistories.StepsSaved == 0)
             {

@@ -50,8 +50,8 @@ namespace UPR.Tests
 
             // Act
             stateHistory.Value = 0;
-            stateHistory.SubmitStep();
-            stateHistory.SubmitStep();
+            stateHistory.SaveStep();
+            stateHistory.SaveStep();
             stateHistory.Rollback(2);
 
             // Assert

@@ -57,14 +57,13 @@ namespace UPR
             }
         }
 
-        public void SubmitStep()
+        public void SaveStep()
         {
             foreach (var entity in _entities)
             {
-                if (entity.LastSavedStatus == EntityStatus.Active
-                    || entity.LastSavedStatus == EntityStatus.Inactive && entity.CurrentStatus == EntityStatus.Active)
+                if (entity.HasUnsavedChanges)
                 {
-                    entity.SubmitStep();
+                    entity.SaveStep();
                 }
             }
 

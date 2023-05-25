@@ -17,7 +17,7 @@ namespace UPR
 
         public int StepsSaved => _history.Count - 1;
 
-        public void SubmitStep()
+        public void SaveStep()
         {
             _history.Add(_memory.Save());
         }

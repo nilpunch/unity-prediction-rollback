@@ -53,7 +53,7 @@ namespace UPR.Samples
                 }
 
                 // Made entity persistent
-                unityEntity.SubmitStep();
+                unityEntity.SaveStep();
 
                 entityIndex += 1;
             }

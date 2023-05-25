@@ -17,11 +17,11 @@ namespace UPR
             _histories.Add(history);
         }
 
-        public void SubmitStep()
+        public void SaveStep()
         {
             foreach (var history in _histories)
             {
-                history.SubmitStep();
+                history.SaveStep();
             }
 
             StepsSaved += 1;

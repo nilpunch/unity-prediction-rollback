@@ -38,7 +38,7 @@ namespace UPR.Samples
             _currentStep -= steps;
         }
 
-        public void SubmitStep()
+        public void SaveStep()
         {
             _currentStep += 1;
         }
