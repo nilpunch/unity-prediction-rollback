@@ -10,4 +10,4 @@ Deterministic prediction-rollback netcode library for Unity.
 
 ## Recent progress
 
-![](https://github.com/nilpunch/unity-prediction-rollback/blob/master/Graphics/shooting.gif)
+![](https://github.com/nilpunch/unity-prediction-rollback/blob/master/Graphics/current_progress.mov)
