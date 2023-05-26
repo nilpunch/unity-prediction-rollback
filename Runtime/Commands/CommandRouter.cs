@@ -11,9 +11,9 @@
 
         public void ForwardCommand(in TCommand command, EntityId entityId)
         {
-            if (_entityWorld.GetStatus(entityId) == EntityStatus.Active)
+            if (_entityWorld.IsExists(entityId))
             {
-                _entityWorld.FindWakeEntity(entityId).ExecuteCommand(command);
+                _entityWorld.GetExistingEntity(entityId).ExecuteCommand(command);
             }
         }
     }

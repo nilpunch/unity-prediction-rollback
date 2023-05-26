@@ -5,8 +5,7 @@ namespace UPR.Samples
 {
     public class Bullet : UnityEntity
     {
-        [SerializeField] private Renderer _renderer;
-        [SerializeField] private Collider _collider;
+        [SerializeField] private Lifetime _lifetime;
         [SerializeField] private EntityTransform _entityTransform;
         [SerializeField] private CharacterMovement _characterMovement;
 
@@ -15,12 +14,14 @@ namespace UPR.Samples
         private void Awake()
         {
             _entityTransform.Init();
+            _lifetime.Init();
 
             var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
             LocalReversibleHistories.AddHistory(transformReversibleHistory);
 
             var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
             LocalReversibleHistories.AddHistory(movementReversibleHistory);
+            LocalReversibleHistories.AddHistory(_lifetime);
 
             LocalSimulations.AddSimulation(_characterMovement);
         }
@@ -29,26 +30,7 @@ namespace UPR.Samples
         {
             _entityTransform.Position = position;
             _characterMovement.SetMoveDirection(direction);
-            _collider.enabled = true;
-            _renderer.enabled = true;
-        }
-
-        protected override void OnDeactivate()
-        {
-            _collider.enabled = false;
-            _renderer.enabled = false;
-        }
-
-        protected override void OnBeginExist()
-        {
-            _collider.enabled = false;
-            _renderer.enabled = false;
-        }
-
-        protected override void OnActivated()
-        {
-            _collider.enabled = true;
-            _renderer.enabled = true;
+            _lifetime.IsAlive = true;
         }
     }
 }

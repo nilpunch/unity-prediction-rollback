@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UPR
 {
     public class ChangeHistory<TValue> : IReversibleHistory
     {
-        private readonly struct ValueChange
+        public readonly struct ValueChange
         {
             public ValueChange(TValue value, int step)
             {
@@ -17,27 +18,28 @@ namespace UPR
             public int Step { get; }
         }
 
-        private readonly Stack<ValueChange> _valueChanges;
+        private readonly List<ValueChange> _valueChanges;
 
         public ChangeHistory(TValue initialValue)
         {
             Value = initialValue;
-            _valueChanges = new Stack<ValueChange>();
-            _valueChanges.Push(new ValueChange(Value, StepsSaved));
+            _valueChanges = new List<ValueChange>();
+            _valueChanges.Add(new ValueChange(Value, StepsSaved));
         }
 
         public int StepsSaved { get; private set; }
 
         public TValue Value { get; set; }
-        public TValue LastSavedValue => _valueChanges.Peek().Value;
+        public int ChangeStep { get; private set; }
 
         public void SaveStep()
         {
             StepsSaved += 1;
 
-            if (!EqualityComparer<TValue>.Default.Equals(Value, LastSavedValue))
+            if (!EqualityComparer<TValue>.Default.Equals(Value, _valueChanges.Last().Value))
             {
-                _valueChanges.Push(new ValueChange(Value, StepsSaved));
+                _valueChanges.Add(new ValueChange(Value, StepsSaved));
+                ChangeStep = StepsSaved;
             }
         }
 
@@ -48,12 +50,13 @@ namespace UPR
 
             StepsSaved -= steps;
 
-            while (_valueChanges.Peek().Step > StepsSaved)
+            for (int i = _valueChanges.Count - 1; _valueChanges[i].Step > StepsSaved ; i--)
             {
-                _valueChanges.Pop();
+                _valueChanges.RemoveAt(_valueChanges.Count - 1);
             }
 
-            Value = _valueChanges.Peek().Value;
+            Value = _valueChanges.Last().Value;
+            ChangeStep = _valueChanges.Last().Step;
         }
     }
 }

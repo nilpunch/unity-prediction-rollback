@@ -13,8 +13,6 @@ namespace UPR.Samples
 
         private readonly List<TEntity> _createdEntities = new List<TEntity>();
 
-        private int _currentStep;
-
         public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> pool)
         {
             _entityWorld = entityWorld;
@@ -35,12 +33,10 @@ namespace UPR.Samples
         public void Rollback(int steps)
         {
             ReturnMissingEntitiesToPool();
-            _currentStep -= steps;
         }
 
         public void SaveStep()
         {
-            _currentStep += 1;
         }
 
         private void ReturnMissingEntitiesToPool()

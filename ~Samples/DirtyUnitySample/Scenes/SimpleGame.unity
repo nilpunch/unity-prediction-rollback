@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 1521243475}
   - component: {fileID: 1521243476}
   - component: {fileID: 1521243477}
+  - component: {fileID: 1521243478}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -993,6 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1483905964}
   _entityTransform: {fileID: 1521243477}
+  _lifetime: {fileID: 1521243478}
   _characterMovement: {fileID: 1521243473}
   _characterShooting: {fileID: 1521243476}
 --- !u!4 &1521243472
@@ -1063,6 +1065,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e716f1bfa4a4d62af44d927df0403f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1521243478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521243469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c83aa54c28475d9013c6a52e401f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 1483905964}
+  _collider: {fileID: 1521243475}
 --- !u!1 &1892181427
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ namespace UPR
     public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
-        private readonly Dictionary<TEntity, int> _entitiesRegistrationStep = new Dictionary<TEntity, int>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
@@ -17,7 +16,6 @@ namespace UPR
             _entities.Add(entity);
             _entitiesById.Add(entityId, entity);
             _idsByEntity.Add(entity, entityId);
-            _entitiesRegistrationStep.Add(entity, CurrentStep);
         }
 
         public EntityId GetEntityId(TEntity entity)
@@ -25,23 +23,23 @@ namespace UPR
             return _idsByEntity[entity];
         }
 
-        public EntityStatus GetStatus(EntityId entityId)
+        public bool IsExists(EntityId entityId)
         {
             if (_entitiesById.ContainsKey(entityId))
             {
-                return _entitiesById[entityId].CurrentStatus;
+                return _entitiesById[entityId].LocalStep >= 0;
             }
-            return EntityStatus.Inactive;
+            return false;
         }
 
-        public TEntity FindWakeEntity(EntityId entityId)
+        public TEntity GetExistingEntity(EntityId entityId)
         {
-            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.CurrentStatus == EntityStatus.Active)
+            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.LocalStep >= 0)
             {
                 return entity;
             }
 
-            return default;
+            throw new Exception("Entity don't not exist.");
         }
 
         public void StepForward()
@@ -50,10 +48,7 @@ namespace UPR
             for (int i = 0; i < _entities.Count; i++)
             {
                 var entity = _entities[i];
-                if (entity.CurrentStatus == EntityStatus.Active)
-                {
-                    entity.StepForward();
-                }
+                entity.StepForward();
             }
         }
 
@@ -61,10 +56,7 @@ namespace UPR
         {
             foreach (var entity in _entities)
             {
-                if (entity.HasUnsavedChanges)
-                {
-                    entity.SaveStep();
-                }
+                entity.SaveStep();
             }
 
             CurrentStep += 1;
@@ -74,17 +66,7 @@ namespace UPR
         {
             foreach (var entity in _entities)
             {
-                int entityStep = _entitiesRegistrationStep[entity] + entity.LocalStep;
-                if (entityStep < CurrentStep)
-                {
-                    int howLongEntityInactive = CurrentStep - entityStep;
-                    int stepsToRollback = Math.Max(steps - howLongEntityInactive, 0);
-                    entity.Rollback(stepsToRollback);
-                }
-                else
-                {
-                    entity.Rollback(steps);
-                }
+                entity.Rollback(steps);
             }
 
             CurrentStep -= steps;
@@ -102,7 +84,6 @@ namespace UPR
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);
                     _idsByEntity.Remove(entity);
-                    _entitiesRegistrationStep.Remove(entity);
                 }
             }
         }

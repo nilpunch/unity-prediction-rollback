@@ -11,9 +11,6 @@ namespace UPR
 
         public void AddHistory(IReversibleHistory history)
         {
-            if (history.StepsSaved != StepsSaved)
-                throw new Exception($"Can't add history: {nameof(StepsSaved)}'s are not synchronised. Current: " + StepsSaved + ", Added: " + history.StepsSaved);
-
             _histories.Add(history);
         }
 

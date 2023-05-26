@@ -17,14 +17,9 @@ namespace UPR.Samples
             {
                 var result = _castResults[i];
 
-                if (result.TryGetComponent(out Character character) && character.CurrentStatus == EntityStatus.Active)
+                if (result.TryGetComponent(out Lifetime lifetime) && lifetime.IsAlive)
                 {
-                    character.Sleep();
-                }
-
-                if (result.TryGetComponent(out Bullet bullet) && bullet.CurrentStatus == EntityStatus.Active)
-                {
-                    bullet.Sleep();
+                    lifetime.IsAlive = false;
                 }
             }
         }
