@@ -12,6 +12,7 @@ namespace UPR.Samples
         [SerializeField] private CharacterShooting _characterShooting;
 
         public EntityTransform EntityTransform => _entityTransform;
+        public Lifetime Lifetime => _lifetime;
 
         private void Awake()
         {
