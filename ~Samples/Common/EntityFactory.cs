@@ -44,16 +44,6 @@ namespace UPR.Samples
 
         public void SaveStep()
         {
-            // for (int i = _createdEntities.Count - 1; i >= 0; i--)
-            // {
-            //     var entity = _createdEntities[i];
-            //     if (entity.CanBeReused)
-            //     {
-            //         _pool.Return(entity);
-            //         _createdEntities.RemoveAt(i);
-            //         _entityWorld.DeregisterEntity(_entityWorld.GetEntityId(entity));
-            //     }
-            // }
         }
 
         private void ReturnMissingEntitiesToPool()

@@ -43,8 +43,8 @@ namespace UPR.Samples
                 input = Vector3.up;
             }
 
-            // if (Input.GetMouseButton(0))
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
+            // if (Input.GetMouseButtonDown(0))
             {
                 Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.EntityTransform.Position, Vector3.forward).normalized;
                 UnitySimulation.CharacterShooting.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
