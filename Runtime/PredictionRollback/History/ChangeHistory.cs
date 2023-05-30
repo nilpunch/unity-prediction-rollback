@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace UPR
 {
-    public class ChangeHistory<TValue> : IReversibleHistory
+    public class ChangeHistory<TValue> : IHistory, IRollback
     {
         public readonly struct ValueChange
         {

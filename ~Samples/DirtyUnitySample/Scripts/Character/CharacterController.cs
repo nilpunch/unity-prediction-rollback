@@ -29,6 +29,7 @@ namespace UPR.Samples
             }
 
             UnitySimulation.CharacterMovement.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
+            UnitySimulation.CharacterMovement.RemoveAllCommandsAt(UnitySimulation.CurrentTick);
 
             if (!_character.Lifetime.IsAlive)
             {
@@ -46,6 +47,7 @@ namespace UPR.Samples
             {
                 Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.EntityTransform.Position, Vector3.forward).normalized;
                 UnitySimulation.CharacterShooting.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
+                UnitySimulation.CharacterShooting.RemoveAllCommandsAt(UnitySimulation.CurrentTick);
                 UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), UnitySimulation.CharacterWorld.GetEntityId(_character));
             }
         }

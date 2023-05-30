@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace UPR
 {
-    public class ReversibleHistories : IReversibleHistory
+    public class ReversibleHistories : IHistory, IRollback
     {
-        private readonly List<IReversibleHistory> _histories = new List<IReversibleHistory>();
+        private readonly List<ReversibleHistory> _reversibleHistories = new List<ReversibleHistory>();
 
         public int StepsSaved { get; private set; }
 
-        public void AddHistory(IReversibleHistory history)
+        public void AddReversibleHistory<TReversibleHistory>(TReversibleHistory reversibleHistory) where TReversibleHistory : IHistory, IRollback
         {
-            _histories.Add(history);
+            _reversibleHistories.Add(new ReversibleHistory(reversibleHistory, reversibleHistory));
         }
 
         public void SaveStep()
         {
-            foreach (var history in _histories)
+            foreach (var reversibleHistory in _reversibleHistories)
             {
-                history.SaveStep();
+                reversibleHistory.History.SaveStep();
             }
 
             StepsSaved += 1;
@@ -26,12 +26,24 @@ namespace UPR
 
         public void Rollback(int steps)
         {
-            foreach (var history in _histories)
+            foreach (var reversibleHistory in _reversibleHistories)
             {
-                history.Rollback(steps);
+                reversibleHistory.Rollback.Rollback(steps);
             }
 
             StepsSaved -= steps;
+        }
+
+        private struct ReversibleHistory
+        {
+            public ReversibleHistory(IHistory history, IRollback rollback)
+            {
+                History = history;
+                Rollback = rollback;
+            }
+
+            public IHistory History { get; }
+            public IRollback Rollback { get; }
         }
     }
 }

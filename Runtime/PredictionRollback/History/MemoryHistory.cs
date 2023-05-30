@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace UPR
 {
-    public class MemoryHistory<TSnapshot> : IReversibleHistory
+    public class MemoryHistory<TSnapshot> : IHistory, IRollback
     {
         private readonly List<TSnapshot> _history;
         private readonly IMemory<TSnapshot> _memory;

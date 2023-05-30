@@ -64,11 +64,11 @@ namespace UPR.Samples
             BulletsFactory = bulletsFactory;
 
             var worldReversibleHistory = new ReversibleHistories();
-            worldReversibleHistory.AddHistory(new ReversibleHistory(IdGenerator, IdGenerator));
-            worldReversibleHistory.AddHistory(new ReversibleHistory(charactersWorld, charactersWorld));
-            worldReversibleHistory.AddHistory(new ReversibleHistory(bulletWorld, bulletWorld));
-            worldReversibleHistory.AddHistory(new ReversibleHistory(deathSpikeWorld, deathSpikeWorld));
-            worldReversibleHistory.AddHistory(new ReversibleHistory(bulletsFactory, bulletsFactory));
+            worldReversibleHistory.AddReversibleHistory(IdGenerator);
+            worldReversibleHistory.AddReversibleHistory(charactersWorld);
+            worldReversibleHistory.AddReversibleHistory(bulletWorld);
+            worldReversibleHistory.AddReversibleHistory(deathSpikeWorld);
+            worldReversibleHistory.AddReversibleHistory(bulletsFactory);
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.AddRollback(worldReversibleHistory);

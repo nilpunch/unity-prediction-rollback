@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Lifetime : MonoBehaviour, IReversibleHistory
+    public class Lifetime : MonoBehaviour, IHistory, IRollback
     {
         [SerializeField] private bool _aliveInitially = true;
 

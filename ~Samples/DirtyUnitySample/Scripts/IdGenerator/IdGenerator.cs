@@ -7,7 +7,7 @@
         public IdGenerator(int startId)
         {
             _memory.IdCounter = startId;
-            LocalReversibleHistories.AddHistory(new MemoryHistory<IdGeneratorMemory>(this));
+            LocalReversibleHistories.AddReversibleHistory(new MemoryHistory<IdGeneratorMemory>(this));
         }
 
         public EntityId Generate()

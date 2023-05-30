@@ -20,11 +20,11 @@ namespace UPR.Samples
             _lifetime.Init();
 
             var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
-            LocalReversibleHistories.AddHistory(transformReversibleHistory);
+            LocalReversibleHistories.AddReversibleHistory(transformReversibleHistory);
 
             var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
-            LocalReversibleHistories.AddHistory(movementReversibleHistory);
-            LocalReversibleHistories.AddHistory(_lifetime);
+            LocalReversibleHistories.AddReversibleHistory(movementReversibleHistory);
+            LocalReversibleHistories.AddReversibleHistory(_lifetime);
 
             LocalSimulations.AddSimulation(_characterMovement);
         }
