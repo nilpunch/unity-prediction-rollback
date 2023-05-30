@@ -10,7 +10,9 @@ namespace UPR
         public void AddSimulation(ISimulation simulation)
         {
             if (simulation == null)
+            {
                 throw new ArgumentNullException(nameof(simulation));
+            }
 
             _simulations.Add(simulation);
         }
@@ -18,7 +20,9 @@ namespace UPR
         public void StepForward()
         {
             foreach (var simulation in _simulations)
+            {
                 simulation.StepForward();
+            }
         }
     }
 }

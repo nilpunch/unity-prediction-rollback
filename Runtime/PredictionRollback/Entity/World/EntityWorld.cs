@@ -25,30 +25,24 @@ namespace UPR
 
         public bool IsExists(EntityId entityId)
         {
-            if (_entitiesById.ContainsKey(entityId))
-            {
-                return _entitiesById[entityId].LocalStep >= 0;
-            }
-            return false;
+            return _entitiesById.ContainsKey(entityId);
         }
 
         public TEntity GetExistingEntity(EntityId entityId)
         {
-            if (_entitiesById.TryGetValue(entityId, out var entity) && entity.LocalStep >= 0)
+            if (_entitiesById.TryGetValue(entityId, out var entity))
             {
                 return entity;
             }
 
-            throw new Exception("Entity don't not exist.");
+            throw new Exception("Entity don't exist.");
         }
 
         public void StepForward()
         {
-            // Using for loop to be able to register new entities during simulation
             for (int i = 0; i < _entities.Count; i++)
             {
-                var entity = _entities[i];
-                entity.StepForward();
+                _entities[i].StepForward();
             }
         }
 
@@ -71,10 +65,10 @@ namespace UPR
 
             CurrentStep -= steps;
 
-            LoseTrackOfMissingEntities();
+            LoseTrackOfNotBornEntities();
         }
 
-        private void LoseTrackOfMissingEntities()
+        private void LoseTrackOfNotBornEntities()
         {
             for (int i = _entities.Count - 1; i >= 0; i--)
             {

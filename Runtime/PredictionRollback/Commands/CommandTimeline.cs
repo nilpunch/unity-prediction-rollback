@@ -4,8 +4,20 @@ namespace UPR
 {
     public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
+        private struct EntityCommand
+        {
+            public EntityCommand(TCommand command, EntityId entity)
+            {
+                Command = command;
+                Entity = entity;
+            }
+
+            public TCommand Command { get; }
+            public EntityId Entity { get; }
+        }
+
         private readonly ICommandRouter<TCommand> _commandRouter;
-        private readonly Dictionary<long, List<EntityCommand<TCommand>>> _timeline = new Dictionary<long, List<EntityCommand<TCommand>>>();
+        private readonly Dictionary<long, List<EntityCommand>> _timeline = new Dictionary<long, List<EntityCommand>>();
 
         public CommandTimeline(ICommandRouter<TCommand> commandRouter)
         {
@@ -30,23 +42,23 @@ namespace UPR
             }
         }
 
-        public void RemoveAllDownTo(int tick)
+        public void RemoveAllCommandsDownTo(int tick)
         {
             foreach (var tickCommandPair in _timeline)
             {
-                if (tickCommandPair.Key >= tick)
+                if (tickCommandPair.Key > tick)
                 {
                     tickCommandPair.Value.Clear();
                 }
             }
 
-            if (tick < EarliestCommandChange)
+            if (tick + 1 < EarliestCommandChange)
             {
-                EarliestCommandChange = tick;
+                EarliestCommandChange = tick + 1;
             }
         }
 
-        public void RemoveAllCommands(int tick)
+        public void RemoveAllCommandsAt(int tick)
         {
             if (_timeline.TryGetValue(tick, out var commands))
             {
@@ -76,13 +88,13 @@ namespace UPR
         {
             if (_timeline.TryGetValue(tick, out var commands))
             {
-                commands.Add(new EntityCommand<TCommand>(command, entityId));
+                commands.Add(new EntityCommand(command, entityId));
             }
             else
             {
-                _timeline.Add(tick, new List<EntityCommand<TCommand>>()
+                _timeline.Add(tick, new List<EntityCommand>()
                 {
-                    new EntityCommand<TCommand>(command, entityId)
+                    new EntityCommand(command, entityId)
                 });
             }
 

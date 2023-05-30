@@ -2,7 +2,7 @@
 {
     public struct Checksum
     {
-        public long Value;
+        public long Value { get; }
 
         public Checksum(long value)
         {

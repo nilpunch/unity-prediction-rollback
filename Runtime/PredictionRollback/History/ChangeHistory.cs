@@ -46,7 +46,9 @@ namespace UPR
         public void Rollback(int steps)
         {
             if (steps > StepsSaved)
+            {
                 throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
+            }
 
             StepsSaved -= steps;
 

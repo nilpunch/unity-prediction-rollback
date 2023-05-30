@@ -27,7 +27,9 @@ namespace UPR
         public void FastForwardToTick(int targetTick)
         {
             if (targetTick < 0)
+            {
                 throw new ArgumentOutOfRangeException(nameof(targetTick), "Target tick should not be negative!");
+            }
 
             int earliestCommandChange = EarliestCommandChange();
             int earliestTick = Math.Min(targetTick, earliestCommandChange);
@@ -39,7 +41,9 @@ namespace UPR
             while (_currentTick <= targetTick)
             {
                 foreach (ICommandTimeline commandTimeline in _commandTimelines)
+                {
                     commandTimeline.ExecuteCommands(_currentTick);
+                }
 
                 _worldSimulation.StepForward();
                 _worldHistory.SaveStep();
