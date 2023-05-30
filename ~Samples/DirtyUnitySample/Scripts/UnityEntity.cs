@@ -11,15 +11,13 @@ namespace UPR.Samples
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
 
-        public int LocalStep { get; set; }
+        public int LocalStep { get; private set; }
 
         public virtual bool CanBeReused => false;
 
-        public void ResetLife()
+        public void ResetLocalStep()
         {
             LocalStep = 0;
-            LocalRollbacks.Rollback(LocalReversibleHistories.StepsSaved);
-            LocalReversibleHistories.Rollback(LocalReversibleHistories.StepsSaved);
         }
 
         public void StepForward()

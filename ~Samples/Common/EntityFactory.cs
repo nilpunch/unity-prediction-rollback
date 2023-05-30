@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace UPR.Samples
 {
@@ -53,6 +55,7 @@ namespace UPR.Samples
                 var entity = _createdEntities[i];
                 if (entity.LocalStep <= 0)
                 {
+                    entity.ResetLocalStep();
                     _pool.Return(entity);
                     _createdEntities.RemoveAt(i);
                 }

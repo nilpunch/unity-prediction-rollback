@@ -18,13 +18,6 @@ namespace UPR
             _idsByEntity.Add(entity, entityId);
         }
 
-        public void DeregisterEntity(EntityId entityId)
-        {
-            _entities.Remove(_entitiesById[entityId]);
-            _idsByEntity.Remove(_entitiesById[entityId]);
-            _entitiesById.Remove(entityId);
-        }
-
         public EntityId GetEntityId(TEntity entity)
         {
             return _idsByEntity[entity];
@@ -37,12 +30,7 @@ namespace UPR
 
         public TEntity GetExistingEntity(EntityId entityId)
         {
-            if (_entitiesById.TryGetValue(entityId, out var entity))
-            {
-                return entity;
-            }
-
-            throw new Exception("Entity don't exist.");
+            return _entitiesById[entityId];
         }
 
         public void StepForward()

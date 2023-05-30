@@ -40,8 +40,6 @@ namespace UPR.Samples
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
             {
-                unityEntity.ResetLife();
-
                 switch (unityEntity)
                 {
                     case Character character:

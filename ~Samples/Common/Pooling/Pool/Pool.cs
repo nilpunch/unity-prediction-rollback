@@ -25,18 +25,14 @@ namespace UPR.Samples
 
         public TItem Get()
         {
-            TItem poolable;
-
             if (_availableItems.Count > 0)
             {
-                poolable = _availableItems.Pop();
+                return _availableItems.Pop();
             }
             else
             {
-                poolable = _factory.Create();
+                return _factory.Create();
             }
-
-            return poolable;
         }
 
         public void Return(TItem item)
