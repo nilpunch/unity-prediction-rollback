@@ -10,7 +10,7 @@ namespace UPR
         private readonly IRollback _worldRollback;
         private readonly List<ICommandTimeline> _commandTimelines = new List<ICommandTimeline>();
 
-        private int _currentTick;
+        private int CurrentTick { get; set; }
 
         public TimeTravelMachine(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback)
         {
@@ -33,21 +33,21 @@ namespace UPR
 
             int earliestCommandChange = EarliestCommandChange();
             int earliestTick = Math.Min(targetTick, earliestCommandChange);
-            int stepsToRollback = _currentTick - earliestTick;
+            int stepsToRollback = CurrentTick - earliestTick;
 
             _worldRollback.Rollback(stepsToRollback);
-            _currentTick -= stepsToRollback;
+            CurrentTick -= stepsToRollback;
 
-            while (_currentTick <= targetTick)
+            while (CurrentTick <= targetTick)
             {
                 foreach (ICommandTimeline commandTimeline in _commandTimelines)
                 {
-                    commandTimeline.ExecuteCommands(_currentTick);
+                    commandTimeline.ExecuteCommands(CurrentTick);
                 }
 
                 _worldSimulation.StepForward();
                 _worldHistory.SaveStep();
-                _currentTick += 1;
+                CurrentTick += 1;
             }
 
             foreach (ICommandTimeline commandTimeline in _commandTimelines)

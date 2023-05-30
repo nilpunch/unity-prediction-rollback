@@ -6,18 +6,6 @@ namespace UPR
 {
     public class ChangeHistory<TValue> : IHistory, IRollback
     {
-        public readonly struct ValueChange
-        {
-            public ValueChange(TValue value, int step)
-            {
-                Value = value;
-                Step = step;
-            }
-
-            public TValue Value { get; }
-            public int Step { get; }
-        }
-
         private readonly List<ValueChange> _valueChanges;
 
         public ChangeHistory(TValue initialValue)
@@ -30,7 +18,6 @@ namespace UPR
         public int StepsSaved { get; private set; }
 
         public TValue Value { get; set; }
-        public int ChangeStep { get; private set; }
 
         public void SaveStep()
         {
@@ -39,7 +26,6 @@ namespace UPR
             if (!EqualityComparer<TValue>.Default.Equals(Value, _valueChanges.Last().Value))
             {
                 _valueChanges.Add(new ValueChange(Value, StepsSaved));
-                ChangeStep = StepsSaved;
             }
         }
 
@@ -58,7 +44,18 @@ namespace UPR
             }
 
             Value = _valueChanges.Last().Value;
-            ChangeStep = _valueChanges.Last().Step;
+        }
+
+        private readonly struct ValueChange
+        {
+            public ValueChange(TValue value, int step)
+            {
+                Value = value;
+                Step = step;
+            }
+
+            public TValue Value { get; }
+            public int Step { get; }
         }
     }
 }

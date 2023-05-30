@@ -5,6 +5,5 @@
 		void AddVariant(TVariant variant, IPool<TItem> pool);
 		void RemoveVariant(TVariant variant);
 		TItem Get(TVariant variant);
-		void ReturnAll();
 	}
 }

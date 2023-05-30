@@ -5,11 +5,10 @@ namespace UPR.Samples
 {
     public class Pool<TItem> : IPool<TItem>
     {
-        private readonly HashSet<TItem> _allCreatedItems = new HashSet<TItem>();
         private readonly Stack<TItem> _availableItems = new Stack<TItem>();
 
         private readonly IFactory<TItem> _factory;
-        
+
         public Pool(IFactory<TItem> factory)
         {
             _factory = factory;
@@ -20,7 +19,6 @@ namespace UPR.Samples
             for (int i = 0; i < prewarm; i++)
             {
                 TItem poolable = _factory.Create();
-                _allCreatedItems.Add(poolable);
                 _availableItems.Push(poolable);
             }
         }
@@ -36,27 +34,14 @@ namespace UPR.Samples
             else
             {
                 poolable = _factory.Create();
-                _allCreatedItems.Add(poolable);
             }
-            
+
             return poolable;
         }
 
         public void Return(TItem item)
         {
-            if (_allCreatedItems.Contains(item) == false)
-                throw new ArgumentException("This object from another pool.", nameof(item));
-            
             _availableItems.Push(item);
-        }
-
-        public void ReturnAll()
-        {
-            foreach (var createdObject in _allCreatedItems)
-            {
-                if (!_availableItems.Contains(createdObject))
-                    Return(createdObject);
-            }
         }
     }
 }

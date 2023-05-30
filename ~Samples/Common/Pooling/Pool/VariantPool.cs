@@ -2,41 +2,34 @@
 
 namespace UPR.Samples
 {
-	public class VariantPool<TKey, IItem> : IVariantPool<TKey, IItem>
+	public class VariantPool<TKey, TItem> : IVariantPool<TKey, TItem>
 	{
-		private readonly Dictionary<TKey, IPool<IItem>> _pools = new Dictionary<TKey, IPool<IItem>>();
+		private readonly Dictionary<TKey, IPool<TItem>> _pools = new Dictionary<TKey, IPool<TItem>>();
 
-		private readonly Dictionary<IItem, TKey> _busyItems = new Dictionary<IItem, TKey>();
-        
-		public void AddVariant(TKey variant, IPool<IItem> pool)
+		private readonly Dictionary<TItem, TKey> _busyItems = new Dictionary<TItem, TKey>();
+
+		public void AddVariant(TKey variant, IPool<TItem> pool)
 		{
 			_pools.Add(variant, pool);
-		} 
+		}
 
 		public void RemoveVariant(TKey variant)
 		{
 			_pools.Remove(variant);
 		}
 
-		public IItem Get(TKey variant)
+		public TItem Get(TKey variant)
 		{
-			IItem item = _pools[variant].Get();
+			TItem item = _pools[variant].Get();
 			_busyItems.Add(item, variant);
 			return item;
 		}
 
-		public void Return(IItem item)
+		public void Return(TItem item)
 		{
 			TKey variant = _busyItems[item];
 			_pools[variant].Return(item);
 			_busyItems.Remove(item);
-		}
-
-		public void ReturnAll()
-		{
-			foreach (var pool in _pools)
-				pool.Value.ReturnAll();
-			_busyItems.Clear();
 		}
 	}
 }

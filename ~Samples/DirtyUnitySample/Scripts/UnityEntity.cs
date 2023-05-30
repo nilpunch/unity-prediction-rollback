@@ -5,13 +5,15 @@ namespace UPR.Samples
 {
     public abstract class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
     {
-        public int LocalStep { get; set; }
-
         protected Simulations LocalSimulations { get; } = new Simulations();
 
         protected Rollbacks LocalRollbacks { get; } = new Rollbacks();
 
         protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
+
+        public int LocalStep { get; set; }
+
+        public virtual bool CanBeReused => false;
 
         public void ResetLife()
         {

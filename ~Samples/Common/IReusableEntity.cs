@@ -2,6 +2,6 @@
 {
     public interface IReusableEntity
     {
-        void ResetLife();
+        bool CanBeReused { get; }
     }
 }

@@ -9,7 +9,7 @@ namespace UPR.Samples
         [SerializeField] private EntityTransform _entityTransform;
         [SerializeField] private CharacterMovement _characterMovement;
 
-        public EntityTransform EntityTransform => _entityTransform;
+        public override bool CanBeReused => !_lifetime.IsAlive;
 
         private void Awake()
         {

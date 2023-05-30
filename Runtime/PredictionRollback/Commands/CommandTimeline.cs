@@ -4,19 +4,8 @@ namespace UPR
 {
     public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
-        private struct EntityCommand
-        {
-            public EntityCommand(TCommand command, EntityId entity)
-            {
-                Command = command;
-                Entity = entity;
-            }
-
-            public TCommand Command { get; }
-            public EntityId Entity { get; }
-        }
-
         private readonly ICommandRouter<TCommand> _commandRouter;
+
         private readonly Dictionary<long, List<EntityCommand>> _timeline = new Dictionary<long, List<EntityCommand>>();
 
         public CommandTimeline(ICommandRouter<TCommand> commandRouter)
@@ -102,6 +91,18 @@ namespace UPR
             {
                 EarliestCommandChange = tick;
             }
+        }
+
+        private readonly struct EntityCommand
+        {
+            public EntityCommand(TCommand command, EntityId entity)
+            {
+                Command = command;
+                Entity = entity;
+            }
+
+            public TCommand Command { get; }
+            public EntityId Entity { get; }
         }
     }
 }

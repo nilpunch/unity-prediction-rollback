@@ -22,9 +22,16 @@ namespace UPR.Samples
 
         public TEntity Create()
         {
+            foreach (var createdEntity in _createdEntities)
+            {
+                if (createdEntity.CanBeReused)
+                {
+                    return createdEntity;
+                }
+            }
+
             var entityId = _idGenerator.Generate();
             TEntity entity = _pool.Get();
-            entity.ResetLife();
             _createdEntities.Add(entity);
             _entityWorld.RegisterEntity(entity, entityId);
             return entity;
@@ -37,6 +44,16 @@ namespace UPR.Samples
 
         public void SaveStep()
         {
+            // for (int i = _createdEntities.Count - 1; i >= 0; i--)
+            // {
+            //     var entity = _createdEntities[i];
+            //     if (entity.CanBeReused)
+            //     {
+            //         _pool.Return(entity);
+            //         _createdEntities.RemoveAt(i);
+            //         _entityWorld.DeregisterEntity(_entityWorld.GetEntityId(entity));
+            //     }
+            // }
         }
 
         private void ReturnMissingEntitiesToPool()

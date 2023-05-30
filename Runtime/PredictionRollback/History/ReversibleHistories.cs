@@ -34,7 +34,7 @@ namespace UPR
             StepsSaved -= steps;
         }
 
-        private struct ReversibleHistory
+        private readonly struct ReversibleHistory
         {
             public ReversibleHistory(IHistory history, IRollback rollback)
             {

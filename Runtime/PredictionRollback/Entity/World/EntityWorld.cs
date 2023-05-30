@@ -18,6 +18,13 @@ namespace UPR
             _idsByEntity.Add(entity, entityId);
         }
 
+        public void DeregisterEntity(EntityId entityId)
+        {
+            _entities.Remove(_entitiesById[entityId]);
+            _idsByEntity.Remove(_entitiesById[entityId]);
+            _entitiesById.Remove(entityId);
+        }
+
         public EntityId GetEntityId(TEntity entity)
         {
             return _idsByEntity[entity];

@@ -23,10 +23,5 @@
 		{
 			return _variantPool.Get(_variant);
 		}
-
-		public void ReturnAll()
-		{
-			_variantPool.ReturnAll();
-		}
 	}
 }
