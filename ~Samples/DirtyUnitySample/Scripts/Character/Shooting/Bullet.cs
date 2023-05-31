@@ -5,6 +5,7 @@ namespace UPR.Samples
 {
     public class Bullet : UnityEntity
     {
+        [SerializeField] private LifetimeTimeout _lifetimeTimeout;
         [SerializeField] private Lifetime _lifetime;
         [SerializeField] private EntityTransform _entityTransform;
         [SerializeField] private CharacterMovement _characterMovement;
@@ -14,16 +15,24 @@ namespace UPR.Samples
         private void Awake()
         {
             _entityTransform.Init();
+
             _lifetime.Init();
+            LocalHistories.Add(_lifetime);
+            LocalRollbacks.Add(_lifetime);
 
             var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
-            LocalReversibleHistories.AddReversibleHistory(transformReversibleHistory);
+            LocalHistories.Add(transformReversibleHistory);
+            LocalRollbacks.Add(transformReversibleHistory);
 
             var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
-            LocalReversibleHistories.AddReversibleHistory(movementReversibleHistory);
-            LocalReversibleHistories.AddReversibleHistory(_lifetime);
+            LocalHistories.Add(movementReversibleHistory);
+            LocalRollbacks.Add(movementReversibleHistory);
 
-            LocalSimulations.AddSimulation(_characterMovement);
+            LocalHistories.Add(_lifetimeTimeout);
+            LocalRollbacks.Add(_lifetimeTimeout);
+            LocalSimulations.Add(_lifetimeTimeout);
+
+            LocalSimulations.Add(_characterMovement);
         }
 
         public void Launch(Vector3 position, Vector3 direction)
@@ -31,6 +40,7 @@ namespace UPR.Samples
             _entityTransform.Position = position;
             _characterMovement.SetMoveDirection(direction);
             _lifetime.IsAlive = true;
+            _lifetimeTimeout.ResetTimer();
         }
     }
 }

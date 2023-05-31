@@ -8,7 +8,7 @@ namespace UPR.Samples
 
         private void Start()
         {
-            LocalSimulations.AddSimulation(_deathHit);
+            LocalSimulations.Add(_deathHit);
         }
     }
 }

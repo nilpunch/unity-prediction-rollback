@@ -8,7 +8,8 @@
 
             var simpleObjectReversibleHistory = new MemoryHistory<TestObjectMemory>(TestObject);
 
-            LocalReversibleHistories.AddReversibleHistory(simpleObjectReversibleHistory);
+            LocalHistories.Add(simpleObjectReversibleHistory);
+            LocalRollbacks.Add(simpleObjectReversibleHistory);
         }
 
         public TestObject TestObject { get; }

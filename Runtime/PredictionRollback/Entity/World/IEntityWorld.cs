@@ -4,5 +4,6 @@ namespace UPR
     {
         void RegisterEntity(TEntity entity, EntityId entityId);
         EntityId GetEntityId(TEntity entity);
+        bool IsEntityExists(TEntity entity);
     }
 }

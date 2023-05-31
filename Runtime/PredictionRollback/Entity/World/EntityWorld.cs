@@ -23,7 +23,12 @@ namespace UPR
             return _idsByEntity[entity];
         }
 
-        public bool IsExists(EntityId entityId)
+        public bool IsEntityExists(TEntity entity)
+        {
+            return _idsByEntity.ContainsKey(entity);
+        }
+
+        public bool IsEntityIdExists(EntityId entityId)
         {
             return _entitiesById.ContainsKey(entityId);
         }

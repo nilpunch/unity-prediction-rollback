@@ -9,14 +9,16 @@ namespace UPR.Samples
 
         protected Rollbacks LocalRollbacks { get; } = new Rollbacks();
 
-        protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
+        protected Histories LocalHistories { get; } = new Histories();
 
         public int LocalStep { get; private set; }
 
         public virtual bool CanBeReused => false;
 
-        public void ResetLocalStep()
+        public void FullyResetEntity()
         {
+            int stepsToRollback = Math.Max(LocalStep, 0);
+            LocalRollbacks.Rollback(stepsToRollback);
             LocalStep = 0;
         }
 
@@ -32,7 +34,7 @@ namespace UPR.Samples
         {
             if (LocalStep >= 0)
             {
-                LocalReversibleHistories.SaveStep();
+                LocalHistories.SaveStep();
             }
 
             LocalStep += 1;
@@ -42,7 +44,6 @@ namespace UPR.Samples
         {
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            LocalReversibleHistories.Rollback(stepsToRollback);
 
             LocalStep -= steps;
         }

@@ -10,7 +10,7 @@ namespace UPR
 
         protected Rollbacks LocalRollbacks { get; } = new Rollbacks();
 
-        protected ReversibleHistories LocalReversibleHistories { get; } = new ReversibleHistories();
+        protected Histories LocalHistories { get; } = new Histories();
 
         public void StepForward()
         {
@@ -24,7 +24,7 @@ namespace UPR
         {
             if (LocalStep >= 0)
             {
-                LocalReversibleHistories.SaveStep();
+                LocalHistories.SaveStep();
             }
 
             LocalStep += 1;
@@ -34,7 +34,6 @@ namespace UPR
         {
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            LocalReversibleHistories.Rollback(stepsToRollback);
 
             LocalStep -= steps;
         }

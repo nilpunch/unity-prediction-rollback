@@ -3,6 +3,10 @@
     public interface IReusableEntity
     {
         bool CanBeReused { get; }
-        void ResetLocalStep();
+
+        /// <summary>
+        /// Use only on mispredictions.
+        /// </summary>
+        void FullyResetEntity();
     }
 }

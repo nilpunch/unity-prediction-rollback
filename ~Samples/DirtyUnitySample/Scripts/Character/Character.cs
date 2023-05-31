@@ -17,16 +17,20 @@ namespace UPR.Samples
         private void Awake()
         {
             _entityTransform.Init();
+
             _lifetime.Init();
+            LocalHistories.Add(_lifetime);
+            LocalRollbacks.Add(_lifetime);
 
             var transformReversibleHistory = new MemoryHistory<EntityTransform.Memory>(_entityTransform);
-            LocalReversibleHistories.AddReversibleHistory(transformReversibleHistory);
+            LocalHistories.Add(transformReversibleHistory);
+            LocalRollbacks.Add(transformReversibleHistory);
 
             var movementReversibleHistory = new MemoryHistory<CharacterMovement.Memory>(_characterMovement);
-            LocalReversibleHistories.AddReversibleHistory(movementReversibleHistory);
-            LocalReversibleHistories.AddReversibleHistory(_lifetime);
+            LocalHistories.Add(movementReversibleHistory);
+            LocalRollbacks.Add(movementReversibleHistory);
 
-            LocalSimulations.AddSimulation(_characterMovement);
+            LocalSimulations.Add(_characterMovement);
         }
 
         public void ExecuteCommand(in CharacterMoveCommand command)

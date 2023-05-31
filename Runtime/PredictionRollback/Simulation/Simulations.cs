@@ -7,7 +7,7 @@ namespace UPR
     {
         private readonly List<ISimulation> _simulations = new List<ISimulation>();
 
-        public void AddSimulation(ISimulation simulation)
+        public void Add(ISimulation simulation)
         {
             if (simulation == null)
             {

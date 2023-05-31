@@ -7,19 +7,19 @@ namespace UPR.Samples
     /// <summary>
     /// Use this to create entities at any time.
     /// </summary>
-    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback, IHistory where TEntity : IEntity, IReusableEntity
+    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback where TEntity : IEntity, IReusableEntity
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
-        private readonly IPool<TEntity> _pool;
         private readonly IIdGenerator _idGenerator;
+        private readonly IPool<TEntity> _pool;
 
         private readonly List<TEntity> _createdEntities = new List<TEntity>();
 
-        public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> pool)
+        public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> factory)
         {
             _entityWorld = entityWorld;
             _idGenerator = idGenerator;
-            _pool = new Pool<TEntity>(pool);
+            _pool = new Pool<TEntity>(factory);
         }
 
         public TEntity Create()
@@ -44,18 +44,14 @@ namespace UPR.Samples
             ReturnMissingEntitiesToPool();
         }
 
-        public void SaveStep()
-        {
-        }
-
         private void ReturnMissingEntitiesToPool()
         {
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {
                 var entity = _createdEntities[i];
-                if (entity.LocalStep <= 0)
+                if (!_entityWorld.IsEntityExists(entity))
                 {
-                    entity.ResetLocalStep();
+                    entity.FullyResetEntity();
                     _pool.Return(entity);
                     _createdEntities.RemoveAt(i);
                 }

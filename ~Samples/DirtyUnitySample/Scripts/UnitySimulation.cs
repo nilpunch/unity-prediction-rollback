@@ -61,22 +61,25 @@ namespace UPR.Samples
             var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
 
-            var worldReversibleHistory = new ReversibleHistories();
-            worldReversibleHistory.AddReversibleHistory(IdGenerator);
-            worldReversibleHistory.AddReversibleHistory(charactersWorld);
-            worldReversibleHistory.AddReversibleHistory(bulletWorld);
-            worldReversibleHistory.AddReversibleHistory(deathSpikeWorld);
-            worldReversibleHistory.AddReversibleHistory(bulletsFactory);
+            var worldHistories = new Histories();
+            worldHistories.Add(IdGenerator);
+            worldHistories.Add(charactersWorld);
+            worldHistories.Add(bulletWorld);
+            worldHistories.Add(deathSpikeWorld);
 
             var worldRollbacks = new Rollbacks();
-            worldRollbacks.AddRollback(worldReversibleHistory);
+            worldRollbacks.Add(IdGenerator);
+            worldRollbacks.Add(charactersWorld);
+            worldRollbacks.Add(bulletWorld);
+            worldRollbacks.Add(deathSpikeWorld);
+            worldRollbacks.Add(bulletsFactory);
 
             var worldSimulation = new Simulations();
-            worldSimulation.AddSimulation(charactersWorld);
-            worldSimulation.AddSimulation(bulletWorld);
-            worldSimulation.AddSimulation(deathSpikeWorld);
+            worldSimulation.Add(charactersWorld);
+            worldSimulation.Add(bulletWorld);
+            worldSimulation.Add(deathSpikeWorld);
 
-            TimeTravelMachine = new TimeTravelMachine(worldReversibleHistory, worldSimulation, worldRollbacks);
+            TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
             CharacterMovement = new CommandTimeline<CharacterMoveCommand>(
                 new CommandRouter<CharacterMoveCommand>(CharacterWorld));

@@ -7,7 +7,7 @@ namespace UPR
     {
         private readonly List<IRollback> _rollback = new List<IRollback>();
 
-        public void AddRollback(IRollback simulation)
+        public void Add(IRollback simulation)
         {
             if (simulation == null)
             {

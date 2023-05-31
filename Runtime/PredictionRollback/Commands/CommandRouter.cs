@@ -11,7 +11,7 @@
 
         public void ForwardCommand(in TCommand command, EntityId entityId)
         {
-            if (_entityWorld.IsExists(entityId))
+            if (_entityWorld.IsEntityIdExists(entityId))
             {
                 _entityWorld.GetExistingEntity(entityId).ExecuteCommand(command);
             }
