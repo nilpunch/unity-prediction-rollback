@@ -6,7 +6,7 @@ namespace UPR
     {
         private readonly ICommandRouter<TCommand> _commandRouter;
 
-        private readonly Dictionary<long, List<EntityCommand>> _timeline = new Dictionary<long, List<EntityCommand>>();
+        private readonly Dictionary<int, List<EntityCommand>> _timeline = new Dictionary<int, List<EntityCommand>>();
 
         public CommandTimeline(ICommandRouter<TCommand> commandRouter)
         {

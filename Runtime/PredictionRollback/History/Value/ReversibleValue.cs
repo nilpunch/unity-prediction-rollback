@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace UPR
 {
@@ -21,11 +20,13 @@ namespace UPR
 
         public TValue Value { get; set; }
 
+        private TValue LastSaved => _valueChanges[_valueChanges.Count - 1].Value;
+
         public void SaveStep()
         {
             StepsSaved += 1;
 
-            if (!Value.Equals(_valueChanges.Last().Value))
+            if (!Value.Equals(LastSaved))
             {
                 _valueChanges.Add(new ValueChange(Value, StepsSaved));
             }
@@ -45,7 +46,7 @@ namespace UPR
                 _valueChanges.RemoveAt(_valueChanges.Count - 1);
             }
 
-            Value = _valueChanges.Last().Value;
+            Value = LastSaved;
         }
 
         private readonly struct ValueChange

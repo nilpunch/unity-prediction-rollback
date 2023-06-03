@@ -95,6 +95,8 @@ namespace UPR.Samples
             ElapsedTime += Time.deltaTime;
 
             TimeTravelMachine.FastForwardToTick(CurrentTick);
+
+            Debug.Log(CurrentTick);
         }
     }
 }

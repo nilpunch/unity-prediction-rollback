@@ -380,7 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73de4225355a4a7283eeda06642d0905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathHit: {fileID: 732317330}
 --- !u!23 &732317333
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -992,7 +991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24acba7a534546cfa30c836cb91998c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 1483905964}
   _entityTransform: {fileID: 1521243477}
   _lifetime: {fileID: 1521243478}
   _characterMovement: {fileID: 1521243473}
@@ -1025,7 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2520bc006c472b96cdcb11f118da0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityTransform: {fileID: 1521243477}
   _speed: 6
 --- !u!65 &1521243475
 BoxCollider:
@@ -1052,7 +1049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44543b235dc43888a9375c95be9bcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityTransform: {fileID: 1521243477}
 --- !u!114 &1521243477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,6 +1073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c83aa54c28475d9013c6a52e401f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aliveInitially: 1
   _renderer: {fileID: 1483905964}
   _collider: {fileID: 1521243475}
 --- !u!1 &1892181427
@@ -1132,7 +1129,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 17.56
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

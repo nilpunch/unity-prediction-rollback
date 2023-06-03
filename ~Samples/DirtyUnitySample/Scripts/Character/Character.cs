@@ -16,12 +16,14 @@ namespace UPR.Samples
 
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
-            _characterMovement.SetMoveDirection(command.MoveDirection);
+            if (_lifetime.IsAlive)
+                _characterMovement.SetMoveDirection(command.MoveDirection);
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)
         {
-            _characterShooting.Shoot(command.Direction);
+            if (_lifetime.IsAlive)
+                _characterShooting.Shoot(command.Direction);
         }
     }
 }
