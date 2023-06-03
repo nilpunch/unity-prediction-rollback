@@ -4,15 +4,17 @@ using System.Linq;
 
 namespace UPR
 {
-    public class ValueChangeOnlyHistory<TValue> : IValueHistory<TValue>
+    public class ReversibleValue<TValue> : IValueHistory<TValue> where TValue : IEquatable<TValue>
     {
         private readonly List<ValueChange> _valueChanges;
 
-        public ValueChangeOnlyHistory(TValue initialValue)
+        public ReversibleValue(TValue initialValue)
         {
             Value = initialValue;
-            _valueChanges = new List<ValueChange>();
-            _valueChanges.Add(new ValueChange(Value, StepsSaved));
+            _valueChanges = new List<ValueChange>
+            {
+                new ValueChange(Value, StepsSaved)
+            };
         }
 
         public int StepsSaved { get; private set; }
@@ -23,7 +25,7 @@ namespace UPR
         {
             StepsSaved += 1;
 
-            if (!EqualityComparer<TValue>.Default.Equals(Value, _valueChanges.Last().Value))
+            if (!Value.Equals(_valueChanges.Last().Value))
             {
                 _valueChanges.Add(new ValueChange(Value, StepsSaved));
             }

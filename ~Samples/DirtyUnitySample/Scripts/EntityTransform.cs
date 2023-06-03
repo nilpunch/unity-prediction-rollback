@@ -3,43 +3,31 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class EntityTransform : FrequentlyChangedComponent<EntityTransform.Memory>
+    public class EntityTransform : MonoBehaviour, IHistory, IRollback, IInitialize
     {
-        public struct Memory
+        private ReversibleValue<Vector3> _position;
+        private ReversibleValue<Quaternion> _rotation;
+
+        public void Initialize()
         {
-            public Quaternion Rotation { get; set; }
-            public Vector3 Position { get; set; }
+            _position = new ReversibleValue<Vector3>(transform.position);
+            _rotation = new ReversibleValue<Quaternion>(transform.rotation);
         }
 
-        public Vector3 Position
+        public void SaveStep()
         {
-            get => Data.Position;
-            set
-            {
-                Data.Position = value;
-                transform.position = value;
-            }
+            _position.Value = transform.position;
+            _rotation.Value = transform.rotation;
+            _position.SaveStep();
+            _rotation.SaveStep();
         }
 
-        public Quaternion Rotation
+        public void Rollback(int steps)
         {
-            get => Data.Rotation;
-            set
-            {
-                Data.Rotation = value;
-                transform.rotation = value;
-            }
-        }
-
-        protected override Memory InitialData => new Memory()
-        {
-            Position = transform.position, Rotation = transform.rotation
-        };
-
-        protected override void OnDataChanged()
-        {
-            transform.position = Data.Position;
-            transform.rotation = Data.Rotation;
+            _position.Rollback(steps);
+            _rotation.Rollback(steps);
+            transform.position = _position.Value;
+            transform.rotation = _rotation.Value;
         }
     }
 }

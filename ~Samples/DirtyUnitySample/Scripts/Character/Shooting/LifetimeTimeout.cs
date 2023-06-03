@@ -7,7 +7,7 @@ namespace UPR.Samples
         [SerializeField] private float _lifetimeLengthSeconds = 2f;
         [SerializeField] private Lifetime _lifetime;
 
-        private readonly ValueChangeOnlyHistory<int> _resetTick = new ValueChangeOnlyHistory<int>(0);
+        private readonly ReversibleValue<int> _resetTick = new ReversibleValue<int>(0);
 
         private int _elapsedTicks;
 
