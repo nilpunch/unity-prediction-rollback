@@ -7,8 +7,10 @@ namespace UPR.Samples
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Collider _collider;
 
-        public override void OnValueChanged()
+        protected override void OnDataChanged()
         {
+            base.OnDataChanged();
+
             _renderer.enabled = IsAlive;
             _collider.enabled = IsAlive;
         }

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace UPR
 {
-    public class ChangeHistory<TValue> : IHistory, IRollback
+    public class ValueChangeOnlyHistory<TValue> : IValueHistory<TValue>
     {
         private readonly List<ValueChange> _valueChanges;
 
-        public ChangeHistory(TValue initialValue)
+        public ValueChangeOnlyHistory(TValue initialValue)
         {
             Value = initialValue;
             _valueChanges = new List<ValueChange>();

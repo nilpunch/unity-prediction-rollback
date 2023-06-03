@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class EntityTransform : MonoBehaviour, IMemory<EntityTransform.Memory>
+    public class EntityTransform : FrequentlyChangedComponent<EntityTransform.Memory>
     {
         public struct Memory
         {
@@ -10,43 +11,35 @@ namespace UPR.Samples
             public Vector3 Position { get; set; }
         }
 
-        private Memory _memory;
-
         public Vector3 Position
         {
-            get => _memory.Position;
+            get => Data.Position;
             set
             {
-                _memory.Position = value;
+                Data.Position = value;
                 transform.position = value;
             }
         }
 
         public Quaternion Rotation
         {
-            get => _memory.Rotation;
+            get => Data.Rotation;
             set
             {
-                _memory.Rotation = value;
+                Data.Rotation = value;
                 transform.rotation = value;
             }
         }
 
-        public void Init()
+        protected override Memory InitialData => new Memory()
         {
-            _memory.Position = transform.position;
-            _memory.Rotation = transform.rotation;
-        }
+            Position = transform.position, Rotation = transform.rotation
+        };
 
-        public Memory Save()
+        protected override void OnDataChanged()
         {
-            return _memory;
-        }
-
-        public void Load(Memory memory)
-        {
-            Position = memory.Position;
-            Rotation = memory.Rotation;
+            transform.position = Data.Position;
+            transform.rotation = Data.Rotation;
         }
     }
 }

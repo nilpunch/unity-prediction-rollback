@@ -3,42 +3,20 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class Lifetime : MonoBehaviour, IHistory, IRollback
+    public class Lifetime : RarelyChangedComponent<bool>
     {
         [SerializeField] private bool _aliveInitially = true;
 
-        private ChangeHistory<bool> _lifeHistory;
-
         public bool IsAlive
         {
-            get
-            {
-                return _lifeHistory.Value;
-            }
+            get => Data;
             set
             {
-                _lifeHistory.Value = value;
-                OnValueChanged();
+                Data = value;
+                OnDataChanged();
             }
         }
 
-        public void Init()
-        {
-            _lifeHistory = new ChangeHistory<bool>(_aliveInitially);
-            OnValueChanged();
-        }
-
-        public void SaveStep()
-        {
-            _lifeHistory.SaveStep();
-        }
-
-        public void Rollback(int steps)
-        {
-            _lifeHistory.Rollback(steps);
-            OnValueChanged();
-        }
-
-        public virtual void OnValueChanged() { }
+        protected override bool InitialData => _aliveInitially;
     }
 }
