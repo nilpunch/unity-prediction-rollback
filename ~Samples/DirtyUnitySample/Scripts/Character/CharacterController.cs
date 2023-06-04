@@ -30,17 +30,19 @@ namespace UPR.Samples
             //     input += Vector3.right;
             // }
 
-            UnitySimulation.CharacterMovement.RemoveAllCommandsAt(UnitySimulation.CurrentTick);
+            EntityId characterId = UnitySimulation.CharacterWorld.GetEntityId(_character);
 
-            UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), UnitySimulation.CharacterWorld.GetEntityId(_character));
+            UnitySimulation.CharacterMovement.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
+
+            UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), characterId);
 
             // if (Input.GetMouseButton(0))
-            // if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
-                // Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.transform.position, Vector3.forward).normalized;
-                Vector3 shootDirection = Quaternion.Euler(0f, 0f, 70f) * input.normalized;
-                UnitySimulation.CharacterShooting.RemoveAllCommandsAt(UnitySimulation.CurrentTick);
-                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), UnitySimulation.CharacterWorld.GetEntityId(_character));
+                Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.transform.position, Vector3.forward).normalized;
+                //Vector3 shootDirection = Quaternion.Euler(0f, 0f, 70f) * input.normalized;
+                UnitySimulation.CharacterShooting.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
+                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), characterId);
             }
         }
     }

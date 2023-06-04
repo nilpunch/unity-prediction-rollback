@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2520bc006c472b96cdcb11f118da0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityTransform: {fileID: 2814053551434500880}
   _speed: 20
 --- !u!114 &6325370493486618588
 MonoBehaviour:
@@ -130,7 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifetimeTimeout: {fileID: 1607263689339134495}
   _lifetime: {fileID: 792523797804912132}
-  _entityTransform: {fileID: 2814053551434500880}
   _characterMovement: {fileID: 1919176250937436867}
 --- !u!114 &2814053551434500880
 MonoBehaviour:
@@ -171,5 +169,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a680ac59cebd45a586721bbe2f0d3a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifetimeLengthSeconds: 2
+  _lifetimeLengthSeconds: 1
   _lifetime: {fileID: 792523797804912132}

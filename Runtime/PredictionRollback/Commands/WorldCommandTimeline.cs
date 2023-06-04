@@ -40,6 +40,19 @@ namespace UPR
             }
         }
 
+        public void RemoveAllCommandsForEntityDownTo(int tick, EntityId entityId)
+        {
+            if (_entityCommandTimelines.TryGetValue(entityId, out var commandTimeline))
+            {
+                commandTimeline.RemoveAllCommandsDownTo(tick);
+
+                if (tick + 1 < EarliestCommandChange)
+                {
+                    EarliestCommandChange = tick + 1;
+                }
+            }
+        }
+
         public void RemoveAllCommandsAt(int tick)
         {
             foreach (var commandTimeline in _entityCommandTimelines.Values)
@@ -50,6 +63,19 @@ namespace UPR
             if (tick < EarliestCommandChange)
             {
                 EarliestCommandChange = tick;
+            }
+        }
+
+        public void RemoveCommandForEntityAt(int tick, EntityId entityId)
+        {
+            if (_entityCommandTimelines.TryGetValue(entityId, out var commandTimeline))
+            {
+                commandTimeline.RemoveCommand(tick);
+
+                if (tick < EarliestCommandChange)
+                {
+                    EarliestCommandChange = tick;
+                }
             }
         }
 

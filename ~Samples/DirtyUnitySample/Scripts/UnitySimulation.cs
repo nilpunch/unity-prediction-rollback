@@ -83,10 +83,10 @@ namespace UPR.Samples
             TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
             CharacterMovement = new WorldCommandTimeline<CharacterMoveCommand>(
-                new CommandTimelineFactory<CharacterMoveCommand>(
+                new PredictionEntityCommandTimelineFactory<CharacterMoveCommand>(
                 new CommandRouter<CharacterMoveCommand>(CharacterWorld)));
             CharacterShooting = new WorldCommandTimeline<CharacterShootCommand>(
-                new PredictionCommandTimelineFactory<CharacterShootCommand>(
+                new CommandTimelineFactory<CharacterShootCommand>(
                     new CommandRouter<CharacterShootCommand>(CharacterWorld)));
 
             TimeTravelMachine.AddCommandsTimeline(CharacterMovement);

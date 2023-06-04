@@ -1,10 +1,10 @@
 ﻿namespace UPR
 {
-    public class PredictionCommandTimelineFactory<TCommand> : IEntityCommandTimelineFactory<TCommand>
+    public class PredictionEntityCommandTimelineFactory<TCommand> : IEntityCommandTimelineFactory<TCommand>
     {
         private readonly ICommandRouter<TCommand> _commandRouter;
 
-        public PredictionCommandTimelineFactory(ICommandRouter<TCommand> commandRouter)
+        public PredictionEntityCommandTimelineFactory(ICommandRouter<TCommand> commandRouter)
         {
             _commandRouter = commandRouter;
         }
