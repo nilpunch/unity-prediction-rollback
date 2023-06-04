@@ -1,6 +1,6 @@
 {
-    "name": "UPR",
-    "rootNamespace": "UPR",
+    "name": "UPR.Common",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
