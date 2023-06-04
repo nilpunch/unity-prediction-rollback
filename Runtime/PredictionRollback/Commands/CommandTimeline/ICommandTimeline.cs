@@ -1,6 +1,6 @@
 ﻿namespace UPR
 {
-    public interface IEntityCommandTimeline<TCommand>
+    public interface ICommandTimeline<TCommand>
     {
         int GetLatestTickWithCommand(int tick);
         void ExecuteCommand(int tick);

@@ -2,7 +2,7 @@
 
 namespace UPR
 {
-    public class EntityCommandTimeline<TCommand> : IEntityCommandTimeline<TCommand>
+    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
         private readonly ICommandRouter<TCommand> _commandRouter;
         private readonly EntityId _entityId;
@@ -10,7 +10,7 @@ namespace UPR
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();
 
-        public EntityCommandTimeline(ICommandRouter<TCommand> commandRouter, EntityId entityId)
+        public CommandTimeline(ICommandRouter<TCommand> commandRouter, EntityId entityId)
         {
             _commandRouter = commandRouter;
             _entityId = entityId;

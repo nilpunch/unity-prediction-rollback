@@ -1,6 +1,6 @@
 ﻿namespace UPR
 {
-    public class CommandTimelineFactory<TCommand> : IEntityCommandTimelineFactory<TCommand>
+    public class CommandTimelineFactory<TCommand> : ICommandTimelineFactory<TCommand>
     {
         private readonly ICommandRouter<TCommand> _commandRouter;
 
@@ -9,9 +9,9 @@
             _commandRouter = commandRouter;
         }
 
-        public IEntityCommandTimeline<TCommand> CreateForEntity(EntityId entityId)
+        public ICommandTimeline<TCommand> CreateForEntity(EntityId entityId)
         {
-            return new EntityCommandTimeline<TCommand>(_commandRouter, entityId);
+            return new CommandTimeline<TCommand>(_commandRouter, entityId);
         }
     }
 }

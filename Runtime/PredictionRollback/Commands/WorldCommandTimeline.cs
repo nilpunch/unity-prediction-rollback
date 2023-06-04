@@ -4,12 +4,12 @@ namespace UPR
 {
     public class WorldCommandTimeline<TCommand> : IWorldCommandTimeline<TCommand>
     {
-        private readonly IEntityCommandTimelineFactory<TCommand> _entityCommandTimelineFactory;
-        private readonly Dictionary<EntityId, IEntityCommandTimeline<TCommand>> _entityCommandTimelines = new Dictionary<EntityId, IEntityCommandTimeline<TCommand>>();
+        private readonly ICommandTimelineFactory<TCommand> _commandTimelineFactory;
+        private readonly Dictionary<EntityId, ICommandTimeline<TCommand>> _entityCommandTimelines = new Dictionary<EntityId, ICommandTimeline<TCommand>>();
 
-        public WorldCommandTimeline(IEntityCommandTimelineFactory<TCommand> entityCommandTimelineFactory)
+        public WorldCommandTimeline(ICommandTimelineFactory<TCommand> commandTimelineFactory)
         {
-            _entityCommandTimelineFactory = entityCommandTimelineFactory;
+            _commandTimelineFactory = commandTimelineFactory;
         }
 
         public int EarliestCommandChange { get; private set; }
@@ -83,7 +83,7 @@ namespace UPR
         {
             if (!_entityCommandTimelines.TryGetValue(entityId, out var commandTimeline))
             {
-                commandTimeline = _entityCommandTimelineFactory.CreateForEntity(entityId);
+                commandTimeline = _commandTimelineFactory.CreateForEntity(entityId);
                 _entityCommandTimelines.Add(entityId, commandTimeline);
             }
 
