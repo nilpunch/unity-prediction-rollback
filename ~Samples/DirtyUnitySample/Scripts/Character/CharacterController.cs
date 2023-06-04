@@ -11,7 +11,7 @@ namespace UPR.Samples
         {
             Vector3 input = Vector3.zero;
 
-            input = Vector3.down * Mathf.Sin(Time.time) + Vector3.right * Mathf.Cos(Time.time);
+            input = Vector3.down * Mathf.Sin(UnitySimulation.ElapsedTime) + Vector3.right * Mathf.Cos(UnitySimulation.ElapsedTime);
 
             // if (Input.GetKey(KeyCode.W))
             // {

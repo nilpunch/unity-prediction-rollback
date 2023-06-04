@@ -1,6 +1,6 @@
 ﻿namespace UPR
 {
-    public interface ICommandTimeline
+    public interface IWorldCommandTimeline
     {
         int EarliestCommandChange { get; }
 
@@ -9,11 +9,10 @@
         void ExecuteCommands(int tick);
     }
 
-    public interface ICommandTimeline<TCommand> : ICommandTimeline
+    public interface IWorldCommandTimeline<TCommand> : IWorldCommandTimeline
     {
         void RemoveAllCommandsDownTo(int tick);
         void RemoveAllCommandsAt(int tick);
-        void RemoveCommand(int tick, EntityId entityId);
         void InsertCommand(int tick, in TCommand command, EntityId entityId);
     }
 }

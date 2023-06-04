@@ -8,7 +8,7 @@ namespace UPR
         private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
         private readonly IRollback _worldRollback;
-        private readonly List<ICommandTimeline> _commandTimelines = new List<ICommandTimeline>();
+        private readonly List<IWorldCommandTimeline> _commandTimelines = new List<IWorldCommandTimeline>();
 
         private int CurrentTick { get; set; }
 
@@ -19,9 +19,9 @@ namespace UPR
             _worldRollback = worldRollback;
         }
 
-        public void AddCommandsTimeline(ICommandTimeline commandTimeline)
+        public void AddCommandsTimeline(IWorldCommandTimeline worldCommandTimeline)
         {
-            _commandTimelines.Add(commandTimeline);
+            _commandTimelines.Add(worldCommandTimeline);
         }
 
         public void FastForwardToTick(int targetTick)
@@ -40,7 +40,7 @@ namespace UPR
 
             while (CurrentTick <= targetTick)
             {
-                foreach (ICommandTimeline commandTimeline in _commandTimelines)
+                foreach (IWorldCommandTimeline commandTimeline in _commandTimelines)
                 {
                     commandTimeline.ExecuteCommands(CurrentTick);
                 }
@@ -50,7 +50,7 @@ namespace UPR
                 CurrentTick += 1;
             }
 
-            foreach (ICommandTimeline commandTimeline in _commandTimelines)
+            foreach (IWorldCommandTimeline commandTimeline in _commandTimelines)
             {
                 commandTimeline.ApproveChangesUpTo(targetTick);
             }

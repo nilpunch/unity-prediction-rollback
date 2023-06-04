@@ -4,14 +4,15 @@ namespace UPR.Samples
 {
     public class UnitySimulation : MonoBehaviour
     {
+        [SerializeField, Range(0.5f, 50f)] private float _simulationSpeed = 1f;
         [SerializeField] private int _ticksPerSecond = 30;
         [SerializeField] private Bullet _bulletPrefab;
 
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
         public static TimeTravelMachine TimeTravelMachine { get; private set; }
-        public static ICommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
-        public static ICommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
+        public static IWorldCommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
+        public static IWorldCommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
 
         public static IEntityWorld<Character> CharacterWorld { get; private set; }
         public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
@@ -81,10 +82,12 @@ namespace UPR.Samples
 
             TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
-            CharacterMovement = new CommandTimeline<CharacterMoveCommand>(
-                new CommandRouter<CharacterMoveCommand>(CharacterWorld));
-            CharacterShooting = new CommandTimeline<CharacterShootCommand>(
-                new CommandRouter<CharacterShootCommand>(CharacterWorld));
+            CharacterMovement = new WorldCommandTimeline<CharacterMoveCommand>(
+                new CommandTimelineFactory<CharacterMoveCommand>(
+                new CommandRouter<CharacterMoveCommand>(CharacterWorld)));
+            CharacterShooting = new WorldCommandTimeline<CharacterShootCommand>(
+                new PredictionCommandTimelineFactory<CharacterShootCommand>(
+                    new CommandRouter<CharacterShootCommand>(CharacterWorld)));
 
             TimeTravelMachine.AddCommandsTimeline(CharacterMovement);
             TimeTravelMachine.AddCommandsTimeline(CharacterShooting);
@@ -92,7 +95,7 @@ namespace UPR.Samples
 
         private void Update()
         {
-            ElapsedTime += Time.deltaTime;
+            ElapsedTime += Time.deltaTime * _simulationSpeed;
 
             TimeTravelMachine.FastForwardToTick(CurrentTick);
 
