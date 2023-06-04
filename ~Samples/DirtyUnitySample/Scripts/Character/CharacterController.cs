@@ -33,16 +33,17 @@ namespace UPR.Samples
             EntityId characterId = UnitySimulation.CharacterWorld.GetEntityId(_character);
 
             UnitySimulation.CharacterMovement.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
-
             UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), characterId);
 
-            // if (Input.GetMouseButton(0))
+            UnitySimulation.CharacterShooting.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
             if (Input.GetMouseButton(0))
             {
                 Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.transform.position, Vector3.forward).normalized;
-                //Vector3 shootDirection = Quaternion.Euler(0f, 0f, 70f) * input.normalized;
-                UnitySimulation.CharacterShooting.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
-                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection), characterId);
+                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true), characterId);
+            }
+            else
+            {
+                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false), characterId);
             }
         }
     }

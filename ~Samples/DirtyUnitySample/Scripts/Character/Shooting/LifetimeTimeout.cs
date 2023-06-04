@@ -2,27 +2,23 @@
 
 namespace UPR.Samples
 {
-    public class LifetimeTimeout : MonoBehaviour, ISimulation, IRollback, IHistory
+    public class LifetimeTimeout : MonoBehaviour, ISimulation, IHistory, IRollback
     {
         [SerializeField] private float _lifetimeLengthSeconds = 2f;
         [SerializeField] private Lifetime _lifetime;
 
-        private readonly ReversibleValue<int> _resetTick = new ReversibleValue<int>(0);
-
-        private int _elapsedTicks;
+        private readonly Timer _timer = new Timer();
 
         public void ResetTimer()
         {
-            _resetTick.Value = _elapsedTicks;
+            _timer.Reset();
         }
 
         public void StepForward()
         {
-            _elapsedTicks += 1;
+            _timer.StepForward();
 
-            int currentTick = _elapsedTicks - _resetTick.Value;
-
-            float elapsedTime = currentTick * UnitySimulation.SimulationSpeed.SecondsPerTick;
+            float elapsedTime = _timer.CurrentTick * UnitySimulation.SimulationSpeed.SecondsPerTick;
 
             if (elapsedTime >= _lifetimeLengthSeconds)
             {
@@ -30,15 +26,14 @@ namespace UPR.Samples
             }
         }
 
-        public void Rollback(int steps)
-        {
-            _resetTick.Rollback(steps);
-            _elapsedTicks -= steps;
-        }
-
         public void SaveStep()
         {
-            _resetTick.SaveStep();
+            _timer.SaveStep();
+        }
+
+        public void Rollback(int steps)
+        {
+            _timer.Rollback(steps);
         }
     }
 }

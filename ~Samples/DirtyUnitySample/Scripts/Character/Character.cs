@@ -23,7 +23,17 @@ namespace UPR.Samples
         public void ExecuteCommand(in CharacterShootCommand command)
         {
             if (_lifetime.IsAlive)
-                _characterShooting.Shoot(command.Direction);
+            {
+                _characterShooting.SetShootingDirection(command.Direction);
+                if (command.IsShooting)
+                {
+                    _characterShooting.EnableShooting();
+                }
+                else
+                {
+                    _characterShooting.DisableShooting();
+                }
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace UPR.Samples
         public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
         public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
 
-        public static IFactory<Bullet> BulletsFactory { get; private set; }
+        public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
 
@@ -86,7 +86,7 @@ namespace UPR.Samples
                 new PredictionCommandTimelineFactory<CharacterMoveCommand>(
                     new CommandRouter<CharacterMoveCommand>(CharacterWorld)));
             CharacterShooting = new WorldCommandTimeline<CharacterShootCommand>(
-                new CommandTimelineFactory<CharacterShootCommand>(
+                new PredictionCommandTimelineFactory<CharacterShootCommand>(
                     new CommandRouter<CharacterShootCommand>(CharacterWorld)));
 
             TimeTravelMachine.AddCommandsTimeline(CharacterMovement);

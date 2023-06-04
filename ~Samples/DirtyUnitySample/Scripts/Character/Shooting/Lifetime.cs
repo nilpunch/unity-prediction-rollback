@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UPR.Samples
 {
@@ -22,6 +21,7 @@ namespace UPR.Samples
         public void Initialize()
         {
             _isAlive = new ReversibleValue<bool>(_aliveInitially);
+            OnAliveChanged();
         }
 
         public void SaveStep()

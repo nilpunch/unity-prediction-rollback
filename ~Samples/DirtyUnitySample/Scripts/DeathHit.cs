@@ -7,7 +7,7 @@ namespace UPR.Samples
     {
         [SerializeField] private Vector3 _dimensions;
 
-        private readonly Collider[] _castResults = new Collider[10];
+        private readonly Collider[] _castResults = new Collider[1000];
 
         public void StepForward()
         {
