@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class CharacterShooting : MonoBehaviour, ISimulation, IHistory, IRollback
+    public class CharacterShooting : MonoBehaviour, ISimulation, IHistory, IRollback, IRebase
     {
         [SerializeField] private float _delaySeconds = 0.2f;
 
@@ -51,6 +51,11 @@ namespace UPR.Samples
         public void Rollback(int steps)
         {
             _timer.Rollback(steps);
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            _timer.ForgetFromBeginning(steps);
         }
     }
 }

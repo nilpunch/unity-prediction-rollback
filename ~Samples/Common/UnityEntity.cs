@@ -5,13 +5,15 @@ using UnityEngine;
 namespace UPR.Samples
 {
     [DisallowMultipleComponent]
-    public class UnityEntity : MonoBehaviour, IEntity, IReusableEntity
+    public class UnityEntity : MonoBehaviour, IEntity, IReusableEntity, IRebase
     {
         protected Simulations LocalSimulations { get; } = new Simulations();
 
         protected Rollbacks LocalRollbacks { get; } = new Rollbacks();
 
         protected Histories LocalHistories { get; } = new Histories();
+
+        protected Rebases LocalRebases { get; } = new Rebases();
 
         public int LocalStep { get; private set; }
 
@@ -24,6 +26,7 @@ namespace UPR.Samples
             var simulations = components.Where(component => component != this && component is ISimulation).Cast<ISimulation>();
             var rollbacks = components.Where(component => component != this && component is IRollback).Cast<IRollback>();
             var histories = components.Where(component => component != this && component is IHistory).Cast<IHistory>();
+            var rebases = components.Where(component => component != this && component is IRebase).Cast<IRebase>();
             var initializes = components.Where(component => component is IInitialize).Cast<IInitialize>();
 
             foreach (ISimulation simulation in simulations)
@@ -39,6 +42,11 @@ namespace UPR.Samples
             foreach (IHistory history in histories)
             {
                 LocalHistories.Add(history);
+            }
+
+            foreach (IRebase rebase in rebases)
+            {
+                LocalRebases.Add(rebase);
             }
 
             foreach (var initialize in initializes)
@@ -78,6 +86,11 @@ namespace UPR.Samples
             LocalRollbacks.Rollback(stepsToRollback);
 
             LocalStep -= steps;
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            LocalRebases.ForgetFromBeginning(steps);
         }
     }
 }

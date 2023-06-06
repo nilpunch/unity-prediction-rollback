@@ -14,7 +14,7 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var stateHistory = new ReversibleValue<int>(originalValue);
+            var stateHistory = new RarelyChangingValue<int>(originalValue);
 
             // Act
             stateHistory.Value = 0;
@@ -31,7 +31,7 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var stateHistory = new ReversibleValue<int>(originalValue);
+            var stateHistory = new RarelyChangingValue<int>(originalValue);
 
             // Act
             stateHistory.Value = 0;
@@ -46,7 +46,7 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var stateHistory = new ReversibleValue<int>(originalValue);
+            var stateHistory = new RarelyChangingValue<int>(originalValue);
 
             // Act
             stateHistory.Value = 0;

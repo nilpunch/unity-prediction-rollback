@@ -1,33 +1,22 @@
 ﻿namespace UPR.Samples
 {
-    public class IdGenerator : Entity, IIdGenerator, IMemory<IdGeneratorMemory>
+    public class IdGenerator : Entity, IIdGenerator
     {
-        private IdGeneratorMemory _memory;
+        private readonly RarelyChangingValue<int> _idCounter;
 
         public IdGenerator(int startId)
         {
-            _memory.IdCounter = startId;
-
-            var memoryHistory = new MemoryHistory<IdGeneratorMemory>(this);
-            LocalHistories.Add(memoryHistory);
-            LocalRollbacks.Add(memoryHistory);
+            _idCounter = new RarelyChangingValue<int>(startId);
+            LocalHistories.Add(_idCounter);
+            LocalRollbacks.Add(_idCounter);
+            LocalRebases.Add(_idCounter);
         }
 
         public EntityId Generate()
         {
-            int id = _memory.IdCounter;
-            _memory.IdCounter += 1;
+            int id = _idCounter.Value;
+            _idCounter.Value += 1;
             return new EntityId(id);
-        }
-
-        public IdGeneratorMemory Save()
-        {
-            return _memory;
-        }
-
-        public void Load(IdGeneratorMemory memory)
-        {
-            _memory = memory;
         }
     }
 }

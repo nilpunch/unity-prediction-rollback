@@ -1,14 +1,23 @@
+using System;
 using System.Collections.Generic;
 
 namespace UPR
 {
-    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IHistory, ISimulation, IRollback where TEntity : IEntity
+    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, ISimulation, IHistory, IRollback, IRebase where TEntity : IEntity
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
-        private int CurrentStep { get; set; }
+        private int HistoryBeginningTick { get; set; }
+        private int CurrentTick { get; set; }
+        public int StepsSaved => CurrentTick - HistoryBeginningTick;
+
+        public EntityWorld(int worldTick = 0)
+        {
+            HistoryBeginningTick = worldTick;
+            CurrentTick = worldTick;
+        }
 
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {
@@ -52,19 +61,41 @@ namespace UPR
                 entity.SaveStep();
             }
 
-            CurrentStep += 1;
+            CurrentTick += 1;
         }
 
         public void Rollback(int steps)
         {
+            if (steps > StepsSaved)
+            {
+                throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
+            }
+
             foreach (var entity in _entities)
             {
                 entity.Rollback(steps);
             }
 
-            CurrentStep -= steps;
+            CurrentTick -= steps;
 
             LoseTrackOfNotBornEntities();
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            if (steps > StepsSaved)
+            {
+                throw new Exception($"Can't forget that far. {nameof(StepsSaved)}: {StepsSaved}, Forgetting: {steps}.");
+            }
+
+            HistoryBeginningTick += steps;
+
+            foreach (var entity in _entities)
+            {
+                int entityHistoryBegin = CurrentTick - entity.LocalStep;
+                int canForgetTicks = HistoryBeginningTick - entityHistoryBegin;
+                entity.ForgetFromBeginning(Math.Min(Math.Max(canForgetTicks, 0), steps));
+            }
         }
 
         private void LoseTrackOfNotBornEntities()

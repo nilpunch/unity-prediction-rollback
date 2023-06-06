@@ -17,13 +17,15 @@ namespace UPR.Samples
         public static IEntityWorld<Character> CharacterWorld { get; private set; }
         public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
         public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
-
-        public static EntityFactory<Bullet> BulletsFactory { get; private set; }
+        public static IFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
 
         public static IdGenerator IdGenerator { get; private set; }
         public static int CurrentTick => Mathf.FloorToInt(ElapsedTime * SimulationSpeed.TicksPerSecond);
+
+        private static Rebases s_rebases;
+        private static EntityWorld<Character> s_characterWorld;
 
         private void Start()
         {
@@ -33,13 +35,19 @@ namespace UPR.Samples
 
             var charactersWorld = new EntityWorld<Character>();
             CharacterWorld = charactersWorld;
+            s_characterWorld = charactersWorld;
             var bulletWorld = new EntityWorld<Bullet>();
             BulletsWorld = bulletWorld;
             var deathSpikeWorld = new EntityWorld<Enemy>();
             DeathSpikeWorld = deathSpikeWorld;
 
+            s_rebases = new Rebases();
+            s_rebases.Add(charactersWorld);
+            s_rebases.Add(bulletWorld);
+            s_rebases.Add(deathSpikeWorld);
+
             int entityIndex = 0;
-            foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>())
+            foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
             {
                 switch (unityEntity)
                 {
@@ -98,8 +106,12 @@ namespace UPR.Samples
             ElapsedTime += Time.deltaTime * _simulationSpeed;
 
             TimeTravelMachine.FastForwardToTick(CurrentTick);
+        }
 
-            Debug.Log(CurrentTick);
+        public static void ForgetFromBegin(int steps)
+        {
+            // World must have at least 1 saved step for 1 frame rollback in time travel machine
+            s_rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(s_characterWorld.StepsSaved - 1, steps), 0));
         }
     }
 }

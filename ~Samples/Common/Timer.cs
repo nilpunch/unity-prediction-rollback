@@ -1,8 +1,8 @@
 ﻿namespace UPR.Samples
 {
-    public class Timer : ISimulation, IRollback, IHistory
+    public class Timer : ISimulation, IRollback, IHistory, IRebase
     {
-        private readonly ReversibleValue<int> _resetTick = new ReversibleValue<int>(0);
+        private readonly RarelyChangingValue<int> _resetTick = new RarelyChangingValue<int>(0);
 
         private int _elapsedTicks;
 
@@ -12,7 +12,7 @@
         {
             _resetTick.Value = _elapsedTicks;
         }
-        
+
         public void StepForward()
         {
             _elapsedTicks += 1;
@@ -27,6 +27,11 @@
         public void SaveStep()
         {
             _resetTick.SaveStep();
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            _resetTick.ForgetFromBeginning(steps);
         }
     }
 }

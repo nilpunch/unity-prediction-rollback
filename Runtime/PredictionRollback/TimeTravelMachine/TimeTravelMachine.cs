@@ -33,7 +33,7 @@ namespace UPR
 
             int earliestCommandChange = EarliestCommandChange();
             int earliestTick = Math.Min(targetTick, earliestCommandChange);
-            int stepsToRollback = CurrentTick - earliestTick;
+            int stepsToRollback = Math.Max(CurrentTick - earliestTick, 0);
 
             _worldRollback.Rollback(stepsToRollback);
             CurrentTick -= stepsToRollback;

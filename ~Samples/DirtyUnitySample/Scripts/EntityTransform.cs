@@ -3,15 +3,17 @@ using UnityEngine;
 
 namespace UPR.Samples
 {
-    public class EntityTransform : MonoBehaviour, IHistory, IRollback, IInitialize
+    public class EntityTransform : MonoBehaviour, IInitialize, IHistory, IRollback, IRebase
     {
-        private ReversibleValue<Vector3> _position;
-        private ReversibleValue<Quaternion> _rotation;
+        private FrequentlyChangingValue<Vector3> _position;
+        private FrequentlyChangingValue<Quaternion> _rotation;
+
+        public int StepsSaved => _position.StepsSaved;
 
         public void Initialize()
         {
-            _position = new ReversibleValue<Vector3>(transform.position);
-            _rotation = new ReversibleValue<Quaternion>(transform.rotation);
+            _position = new FrequentlyChangingValue<Vector3>(transform.position);
+            _rotation = new FrequentlyChangingValue<Quaternion>(transform.rotation);
         }
 
         public void SaveStep()
@@ -28,6 +30,12 @@ namespace UPR.Samples
             _rotation.Rollback(steps);
             transform.position = _position.Value;
             transform.rotation = _rotation.Value;
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            _position.ForgetFromBeginning(steps);
+            _rotation.ForgetFromBeginning(steps);
         }
     }
 }

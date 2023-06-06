@@ -2,11 +2,11 @@
 
 namespace UPR.Samples
 {
-    public class Lifetime : MonoBehaviour, IHistory, IRollback, IInitialize
+    public class Lifetime : MonoBehaviour, IHistory, IRollback, IRebase, IInitialize
     {
         [SerializeField] private bool _aliveInitially = true;
 
-        private ReversibleValue<bool> _isAlive;
+        private RarelyChangingValue<bool> _isAlive;
 
         public bool IsAlive
         {
@@ -20,7 +20,7 @@ namespace UPR.Samples
 
         public void Initialize()
         {
-            _isAlive = new ReversibleValue<bool>(_aliveInitially);
+            _isAlive = new RarelyChangingValue<bool>(_aliveInitially);
             OnAliveChanged();
         }
 
@@ -33,6 +33,11 @@ namespace UPR.Samples
         {
             _isAlive.Rollback(steps);
             OnAliveChanged();
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            _isAlive.ForgetFromBeginning(steps);
         }
 
         protected virtual void OnAliveChanged() {}

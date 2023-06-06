@@ -12,6 +12,8 @@ namespace UPR
 
         protected Histories LocalHistories { get; } = new Histories();
 
+        protected Rebases LocalRebases { get; } = new Rebases();
+
         public void StepForward()
         {
             if (LocalStep >= 0)
@@ -36,6 +38,11 @@ namespace UPR
             LocalRollbacks.Rollback(stepsToRollback);
 
             LocalStep -= steps;
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            LocalRebases.ForgetFromBeginning(steps);
         }
     }
 }
