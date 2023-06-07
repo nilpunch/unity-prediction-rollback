@@ -2,20 +2,35 @@
 
 namespace UPR.Samples
 {
-    public class CharacterMovement : MonoBehaviour, ISimulation
+    public class CharacterMovement : MonoBehaviour, ISimulation, IHistory, IRollback, IRebase
     {
         [SerializeField] private float _speed = 5f;
 
-        private Vector3 _moveDirection = Vector3.zero;
+        private readonly RarelyChangingValue<Vector3> _moveDirection = new RarelyChangingValue<Vector3>(Vector3.zero);
 
         public void SetMoveDirection(Vector3 moveDirection)
         {
-            _moveDirection = moveDirection;
+            _moveDirection.Value = moveDirection;
         }
 
         public void StepForward()
         {
-            transform.position += _moveDirection * (UnitySimulation.SimulationSpeed.SecondsPerTick * _speed);
+            transform.position += _moveDirection.Value * (UnitySimulation.SimulationSpeed.SecondsPerTick * _speed);
+        }
+
+        public void SaveStep()
+        {
+            _moveDirection.SaveStep();
+        }
+
+        public void Rollback(int steps)
+        {
+            _moveDirection.Rollback(steps);
+        }
+
+        public void ForgetFromBeginning(int steps)
+        {
+            _moveDirection.ForgetFromBeginning(steps);
         }
     }
 }

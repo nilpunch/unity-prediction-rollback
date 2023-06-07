@@ -47,6 +47,11 @@ namespace UPR
 
         public void ForgetFromBeginning(int steps)
         {
+            if (steps < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(steps));
+            }
+
             LocalRebases.ForgetFromBeginning(steps);
         }
     }

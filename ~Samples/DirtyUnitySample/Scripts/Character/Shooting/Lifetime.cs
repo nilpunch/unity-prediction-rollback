@@ -2,7 +2,7 @@
 
 namespace UPR.Samples
 {
-    public class Lifetime : MonoBehaviour, IHistory, IRollback, IRebase, IInitialize
+    public class Lifetime : MonoBehaviour, IInitialize, IHistory, IRollback, IRebase
     {
         [SerializeField] private bool _aliveInitially = true;
 
