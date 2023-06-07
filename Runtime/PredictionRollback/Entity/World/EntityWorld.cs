@@ -66,6 +66,11 @@ namespace UPR
 
         public void Rollback(int steps)
         {
+            if (steps < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(steps));
+            }
+
             if (steps > StepsSaved)
             {
                 throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
@@ -83,6 +88,11 @@ namespace UPR
 
         public void ForgetFromBeginning(int steps)
         {
+            if (steps < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(steps));
+            }
+
             if (steps > StepsSaved)
             {
                 throw new Exception($"Can't forget that far. {nameof(StepsSaved)}: {StepsSaved}, Forgetting: {steps}.");

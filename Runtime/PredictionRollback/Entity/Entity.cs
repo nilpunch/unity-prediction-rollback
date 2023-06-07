@@ -34,6 +34,11 @@ namespace UPR
 
         public void Rollback(int steps)
         {
+            if (steps < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(steps));
+            }
+
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
 

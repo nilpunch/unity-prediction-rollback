@@ -110,8 +110,7 @@ namespace UPR.Samples
 
         public static void ForgetFromBegin(int steps)
         {
-            // World must have at least 1 saved step for 1 frame rollback in time travel machine
-            s_rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(s_characterWorld.StepsSaved - 1, steps), 0));
+            s_rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(s_characterWorld.StepsSaved, steps), 0));
         }
     }
 }

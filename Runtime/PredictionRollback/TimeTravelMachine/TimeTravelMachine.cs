@@ -31,16 +31,15 @@ namespace UPR
                 throw new ArgumentOutOfRangeException(nameof(targetTick), "Target tick should not be negative!");
             }
 
-            int earliestCommandChange = EarliestCommandChange();
-            int earliestTick = Math.Min(targetTick, earliestCommandChange);
+            int earliestTick = Math.Min(targetTick, EarliestCommandChange());
             int stepsToRollback = Math.Max(CurrentTick - earliestTick, 0);
 
             _worldRollback.Rollback(stepsToRollback);
             CurrentTick -= stepsToRollback;
 
-            while (CurrentTick <= targetTick)
+            while (CurrentTick < targetTick)
             {
-                foreach (IWorldCommandTimeline commandTimeline in _commandTimelines)
+                foreach (var commandTimeline in _commandTimelines)
                 {
                     commandTimeline.ExecuteCommands(CurrentTick);
                 }
@@ -50,7 +49,7 @@ namespace UPR
                 CurrentTick += 1;
             }
 
-            foreach (IWorldCommandTimeline commandTimeline in _commandTimelines)
+            foreach (var commandTimeline in _commandTimelines)
             {
                 commandTimeline.ApproveChangesUpTo(targetTick);
             }
