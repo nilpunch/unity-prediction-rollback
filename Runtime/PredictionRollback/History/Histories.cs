@@ -10,9 +10,7 @@ namespace UPR
         public void Add(IHistory history)
         {
             if (history == null)
-            {
                 throw new ArgumentNullException(nameof(history));
-            }
 
             _histories.Add(history);
         }

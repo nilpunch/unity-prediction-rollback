@@ -27,9 +27,7 @@ namespace UPR
         public void FastForwardToTick(int targetTick)
         {
             if (targetTick < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(targetTick), "Target tick should not be negative!");
-            }
 
             int earliestTick = Math.Min(targetTick, EarliestCommandChange());
             int stepsToRollback = Math.Max(CurrentTick - earliestTick, 0);

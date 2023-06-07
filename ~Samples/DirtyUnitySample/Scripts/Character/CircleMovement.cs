@@ -2,6 +2,9 @@
 
 namespace UPR.Samples
 {
+    /// <summary>
+    /// Reversible simulation have no need in steps saving.
+    /// </summary>
     public class CircleMovement : MonoBehaviour, IInitialize, ISimulation, IRollback
     {
         [SerializeField] private float _speedX = 5f;

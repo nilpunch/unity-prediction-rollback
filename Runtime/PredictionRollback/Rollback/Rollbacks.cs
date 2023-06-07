@@ -10,9 +10,7 @@ namespace UPR
         public void Add(IRollback simulation)
         {
             if (simulation == null)
-            {
                 throw new ArgumentNullException(nameof(simulation));
-            }
 
             _rollback.Add(simulation);
         }

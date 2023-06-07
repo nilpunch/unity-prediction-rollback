@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 35236780}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 35236782}
 --- !u!114 &35236786
 MonoBehaviour:
@@ -324,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 42012178}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 42012180}
 --- !u!114 &42012184
 MonoBehaviour:
@@ -449,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 45416685}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 45416687}
 --- !u!114 &45416691
 MonoBehaviour:
@@ -657,6 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 80203567}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 80203569}
 --- !u!114 &80203573
 MonoBehaviour:
@@ -865,6 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 162105667}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 162105669}
 --- !u!114 &162105673
 MonoBehaviour:
@@ -1156,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 183669236}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 183669238}
 --- !u!114 &183669242
 MonoBehaviour:
@@ -1281,6 +1287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 214568153}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 214568155}
 --- !u!114 &214568159
 MonoBehaviour:
@@ -1406,6 +1413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 235429917}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 235429919}
 --- !u!114 &235429923
 MonoBehaviour:
@@ -1614,6 +1622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 281317755}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 281317757}
 --- !u!114 &281317761
 MonoBehaviour:
@@ -1739,6 +1748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 284091776}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 284091778}
 --- !u!114 &284091782
 MonoBehaviour:
@@ -2010,6 +2020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 316454177}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 316454179}
 --- !u!114 &316454183
 MonoBehaviour:
@@ -2218,6 +2229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 339795090}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 339795092}
 --- !u!114 &339795096
 MonoBehaviour:
@@ -2343,6 +2355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 355830049}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 355830051}
 --- !u!114 &355830055
 MonoBehaviour:
@@ -2551,6 +2564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 415441256}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 415441258}
 --- !u!114 &415441262
 MonoBehaviour:
@@ -2676,6 +2690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 464121521}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 464121523}
 --- !u!114 &464121527
 MonoBehaviour:
@@ -2884,6 +2899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 480528703}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 480528705}
 --- !u!114 &480528709
 MonoBehaviour:
@@ -3129,6 +3145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 532458478}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 532458480}
 --- !u!114 &532458484
 MonoBehaviour:
@@ -3254,6 +3271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 552693164}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 552693166}
 --- !u!114 &552693170
 MonoBehaviour:
@@ -3628,6 +3646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 621110041}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 621110043}
 --- !u!114 &621110047
 MonoBehaviour:
@@ -3836,6 +3855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 649430529}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 649430531}
 --- !u!114 &649430535
 MonoBehaviour:
@@ -3961,6 +3981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 703288231}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 703288233}
 --- !u!114 &703288237
 MonoBehaviour:
@@ -4309,6 +4330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 733024313}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 733024315}
 --- !u!114 &733024319
 MonoBehaviour:
@@ -4667,6 +4689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 797250683}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 797250685}
 --- !u!114 &797250689
 MonoBehaviour:
@@ -4792,6 +4815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 847632143}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 847632145}
 --- !u!114 &847632149
 MonoBehaviour:
@@ -4917,6 +4941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 850445837}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 850445839}
 --- !u!114 &850445843
 MonoBehaviour:
@@ -5042,6 +5067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 865613498}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 865613500}
 --- !u!114 &865613504
 MonoBehaviour:
@@ -5250,6 +5276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 893774461}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 893774463}
 --- !u!114 &893774467
 MonoBehaviour:
@@ -5458,6 +5485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 958602570}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 958602572}
 --- !u!114 &958602576
 MonoBehaviour:
@@ -5749,6 +5777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 982031309}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 982031311}
 --- !u!114 &982031315
 MonoBehaviour:
@@ -6040,6 +6069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 999360998}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 999361000}
 --- !u!114 &999361004
 MonoBehaviour:
@@ -6331,6 +6361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1049282511}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1049282513}
 --- !u!114 &1049282517
 MonoBehaviour:
@@ -6893,6 +6924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1094547230}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1094547232}
 --- !u!114 &1094547236
 MonoBehaviour:
@@ -7509,6 +7541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1207603971}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1207603973}
 --- !u!114 &1207603977
 MonoBehaviour:
@@ -7634,6 +7667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1212841034}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1212841036}
 --- !u!114 &1212841040
 MonoBehaviour:
@@ -7759,6 +7793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1214292489}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1214292491}
 --- !u!114 &1214292495
 MonoBehaviour:
@@ -8133,6 +8168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1241271426}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1241271428}
 --- !u!114 &1241271432
 MonoBehaviour:
@@ -8341,6 +8377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1305117499}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1305117501}
 --- !u!114 &1305117505
 MonoBehaviour:
@@ -8715,6 +8752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1381698614}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1381698616}
 --- !u!114 &1381698620
 MonoBehaviour:
@@ -8923,6 +8961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1393488595}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1393488597}
 --- !u!114 &1393488601
 MonoBehaviour:
@@ -9048,6 +9087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1445450142}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1445450144}
 --- !u!114 &1445450148
 MonoBehaviour:
@@ -9256,6 +9296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1470333987}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1470333989}
 --- !u!114 &1470333993
 MonoBehaviour:
@@ -9426,7 +9467,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c016807210e905c4ab300ad3e145bae1, type: 2}
+  - {fileID: 2100000, guid: 5390cd124f316244a903746e1fcbd824, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9630,6 +9671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1514935431}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1514935433}
 --- !u!114 &1514935437
 MonoBehaviour:
@@ -9776,6 +9818,7 @@ GameObject:
   - component: {fileID: 1521243475}
   - component: {fileID: 1521243476}
   - component: {fileID: 1521243478}
+  - component: {fileID: 1521243480}
   - component: {fileID: 1521243479}
   m_Layer: 0
   m_Name: Character
@@ -9811,6 +9854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1521243478}
+  _characterMovement: {fileID: 1521243479}
   _characterShooting: {fileID: 1521243476}
 --- !u!4 &1521243472
 Transform:
@@ -9878,15 +9922,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1521243469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0799c4414c741e18ac03562323296bb, type: 3}
+  m_Script: {fileID: 11500000, guid: ae2520bc006c472b96cdcb11f118da0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedX: 1
-  _speedY: 2
-  _radiusX: 10
-  _radiusY: 5
-  _phaseX: 180
-  _phaseY: 0
+  _speed: 6
+--- !u!114 &1521243480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521243469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e716f1bfa4a4d62af44d927df0403f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1561924370
 GameObject:
   m_ObjectHideFlags: 0
@@ -10129,6 +10180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1626597597}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1626597599}
 --- !u!114 &1626597603
 MonoBehaviour:
@@ -10254,6 +10306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1661542037}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1661542039}
 --- !u!114 &1661542043
 MonoBehaviour:
@@ -10462,6 +10515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1688494080}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1688494082}
 --- !u!114 &1688494086
 MonoBehaviour:
@@ -10587,6 +10641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1696292254}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1696292256}
 --- !u!114 &1696292260
 MonoBehaviour:
@@ -10712,6 +10767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1697881397}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1697881399}
 --- !u!114 &1697881403
 MonoBehaviour:
@@ -10837,6 +10893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1713920454}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1713920456}
 --- !u!114 &1713920460
 MonoBehaviour:
@@ -11045,6 +11102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1766041746}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1766041748}
 --- !u!114 &1766041752
 MonoBehaviour:
@@ -11253,6 +11311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1782745335}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1782745337}
 --- !u!114 &1782745341
 MonoBehaviour:
@@ -11461,6 +11520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1797323927}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1797323929}
 --- !u!114 &1797323933
 MonoBehaviour:
@@ -11669,6 +11729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1812036670}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1812036672}
 --- !u!114 &1812036676
 MonoBehaviour:
@@ -11960,6 +12021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1848771259}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1848771261}
 --- !u!114 &1848771265
 MonoBehaviour:
@@ -12085,6 +12147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1848958485}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1848958487}
 --- !u!114 &1848958491
 MonoBehaviour:
@@ -12551,6 +12614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1910390599}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1910390601}
 --- !u!114 &1910390605
 MonoBehaviour:
@@ -12759,6 +12823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 1958149931}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1958149933}
 --- !u!114 &1958149937
 MonoBehaviour:
@@ -13216,6 +13281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2020724739}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2020724741}
 --- !u!114 &2020724745
 MonoBehaviour:
@@ -13341,6 +13407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2039093870}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2039093872}
 --- !u!114 &2039093876
 MonoBehaviour:
@@ -13466,6 +13533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2048372856}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2048372858}
 --- !u!114 &2048372862
 MonoBehaviour:
@@ -13591,6 +13659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2049099531}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2049099533}
 --- !u!114 &2049099537
 MonoBehaviour:
@@ -13716,6 +13785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2061085959}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2061085961}
 --- !u!114 &2061085965
 MonoBehaviour:
@@ -13841,6 +13911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2064612185}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2064612187}
 --- !u!114 &2064612191
 MonoBehaviour:
@@ -14132,6 +14203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifetime: {fileID: 2114648154}
+  _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2114648156}
 --- !u!114 &2114648160
 MonoBehaviour:

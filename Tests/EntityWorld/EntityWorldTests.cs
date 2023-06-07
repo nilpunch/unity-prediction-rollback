@@ -9,43 +9,43 @@ namespace UPR.Tests
         public void RollbackZeroAppliesLastSavedState()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
+            var entitiesTimeline = new EntityWorld<TestEntity>();
             int originalValue = 11;
-            var testEntity = new SimpleTestEntity(originalValue);
+            var testEntity = new TestEntity(originalValue);
 
             // Act
             entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
             entitiesTimeline.SaveStep();
-            testEntity.TestObject.ChangeValue(22);
+            testEntity.StoredValue = 22;
             entitiesTimeline.Rollback(0);
 
             // Assert
-            Assert.AreEqual(originalValue, testEntity.TestObject.Value);
+            Assert.AreEqual(originalValue, testEntity.StoredValue);
         }
 
         [Test]
         public void RollbackAliveEntityRollbackIt()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld<SimpleTestEntity>();
+            var entitiesTimeline = new EntityWorld<TestEntity>();
             int originalValue = 11;
-            var testEntity = new SimpleTestEntity(originalValue);
+            var testEntity = new TestEntity(originalValue);
 
             // Act
             entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
             entitiesTimeline.SaveStep();
 
             int newValue = 22;
-            testEntity.TestObject.ChangeValue(newValue);
+            testEntity.StoredValue = newValue;
             entitiesTimeline.SaveStep();
 
-            testEntity.TestObject.ChangeValue(33);
+            testEntity.StoredValue = 33;
             entitiesTimeline.SaveStep();
 
             entitiesTimeline.Rollback(1);
 
             // Assert
-            Assert.AreEqual(newValue, testEntity.TestObject.Value);
+            Assert.AreEqual(newValue, testEntity.StoredValue);
         }
     }
 }

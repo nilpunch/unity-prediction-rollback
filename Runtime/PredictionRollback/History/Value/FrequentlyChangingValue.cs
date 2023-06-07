@@ -10,10 +10,7 @@ namespace UPR
         public FrequentlyChangingValue(TValue initialValue)
         {
             Value = initialValue;
-            _history = new List<TValue>
-            {
-                Value
-            };
+            _history = new List<TValue> { Value };
         }
 
         public int StepsSaved => _history.Count - 1;
@@ -29,10 +26,11 @@ namespace UPR
 
         public void Rollback(int steps)
         {
+            if (steps < 0)
+                throw new ArgumentOutOfRangeException(nameof(steps));
+
             if (steps > StepsSaved)
-            {
                 throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
-            }
 
             if (StepsSaved != 0)
             {
@@ -45,14 +43,10 @@ namespace UPR
         public void ForgetFromBeginning(int steps)
         {
             if (steps < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(steps));
-            }
 
             if (steps > StepsSaved)
-            {
                 throw new Exception($"Can't forget that far. {nameof(StepsSaved)}: {StepsSaved}, Forgetting: {steps}.");
-            }
 
             _history.RemoveRange(0, steps);
         }

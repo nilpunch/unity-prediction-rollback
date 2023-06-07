@@ -8,13 +8,13 @@ namespace UPR.Samples
         ICommandTarget<CharacterShootCommand>
     {
         [SerializeField] private Lifetime _lifetime;
-        // [SerializeField] private CharacterMovement _characterMovement;
+        [SerializeField] private CharacterMovement _characterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
         public void ExecuteCommand(in CharacterMoveCommand command)
         {
-            // if (_lifetime.IsAlive)
-            //     _characterMovement.SetMoveDirection(command.MoveDirection);
+            if (_lifetime.IsAlive)
+                _characterMovement?.SetMoveDirection(command.MoveDirection);
         }
 
         public void ExecuteCommand(in CharacterShootCommand command)

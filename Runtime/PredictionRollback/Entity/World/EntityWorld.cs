@@ -9,9 +9,10 @@ namespace UPR
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
+        public int StepsSaved => CurrentTick - HistoryBeginningTick;
+
         private int HistoryBeginningTick { get; set; }
         private int CurrentTick { get; set; }
-        public int StepsSaved => CurrentTick - HistoryBeginningTick;
 
         public EntityWorld(int worldTick = 0)
         {
@@ -67,14 +68,10 @@ namespace UPR
         public void Rollback(int steps)
         {
             if (steps < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(steps));
-            }
 
             if (steps > StepsSaved)
-            {
                 throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
-            }
 
             foreach (var entity in _entities)
             {
@@ -89,22 +86,18 @@ namespace UPR
         public void ForgetFromBeginning(int steps)
         {
             if (steps < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(steps));
-            }
 
             if (steps > StepsSaved)
-            {
                 throw new Exception($"Can't forget that far. {nameof(StepsSaved)}: {StepsSaved}, Forgetting: {steps}.");
-            }
 
             HistoryBeginningTick += steps;
 
             foreach (var entity in _entities)
             {
                 int entityHistoryBegin = CurrentTick - entity.LocalStep;
-                int canForgetTicks = HistoryBeginningTick - entityHistoryBegin;
-                entity.ForgetFromBeginning(Math.Min(Math.Max(canForgetTicks, 0), steps));
+                int canForgetSteps = Math.Max(HistoryBeginningTick - entityHistoryBegin, 0);
+                entity.ForgetFromBeginning(Math.Min(canForgetSteps, steps));
             }
         }
 

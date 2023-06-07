@@ -2,6 +2,7 @@
 
 namespace UPR.Samples
 {
+    [RequireComponent(typeof(EntityTransform))] // Component does not save position by itself. So, we need EntityTransform
     public class CharacterMovement : MonoBehaviour, ISimulation, IHistory, IRollback, IRebase
     {
         [SerializeField] private float _speed = 5f;

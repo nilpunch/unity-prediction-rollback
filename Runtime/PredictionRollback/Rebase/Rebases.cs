@@ -10,9 +10,7 @@ namespace UPR
         public void Add(IRebase rebase)
         {
             if (rebase == null)
-            {
                 throw new ArgumentNullException(nameof(rebase));
-            }
 
             _rebases.Add(rebase);
         }

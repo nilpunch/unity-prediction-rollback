@@ -21,35 +21,31 @@ namespace UPR.Samples
 
         private void Awake()
         {
-            var components = GetComponentsInChildren<MonoBehaviour>();
+            var components = GetComponentsInChildren<MonoBehaviour>()
+                .Where(component => component != this)
+                .ToArray();
 
-            var simulations = components.Where(component => component != this && component is ISimulation).Cast<ISimulation>();
-            var rollbacks = components.Where(component => component != this && component is IRollback).Cast<IRollback>();
-            var histories = components.Where(component => component != this && component is IHistory).Cast<IHistory>();
-            var rebases = components.Where(component => component != this && component is IRebase).Cast<IRebase>();
-            var initializes = components.Where(component => component is IInitialize).Cast<IInitialize>();
-
-            foreach (ISimulation simulation in simulations)
+            foreach (ISimulation simulation in components.OfType<ISimulation>())
             {
                 LocalSimulations.Add(simulation);
             }
 
-            foreach (IRollback rollback in rollbacks)
+            foreach (IRollback rollback in components.OfType<IRollback>())
             {
                 LocalRollbacks.Add(rollback);
             }
 
-            foreach (IHistory history in histories)
+            foreach (IHistory history in components.OfType<IHistory>())
             {
                 LocalHistories.Add(history);
             }
 
-            foreach (IRebase rebase in rebases)
+            foreach (IRebase rebase in  components.OfType<IRebase>())
             {
                 LocalRebases.Add(rebase);
             }
 
-            foreach (var initialize in initializes)
+            foreach (var initialize in components.OfType<IInitialize>())
             {
                 initialize.Initialize();
             }
@@ -82,11 +78,6 @@ namespace UPR.Samples
 
         public void Rollback(int steps)
         {
-            if (steps < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(steps));
-            }
-
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
 
@@ -95,11 +86,6 @@ namespace UPR.Samples
 
         public void ForgetFromBeginning(int steps)
         {
-            if (steps < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(steps));
-            }
-
             LocalRebases.ForgetFromBeginning(steps);
         }
     }

@@ -8,8 +8,6 @@ namespace UPR.Samples
         private FrequentlyChangingValue<Vector3> _position;
         private FrequentlyChangingValue<Quaternion> _rotation;
 
-        public int StepsSaved => _position.StepsSaved;
-
         public void Initialize()
         {
             _position = new FrequentlyChangingValue<Vector3>(transform.position);

@@ -10,9 +10,7 @@ namespace UPR
         public void Add(ISimulation simulation)
         {
             if (simulation == null)
-            {
                 throw new ArgumentNullException(nameof(simulation));
-            }
 
             _simulations.Add(simulation);
         }
