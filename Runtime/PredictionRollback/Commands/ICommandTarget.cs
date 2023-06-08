@@ -1,4 +1,4 @@
-﻿namespace UPR
+﻿namespace UPR.PredictionRollback
 {
     public interface ICommandTarget<TCommand>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace UPR
+namespace UPR.PredictionRollback
 {
     public class EntityWorld<TEntity> : IEntityWorld<TEntity>, ISimulation, IHistory, IRollback, IRebase where TEntity : IEntity
     {

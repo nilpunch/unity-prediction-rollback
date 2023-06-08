@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {

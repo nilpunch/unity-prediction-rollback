@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
@@ -80,7 +81,6 @@ namespace UPR.Samples
         {
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-
             LocalStep -= steps;
         }
 

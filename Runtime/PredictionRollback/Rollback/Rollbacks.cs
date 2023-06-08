@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UPR
+namespace UPR.PredictionRollback
 {
     public class Rollbacks : IRollback
     {

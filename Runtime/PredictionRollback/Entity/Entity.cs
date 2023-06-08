@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UPR
+namespace UPR.PredictionRollback
 {
     public abstract class Entity : IEntity
     {
@@ -36,7 +36,6 @@ namespace UPR
         {
             int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-
             LocalStep -= steps;
         }
 

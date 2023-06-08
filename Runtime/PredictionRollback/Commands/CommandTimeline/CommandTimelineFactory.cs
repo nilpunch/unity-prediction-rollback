@@ -1,4 +1,4 @@
-﻿namespace UPR
+﻿namespace UPR.PredictionRollback
 {
     public class CommandTimelineFactory<TCommand> : ICommandTimelineFactory<TCommand>
     {

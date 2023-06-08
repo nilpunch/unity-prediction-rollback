@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UPR.PredictionRollback;
+using UPR.Utils;
 
 namespace UPR.Tests
 {
-    public class ChangeHistoryTests
+    public class RarelyChangingValueTests
     {
         [Test]
-        public void RollbackWithNotFilledHistoryShouldThrow()
+        public void Rollback_WithNotFilledHistory_ShouldThrow()
         {
             // Arrange
             int originalValue = 11;
@@ -27,7 +29,7 @@ namespace UPR.Tests
         }
 
         [Test]
-        public void RollbackZeroAppliesLastSavedState()
+        public void RollbackZero_AppliesLastSavedState()
         {
             // Arrange
             int originalValue = 11;
@@ -42,7 +44,7 @@ namespace UPR.Tests
         }
 
         [Test]
-        public void RollbackWorksAsIntended()
+        public void Rollback_WithFilledHistory_AppliesPreviousState()
         {
             // Arrange
             int originalValue = 11;

@@ -1,4 +1,6 @@
-﻿namespace UPR.Samples
+﻿using UPR.PredictionRollback;
+
+namespace UPR.Samples
 {
     public interface IIdGenerator
     {

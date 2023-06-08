@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UPR
+namespace UPR.PredictionRollback
 {
     public class WorldCommandTimeline<TCommand> : IWorldCommandTimeline<TCommand>
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using UPR.PredictionRollback;
 
-namespace UPR
+namespace UPR.Utils
 {
     public class FrequentlyChangingValue<TValue> : IHistory, IRollback, IRebase where TValue : IEquatable<TValue>
     {

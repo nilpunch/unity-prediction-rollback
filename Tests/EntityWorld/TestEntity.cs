@@ -1,4 +1,7 @@
-﻿namespace UPR.Tests
+﻿using UPR.PredictionRollback;
+using UPR.Utils;
+
+namespace UPR.Tests
 {
     public class TestEntity : Entity
     {

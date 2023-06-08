@@ -1,4 +1,4 @@
-﻿namespace UPR
+﻿namespace UPR.PredictionRollback
 {
     /// <summary>
     /// Stepper for snapshot-based rollbacking.

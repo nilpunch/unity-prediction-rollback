@@ -1,4 +1,4 @@
-﻿namespace UPR
+﻿namespace UPR.Common
 {
     public struct Checksum
     {

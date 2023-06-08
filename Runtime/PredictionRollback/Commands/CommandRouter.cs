@@ -1,4 +1,4 @@
-﻿namespace UPR
+﻿namespace UPR.PredictionRollback
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {

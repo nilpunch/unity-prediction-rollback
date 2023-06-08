@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UPR
+namespace UPR.PredictionRollback
 {
     public readonly struct EntityId : IEquatable<EntityId>
     {

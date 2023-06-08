@@ -1,4 +1,7 @@
-﻿namespace UPR.Samples
+﻿using UPR.PredictionRollback;
+using UPR.Utils;
+
+namespace UPR.Samples
 {
     public class IdGenerator : Entity, IIdGenerator
     {

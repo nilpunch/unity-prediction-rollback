@@ -1,10 +1,7 @@
 {
-    "name": "UPR.Networking",
+    "name": "UPR.Serialization",
     "rootNamespace": "",
-    "references": [
-        "GUID:c11b41b18272cce45a1d4fad7c4ecd81",
-        "GUID:1b69f91aadc9db84a897f205a57d541c"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

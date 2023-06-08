@@ -2,9 +2,9 @@
     "name": "UPR.~Samples",
     "rootNamespace": "UPR.Samples",
     "references": [
-        "GUID:10813fe237f8d254ebb9db6f59cab3de",
         "GUID:c11b41b18272cce45a1d4fad7c4ecd81",
-        "GUID:1b69f91aadc9db84a897f205a57d541c"
+        "GUID:1b69f91aadc9db84a897f205a57d541c",
+        "GUID:bf3062ab7dcd05c4b8949f83b90166dd"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
