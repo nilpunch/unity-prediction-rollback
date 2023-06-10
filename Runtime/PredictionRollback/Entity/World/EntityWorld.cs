@@ -9,16 +9,20 @@ namespace UPR.PredictionRollback
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
+        public EntityWorld(int currentTick = 0)
+        {
+            HistoryBeginningTick = currentTick;
+            CurrentTick = currentTick;
+        }
+
         public int StepsSaved => CurrentTick - HistoryBeginningTick;
 
-        private int HistoryBeginningTick { get; set; }
-        private int CurrentTick { get; set; }
+        public int CurrentTick { get; private set; }
 
-        public EntityWorld(int worldTick = 0)
-        {
-            HistoryBeginningTick = worldTick;
-            CurrentTick = worldTick;
-        }
+        public IReadOnlyCollection<TEntity> Entities => _entities;
+
+        private int HistoryBeginningTick { get; set; }
+
 
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {

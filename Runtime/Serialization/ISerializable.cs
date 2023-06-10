@@ -1,6 +1,6 @@
 ﻿namespace UPR.Serialization
 {
-    public interface ISerialization
+    public interface ISerializable
     {
         void Serialize(IWriteHandle writeHandle);
     }
