@@ -14,7 +14,6 @@ namespace UPR.Utils
 
         public void Serialize(IWriteHandle writeHandle)
         {
-            new IntSerializable(_entityWorld.CurrentTick).Serialize(writeHandle);
             new IntSerializable(_entityWorld.Entities.Count).Serialize(writeHandle);
             foreach (TEntity entity in _entityWorld.Entities)
             {

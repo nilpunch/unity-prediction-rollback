@@ -6,7 +6,7 @@ using UPR.PredictionRollback;
 namespace UPR.Samples
 {
     [DisallowMultipleComponent]
-    public class UnityEntity : MonoBehaviour, IEntity, IReusableEntity, IRebase
+    public class UnityEntity : MonoBehaviour, IEntity, IReusableEntity, ISimulation, IHistory, IRollback, IRebase
     {
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -16,7 +16,7 @@ namespace UPR.Samples
 
         protected Rebases LocalRebases { get; } = new Rebases();
 
-        public int LocalStep { get; private set; }
+        public int SavedSteps { get; private set; }
 
         public virtual bool CanBeReused => false;
 
@@ -54,14 +54,14 @@ namespace UPR.Samples
 
         public void FullyResetEntity()
         {
-            int stepsToRollback = Math.Max(LocalStep, 0);
+            int stepsToRollback = Math.Max(SavedSteps, 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            LocalStep = 0;
+            SavedSteps = 0;
         }
 
         public void StepForward()
         {
-            if (LocalStep >= 0)
+            if (SavedSteps >= 0)
             {
                 LocalSimulations.StepForward();
             }
@@ -69,19 +69,19 @@ namespace UPR.Samples
 
         public void SaveStep()
         {
-            if (LocalStep >= 0)
+            if (SavedSteps >= 0)
             {
                 LocalHistories.SaveStep();
             }
 
-            LocalStep += 1;
+            SavedSteps += 1;
         }
 
         public void Rollback(int steps)
         {
-            int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
+            int stepsToRollback = Math.Max(Math.Min(SavedSteps, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            LocalStep -= steps;
+            SavedSteps -= steps;
         }
 
         public void ForgetFromBeginning(int steps)

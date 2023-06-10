@@ -1,7 +1,7 @@
 ﻿namespace UPR.PredictionRollback
 {
-    public interface IEntity : IHistory, ISimulation, IRollback, IRebase
+    public interface IEntity
     {
-        int LocalStep { get; }
+        int SavedSteps { get; }
     }
 }

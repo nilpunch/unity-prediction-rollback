@@ -1,28 +1,14 @@
-using System;
 using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
-    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, ISimulation, IHistory, IRollback, IRebase where TEntity : IEntity
+    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IMispredictionCleanup where TEntity : IEntity
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
         private readonly Dictionary<TEntity, EntityId> _idsByEntity = new Dictionary<TEntity, EntityId>();
 
-        public EntityWorld(int currentTick = 0)
-        {
-            HistoryBeginningTick = currentTick;
-            CurrentTick = currentTick;
-        }
-
-        public int StepsSaved => CurrentTick - HistoryBeginningTick;
-
-        public int CurrentTick { get; private set; }
-
-        public IReadOnlyCollection<TEntity> Entities => _entities;
-
-        private int HistoryBeginningTick { get; set; }
-
+        public IReadOnlyList<TEntity> Entities => _entities;
 
         public void RegisterEntity(TEntity entity, EntityId entityId)
         {
@@ -51,66 +37,17 @@ namespace UPR.PredictionRollback
             return _entitiesById[entityId];
         }
 
-        public void StepForward()
+        public void Cleanup()
         {
-            for (int i = 0; i < _entities.Count; i++)
-            {
-                _entities[i].StepForward();
-            }
+            RemoveNotBornEntities();
         }
 
-        public void SaveStep()
-        {
-            foreach (var entity in _entities)
-            {
-                entity.SaveStep();
-            }
-
-            CurrentTick += 1;
-        }
-
-        public void Rollback(int steps)
-        {
-            if (steps < 0)
-                throw new ArgumentOutOfRangeException(nameof(steps));
-
-            if (steps > StepsSaved)
-                throw new Exception($"Can't rollback that far. {nameof(StepsSaved)}: {StepsSaved}, Rollbacking: {steps}.");
-
-            foreach (var entity in _entities)
-            {
-                entity.Rollback(steps);
-            }
-
-            CurrentTick -= steps;
-
-            LoseTrackOfNotBornEntities();
-        }
-
-        public void ForgetFromBeginning(int steps)
-        {
-            if (steps < 0)
-                throw new ArgumentOutOfRangeException(nameof(steps));
-
-            if (steps > StepsSaved)
-                throw new Exception($"Can't forget that far. {nameof(StepsSaved)}: {StepsSaved}, Forgetting: {steps}.");
-
-            HistoryBeginningTick += steps;
-
-            foreach (var entity in _entities)
-            {
-                int entityHistoryBegin = CurrentTick - entity.LocalStep;
-                int canForgetSteps = Math.Max(HistoryBeginningTick - entityHistoryBegin, 0);
-                entity.ForgetFromBeginning(Math.Min(canForgetSteps, steps));
-            }
-        }
-
-        private void LoseTrackOfNotBornEntities()
+        private void RemoveNotBornEntities()
         {
             for (int i = _entities.Count - 1; i >= 0; i--)
             {
                 var entity = _entities[i];
-                if (entity.LocalStep <= 0)
+                if (entity.SavedSteps <= 0)
                 {
                     _entities.RemoveAt(i);
                     _entitiesById.Remove(_idsByEntity[entity]);

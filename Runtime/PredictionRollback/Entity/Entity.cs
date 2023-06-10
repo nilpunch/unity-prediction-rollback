@@ -2,9 +2,9 @@
 
 namespace UPR.PredictionRollback
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity : IEntity, ISimulation, IHistory, IRollback, IRebase
     {
-        public int LocalStep { get; set; }
+        public int SavedSteps { get; set; }
 
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -16,7 +16,7 @@ namespace UPR.PredictionRollback
 
         public void StepForward()
         {
-            if (LocalStep >= 0)
+            if (SavedSteps >= 0)
             {
                 LocalSimulations.StepForward();
             }
@@ -24,19 +24,19 @@ namespace UPR.PredictionRollback
 
         public void SaveStep()
         {
-            if (LocalStep >= 0)
+            if (SavedSteps >= 0)
             {
                 LocalHistories.SaveStep();
             }
 
-            LocalStep += 1;
+            SavedSteps += 1;
         }
 
         public void Rollback(int steps)
         {
-            int stepsToRollback = Math.Max(Math.Min(LocalStep, steps), 0);
+            int stepsToRollback = Math.Max(Math.Min(SavedSteps, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            LocalStep -= steps;
+            SavedSteps -= steps;
         }
 
         public void ForgetFromBeginning(int steps)

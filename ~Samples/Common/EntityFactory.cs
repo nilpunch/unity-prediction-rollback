@@ -6,7 +6,7 @@ namespace UPR.Samples
     /// <summary>
     /// Use this to create entities at any time.
     /// </summary>
-    public class EntityFactory<TEntity> : IFactory<TEntity>, IRollback where TEntity : IEntity, IReusableEntity
+    public class EntityFactory<TEntity> : IFactory<TEntity>, IMispredictionCleanup where TEntity : IEntity, IReusableEntity
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
         private readonly IIdGenerator _idGenerator;
@@ -40,10 +40,15 @@ namespace UPR.Samples
 
         public void Rollback(int steps)
         {
-            ReturnMissingEntitiesToPool();
+            ReturnNonExistedEntitiesToPool();
         }
 
-        private void ReturnMissingEntitiesToPool()
+        public void Cleanup()
+        {
+            ReturnNonExistedEntitiesToPool();
+        }
+
+        private void ReturnNonExistedEntitiesToPool()
         {
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {

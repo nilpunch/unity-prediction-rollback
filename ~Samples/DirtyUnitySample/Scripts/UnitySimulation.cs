@@ -26,7 +26,7 @@ namespace UPR.Samples
         public static int CurrentTick => Mathf.FloorToInt(ElapsedTime * SimulationSpeed.TicksPerSecond);
 
         private static Rebases s_rebases;
-        private static EntityWorld<Character> s_characterWorld;
+        private static EntityWorld<Character> s_character;
 
         private void Start()
         {
@@ -36,16 +36,10 @@ namespace UPR.Samples
 
             var charactersWorld = new EntityWorld<Character>();
             CharacterWorld = charactersWorld;
-            s_characterWorld = charactersWorld;
             var bulletWorld = new EntityWorld<Bullet>();
             BulletsWorld = bulletWorld;
             var deathSpikeWorld = new EntityWorld<Enemy>();
             DeathSpikeWorld = deathSpikeWorld;
-
-            s_rebases = new Rebases();
-            s_rebases.Add(charactersWorld);
-            s_rebases.Add(bulletWorld);
-            s_rebases.Add(deathSpikeWorld);
 
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
@@ -71,23 +65,26 @@ namespace UPR.Samples
             var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
             BulletsFactory = bulletsFactory;
 
+            var worldSimulation = new Simulations();
+            worldSimulation.Add(new WorldSimulation<Character>(charactersWorld));
+            worldSimulation.Add(new WorldSimulation<Bullet>(bulletWorld));
+            worldSimulation.Add(new WorldSimulation<Enemy>(deathSpikeWorld));
+
             var worldHistories = new Histories();
             worldHistories.Add(IdGenerator);
-            worldHistories.Add(charactersWorld);
-            worldHistories.Add(bulletWorld);
-            worldHistories.Add(deathSpikeWorld);
+            worldHistories.Add(new WorldHistory<Character>(charactersWorld));
+            worldHistories.Add(new WorldHistory<Bullet>(bulletWorld));
+            worldHistories.Add(new WorldHistory<Enemy>(deathSpikeWorld));
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.Add(IdGenerator);
-            worldRollbacks.Add(charactersWorld);
-            worldRollbacks.Add(bulletWorld);
-            worldRollbacks.Add(deathSpikeWorld);
-            worldRollbacks.Add(bulletsFactory);
-
-            var worldSimulation = new Simulations();
-            worldSimulation.Add(charactersWorld);
-            worldSimulation.Add(bulletWorld);
-            worldSimulation.Add(deathSpikeWorld);
+            worldRollbacks.Add(new WorldRollback<Character>(charactersWorld));
+            worldRollbacks.Add(new WorldRollback<Bullet>(bulletWorld));
+            worldRollbacks.Add(new WorldRollback<Enemy>(deathSpikeWorld));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(charactersWorld));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(bulletWorld));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(deathSpikeWorld));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(bulletsFactory));
 
             TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
@@ -104,14 +101,9 @@ namespace UPR.Samples
 
         private void Update()
         {
-            ElapsedTime += Time.deltaTime * _simulationSpeed;
+            ElapsedTime += UnityEngine.Time.deltaTime * _simulationSpeed;
 
             TimeTravelMachine.FastForwardToTick(CurrentTick);
-        }
-
-        public static void ForgetFromBegin(int steps)
-        {
-            s_rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(s_characterWorld.StepsSaved, steps), 0));
         }
     }
 }

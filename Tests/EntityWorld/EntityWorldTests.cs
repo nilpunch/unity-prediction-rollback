@@ -10,15 +10,17 @@ namespace UPR.Tests
         public void RollbackZero_AppliesLastSavedState()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld<TestEntity>();
+            var entityWorld = new EntityWorld<TestEntity>();
+            var worldHistory = new WorldHistory<TestEntity>(entityWorld);
+            var worldRollback = new WorldRollback<TestEntity>(entityWorld);
             int originalValue = 11;
             var testEntity = new TestEntity(originalValue);
 
             // Act
-            entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
-            entitiesTimeline.SaveStep();
+            entityWorld.RegisterEntity(testEntity, new EntityId(0));
+            worldHistory.SaveStep();
             testEntity.StoredValue = 22;
-            entitiesTimeline.Rollback(0);
+            worldRollback.Rollback(0);
 
             // Assert
             Assert.AreEqual(originalValue, testEntity.StoredValue);
@@ -28,22 +30,24 @@ namespace UPR.Tests
         public void Rollback_WithSavedStep_AppliesPreviousState()
         {
             // Arrange
-            var entitiesTimeline = new EntityWorld<TestEntity>();
+            var entityWorld = new EntityWorld<TestEntity>();
+            var worldHistory = new WorldHistory<TestEntity>(entityWorld);
+            var worldRollback = new WorldRollback<TestEntity>(entityWorld);
             int originalValue = 11;
             var testEntity = new TestEntity(originalValue);
 
             // Act
-            entitiesTimeline.RegisterEntity(testEntity, new EntityId(0));
-            entitiesTimeline.SaveStep();
+            entityWorld.RegisterEntity(testEntity, new EntityId(0));
+            worldHistory.SaveStep();
 
             int newValue = 22;
             testEntity.StoredValue = newValue;
-            entitiesTimeline.SaveStep();
+            worldHistory.SaveStep();
 
             testEntity.StoredValue = 33;
-            entitiesTimeline.SaveStep();
+            worldHistory.SaveStep();
 
-            entitiesTimeline.Rollback(1);
+            worldRollback.Rollback(1);
 
             // Assert
             Assert.AreEqual(newValue, testEntity.StoredValue);

@@ -15,8 +15,7 @@ namespace UPR.Utils
 
         public EntityWorld<TEntity> Deserialize(IReadHandle readHandle)
         {
-            int currentTick = _intDeserializer.Deserialize(readHandle);
-            var entityWorld = new EntityWorld<TEntity>(currentTick);
+            var entityWorld = new EntityWorld<TEntity>();
 
             int entitiesCount = _intDeserializer.Deserialize(readHandle);
             for (int i = 0; i < entitiesCount; i++)
