@@ -1,8 +1,10 @@
-﻿namespace UPR.PredictionRollback
+﻿using UPR.PredictionRollback;
+
+namespace UPR.Utils
 {
-    public class Time : ISimulation, IRollback, ITime
+    public class TickCounter : ISimulation, IRollback, ITickCounter
     {
-        public Time(int currentTick = 0)
+        public TickCounter(int currentTick = 0)
         {
             CurrentTick = currentTick;
         }

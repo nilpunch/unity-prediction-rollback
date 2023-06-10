@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using UPR.Common;
 
 namespace UPR.PredictionRollback
 {
-    public class EntityWorld<TEntity> : IEntityWorld<TEntity>, IMispredictionCleanup where TEntity : IEntity
+    public class EntityWorld<TEntity> : IEntityWorld<TEntity>
     {
         private readonly List<TEntity> _entities = new List<TEntity>();
         private readonly Dictionary<EntityId, TEntity> _entitiesById = new Dictionary<EntityId, TEntity>();
@@ -15,6 +16,14 @@ namespace UPR.PredictionRollback
             _entities.Add(entity);
             _entitiesById.Add(entityId, entity);
             _idsByEntity.Add(entity, entityId);
+        }
+
+        public void DeregisterEntity(EntityId entityId)
+        {
+            var entity = _entitiesById[entityId];
+            _entities.RemoveBySwap(entity);
+            _idsByEntity.Remove(entity);
+            _entitiesById.Remove(entityId);
         }
 
         public EntityId GetEntityId(TEntity entity)
@@ -35,25 +44,6 @@ namespace UPR.PredictionRollback
         public TEntity GetExistingEntity(EntityId entityId)
         {
             return _entitiesById[entityId];
-        }
-
-        public void Cleanup()
-        {
-            RemoveNotBornEntities();
-        }
-
-        private void RemoveNotBornEntities()
-        {
-            for (int i = _entities.Count - 1; i >= 0; i--)
-            {
-                var entity = _entities[i];
-                if (entity.SavedSteps <= 0)
-                {
-                    _entities.RemoveAt(i);
-                    _entitiesById.Remove(_idsByEntity[entity]);
-                    _idsByEntity.Remove(entity);
-                }
-            }
         }
     }
 }

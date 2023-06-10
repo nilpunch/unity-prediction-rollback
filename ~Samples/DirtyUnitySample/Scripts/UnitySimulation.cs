@@ -1,5 +1,6 @@
 using UnityEngine;
 using UPR.PredictionRollback;
+using UPR.Utils;
 
 namespace UPR.Samples
 {
@@ -18,15 +19,16 @@ namespace UPR.Samples
         public static IEntityWorld<Character> CharacterWorld { get; private set; }
         public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
         public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
-        public static IFactory<Bullet> BulletsFactory { get; private set; }
+        public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
 
         public static IdGenerator IdGenerator { get; private set; }
+        public static TickCounter WorldTickCounter { get; private set; }
         public static int CurrentTick => Mathf.FloorToInt(ElapsedTime * SimulationSpeed.TicksPerSecond);
 
-        private static Rebases s_rebases;
-        private static EntityWorld<Character> s_character;
+        private static Rebases Rebases { get; set; }
+        private static RebaseCounter RebaseCounter { get; set; }
 
         private void Start()
         {
@@ -61,14 +63,14 @@ namespace UPR.Samples
             }
 
             IdGenerator = new IdGenerator(entityIndex);
-
-            var bulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
-            BulletsFactory = bulletsFactory;
+            WorldTickCounter = new TickCounter();
+            BulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
 
             var worldSimulation = new Simulations();
             worldSimulation.Add(new WorldSimulation<Character>(charactersWorld));
             worldSimulation.Add(new WorldSimulation<Bullet>(bulletWorld));
             worldSimulation.Add(new WorldSimulation<Enemy>(deathSpikeWorld));
+            worldSimulation.Add(WorldTickCounter);
 
             var worldHistories = new Histories();
             worldHistories.Add(IdGenerator);
@@ -78,13 +80,14 @@ namespace UPR.Samples
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.Add(IdGenerator);
+            worldRollbacks.Add(WorldTickCounter);
             worldRollbacks.Add(new WorldRollback<Character>(charactersWorld));
             worldRollbacks.Add(new WorldRollback<Bullet>(bulletWorld));
             worldRollbacks.Add(new WorldRollback<Enemy>(deathSpikeWorld));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(charactersWorld));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(bulletWorld));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(deathSpikeWorld));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(bulletsFactory));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Character>(charactersWorld)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Bullet>(bulletWorld)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Enemy>(deathSpikeWorld)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(BulletsFactory));
 
             TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
@@ -97,6 +100,13 @@ namespace UPR.Samples
 
             TimeTravelMachine.AddCommandsTimeline(CharacterMovement);
             TimeTravelMachine.AddCommandsTimeline(CharacterShooting);
+
+            RebaseCounter = new RebaseCounter(WorldTickCounter);
+            Rebases = new Rebases();
+            Rebases.Add(new WorldRebase<Character>(charactersWorld, WorldTickCounter));
+            Rebases.Add(new WorldRebase<Bullet>(bulletWorld, WorldTickCounter));
+            Rebases.Add(new WorldRebase<Enemy>(deathSpikeWorld, WorldTickCounter));
+            Rebases.Add(RebaseCounter);
         }
 
         private void Update()
@@ -104,6 +114,11 @@ namespace UPR.Samples
             ElapsedTime += UnityEngine.Time.deltaTime * _simulationSpeed;
 
             TimeTravelMachine.FastForwardToTick(CurrentTick);
+        }
+
+        public static void ForgetFromBegin(int steps)
+        {
+            Rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(RebaseCounter.StepsSaved, steps), 0));
         }
     }
 }

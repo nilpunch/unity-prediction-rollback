@@ -1,6 +1,6 @@
 ﻿namespace UPR.PredictionRollback
 {
-    public interface ITime
+    public interface ITickCounter
     {
         int CurrentTick { get; }
     }

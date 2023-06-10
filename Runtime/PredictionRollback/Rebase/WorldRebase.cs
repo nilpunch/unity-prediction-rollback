@@ -2,19 +2,19 @@
 
 namespace UPR.PredictionRollback
 {
-    public class WorldRebase<TEntity> : IRebase where TEntity : IEntity, IRebase
+    public class WorldRebase<TEntity> : IRebase where TEntity : ITickCounter, IRebase
     {
         private readonly IEntityCollection<TEntity> _entityCollection;
-        private readonly ITime _worldTime;
+        private readonly ITickCounter _worldTickCounter;
 
-        public WorldRebase(IEntityCollection<TEntity> entityCollection, ITime worldTime)
+        public WorldRebase(IEntityCollection<TEntity> entityCollection, ITickCounter worldTickCounter)
         {
             _entityCollection = entityCollection;
-            _worldTime = worldTime;
-            HistoryBeginningTick = _worldTime.CurrentTick;
+            _worldTickCounter = worldTickCounter;
+            HistoryBeginningTick = _worldTickCounter.CurrentTick;
         }
 
-        public int StepsSaved => _worldTime.CurrentTick - HistoryBeginningTick;
+        public int StepsSaved => _worldTickCounter.CurrentTick - HistoryBeginningTick;
 
         private int HistoryBeginningTick { get; set; }
 
@@ -30,7 +30,7 @@ namespace UPR.PredictionRollback
 
             foreach (var entity in _entityCollection.Entities)
             {
-                int entityHistoryBegin = _worldTime.CurrentTick - entity.SavedSteps;
+                int entityHistoryBegin = _worldTickCounter.CurrentTick - entity.CurrentTick;
                 int canForgetSteps = Math.Max(HistoryBeginningTick - entityHistoryBegin, 0);
                 entity.ForgetFromBeginning(Math.Min(canForgetSteps, steps));
             }

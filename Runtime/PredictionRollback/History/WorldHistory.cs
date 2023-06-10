@@ -1,6 +1,6 @@
 ﻿namespace UPR.PredictionRollback
 {
-    public class WorldHistory<TEntity> : IHistory where TEntity : IEntity, IHistory
+    public class WorldHistory<TEntity> : IHistory where TEntity : ITickCounter, IHistory
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
 

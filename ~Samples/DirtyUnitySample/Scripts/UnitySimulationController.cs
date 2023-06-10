@@ -32,6 +32,11 @@ namespace UPR.Samples
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                UnitySimulation.ForgetFromBegin(60);
+            }
+
             if (_simulationStopped)
             {
                 UnitySimulation.TimeTravelMachine.FastForwardToTick(Mathf.RoundToInt(_slider.value));

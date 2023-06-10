@@ -6,7 +6,7 @@ using UPR.PredictionRollback;
 namespace UPR.Samples
 {
     [DisallowMultipleComponent]
-    public class UnityEntity : MonoBehaviour, IEntity, IReusableEntity, ISimulation, IHistory, IRollback, IRebase
+    public class UnityEntity : MonoBehaviour, IReusableEntity, ISimulation, IHistory, IRollback, IRebase, ITickCounter
     {
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -16,7 +16,7 @@ namespace UPR.Samples
 
         protected Rebases LocalRebases { get; } = new Rebases();
 
-        public int SavedSteps { get; private set; }
+        public int CurrentTick { get; private set; }
 
         public virtual bool CanBeReused => false;
 
@@ -54,14 +54,14 @@ namespace UPR.Samples
 
         public void FullyResetEntity()
         {
-            int stepsToRollback = Math.Max(SavedSteps, 0);
+            int stepsToRollback = Math.Max(CurrentTick, 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            SavedSteps = 0;
+            CurrentTick = 0;
         }
 
         public void StepForward()
         {
-            if (SavedSteps >= 0)
+            if (CurrentTick >= 0)
             {
                 LocalSimulations.StepForward();
             }
@@ -69,19 +69,19 @@ namespace UPR.Samples
 
         public void SaveStep()
         {
-            if (SavedSteps >= 0)
+            if (CurrentTick >= 0)
             {
                 LocalHistories.SaveStep();
             }
 
-            SavedSteps += 1;
+            CurrentTick += 1;
         }
 
         public void Rollback(int steps)
         {
-            int stepsToRollback = Math.Max(Math.Min(SavedSteps, steps), 0);
+            int stepsToRollback = Math.Max(Math.Min(CurrentTick, steps), 0);
             LocalRollbacks.Rollback(stepsToRollback);
-            SavedSteps -= steps;
+            CurrentTick -= steps;
         }
 
         public void ForgetFromBeginning(int steps)

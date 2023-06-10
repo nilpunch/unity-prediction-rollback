@@ -6,7 +6,7 @@ namespace UPR.Samples
     /// <summary>
     /// Use this to create entities at any time.
     /// </summary>
-    public class EntityFactory<TEntity> : IFactory<TEntity>, IMispredictionCleanup where TEntity : IEntity, IReusableEntity
+    public class EntityFactory<TEntity> : IFactory<TEntity>, IMispredictionCleanup where TEntity : ITickCounter, IReusableEntity
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
         private readonly IIdGenerator _idGenerator;
@@ -53,7 +53,7 @@ namespace UPR.Samples
             for (int i = _createdEntities.Count - 1; i >= 0; i--)
             {
                 var entity = _createdEntities[i];
-                if (!_entityWorld.IsEntityExists(entity))
+                if (entity.CurrentTick <= 0)
                 {
                     entity.FullyResetEntity();
                     _pool.Return(entity);

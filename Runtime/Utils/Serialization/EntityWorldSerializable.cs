@@ -3,7 +3,7 @@ using UPR.Serialization;
 
 namespace UPR.Utils
 {
-    public class EntityWorldSerializable<TEntity> : ISerializable where TEntity : IEntity, ISerializable
+    public class EntityWorldSerializable<TEntity> : ISerializable where TEntity : ITickCounter, ISerializable
     {
         private readonly IEntityWorld<TEntity> _entityWorld;
 

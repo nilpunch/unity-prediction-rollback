@@ -2,7 +2,7 @@
 
 namespace UPR.PredictionRollback
 {
-    public class WorldRollback<TEntity> : IRollback where TEntity : IEntity, IRollback
+    public class WorldRollback<TEntity> : IRollback where TEntity : ITickCounter, IRollback
     {
         private readonly IEntityCollection<TEntity> _entityCollection;
 

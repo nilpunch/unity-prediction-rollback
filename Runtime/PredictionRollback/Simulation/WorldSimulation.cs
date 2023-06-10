@@ -1,6 +1,6 @@
 ﻿namespace UPR.PredictionRollback
 {
-    public class WorldSimulation<TEntity> : ISimulation where TEntity : IEntity, ISimulation
+    public class WorldSimulation<TEntity> : ISimulation where TEntity : ITickCounter, ISimulation
     {
         private readonly IEntityCollection<TEntity> _entityCollection;
 
