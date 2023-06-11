@@ -3,7 +3,7 @@ using UPR.Utils;
 
 namespace UPR.Samples
 {
-    public class IdGenerator : Entity, IIdGenerator
+    public class IdGenerator : CommandTarget, IIdGenerator
     {
         private readonly RarelyChangingValue<int> _idCounter;
 
@@ -15,11 +15,11 @@ namespace UPR.Samples
             LocalRebases.Add(_idCounter);
         }
 
-        public EntityId Generate()
+        public TargetId Generate()
         {
             int id = _idCounter.Value;
             _idCounter.Value += 1;
-            return new EntityId(id);
+            return new TargetId(id);
         }
     }
 }

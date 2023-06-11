@@ -5,7 +5,7 @@ namespace UPR.Samples
 {
     public class CharacterWorldRawFactory
     {
-        public EntityWorld<Character> Create(byte[] bytes)
+        public CommandTargetRegistry<Character> Create(byte[] bytes)
         {
             return null;
         }

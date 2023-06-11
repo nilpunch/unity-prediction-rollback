@@ -13,12 +13,12 @@ namespace UPR.Samples
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
         public static TimeTravelMachine TimeTravelMachine { get; private set; }
-        public static IWorldCommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
-        public static IWorldCommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
+        public static IMultiTargetCommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
+        public static IMultiTargetCommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
 
-        public static IEntityWorld<Character> CharacterWorld { get; private set; }
-        public static IEntityWorld<Enemy> DeathSpikeWorld { get; private set; }
-        public static IEntityWorld<Bullet> BulletsWorld { get; private set; }
+        public static ICommandTargetRegistry<Character> CharacterRegistry { get; private set; }
+        public static ICommandTargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
+        public static ICommandTargetRegistry<Bullet> BulletsRegistry { get; private set; }
         public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
@@ -36,12 +36,12 @@ namespace UPR.Samples
 
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
 
-            var charactersWorld = new EntityWorld<Character>();
-            CharacterWorld = charactersWorld;
-            var bulletWorld = new EntityWorld<Bullet>();
-            BulletsWorld = bulletWorld;
-            var deathSpikeWorld = new EntityWorld<Enemy>();
-            DeathSpikeWorld = deathSpikeWorld;
+            var characterRegistry = new CommandTargetRegistry<Character>();
+            CharacterRegistry = characterRegistry;
+            var bulletRegistry = new CommandTargetRegistry<Bullet>();
+            BulletsRegistry = bulletRegistry;
+            var enemyRegistry = new CommandTargetRegistry<Enemy>();
+            DeathSpikeRegistry = enemyRegistry;
 
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
@@ -49,10 +49,10 @@ namespace UPR.Samples
                 switch (unityEntity)
                 {
                     case Character character:
-                        CharacterWorld.RegisterEntity(character, new EntityId(entityIndex));
+                        CharacterRegistry.Add(character, new TargetId(entityIndex));
                         break;
                     case Enemy deathSpike:
-                        DeathSpikeWorld.RegisterEntity(deathSpike, new EntityId(entityIndex));
+                        DeathSpikeRegistry.Add(deathSpike, new TargetId(entityIndex));
                         break;
                 }
 
@@ -64,48 +64,48 @@ namespace UPR.Samples
 
             IdGenerator = new IdGenerator(entityIndex);
             WorldTickCounter = new TickCounter();
-            BulletsFactory = new EntityFactory<Bullet>(bulletWorld, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
+            BulletsFactory = new EntityFactory<Bullet>(bulletRegistry, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
 
             var worldSimulation = new Simulations();
-            worldSimulation.Add(new WorldSimulation<Character>(charactersWorld));
-            worldSimulation.Add(new WorldSimulation<Bullet>(bulletWorld));
-            worldSimulation.Add(new WorldSimulation<Enemy>(deathSpikeWorld));
             worldSimulation.Add(WorldTickCounter);
+            worldSimulation.Add(new CollectionSimulation(characterRegistry));
+            worldSimulation.Add(new CollectionSimulation(bulletRegistry));
+            worldSimulation.Add(new CollectionSimulation(enemyRegistry));
 
             var worldHistories = new Histories();
             worldHistories.Add(IdGenerator);
-            worldHistories.Add(new WorldHistory<Character>(charactersWorld));
-            worldHistories.Add(new WorldHistory<Bullet>(bulletWorld));
-            worldHistories.Add(new WorldHistory<Enemy>(deathSpikeWorld));
+            worldHistories.Add(new CollectionHistory(characterRegistry));
+            worldHistories.Add(new CollectionHistory(bulletRegistry));
+            worldHistories.Add(new CollectionHistory(enemyRegistry));
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.Add(IdGenerator);
             worldRollbacks.Add(WorldTickCounter);
-            worldRollbacks.Add(new WorldRollback<Character>(charactersWorld));
-            worldRollbacks.Add(new WorldRollback<Bullet>(bulletWorld));
-            worldRollbacks.Add(new WorldRollback<Enemy>(deathSpikeWorld));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Character>(charactersWorld)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Bullet>(bulletWorld)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new EntityWorldCleanup<Enemy>(deathSpikeWorld)));
+            worldRollbacks.Add(new CollectionRollback(characterRegistry));
+            worldRollbacks.Add(new CollectionRollback(bulletRegistry));
+            worldRollbacks.Add(new CollectionRollback(enemyRegistry));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Character>(characterRegistry)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Bullet>(bulletRegistry)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Enemy>(enemyRegistry)));
             worldRollbacks.Add(new MispredictionCleanupAfterRollback(BulletsFactory));
 
             TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
 
-            CharacterMovement = new WorldCommandTimeline<CharacterMoveCommand>(
+            CharacterMovement = new MultiTargetCommandTimeline<CharacterMoveCommand>(
                 new PredictionCommandTimelineFactory<CharacterMoveCommand>(
-                    new CommandRouter<CharacterMoveCommand>(CharacterWorld)));
-            CharacterShooting = new WorldCommandTimeline<CharacterShootCommand>(
+                    new CommandRouter<CharacterMoveCommand>(CharacterRegistry)));
+            CharacterShooting = new MultiTargetCommandTimeline<CharacterShootCommand>(
                 new PredictionCommandTimelineFactory<CharacterShootCommand>(
-                    new CommandRouter<CharacterShootCommand>(CharacterWorld)));
+                    new CommandRouter<CharacterShootCommand>(CharacterRegistry)));
 
             TimeTravelMachine.AddCommandsTimeline(CharacterMovement);
             TimeTravelMachine.AddCommandsTimeline(CharacterShooting);
 
             RebaseCounter = new RebaseCounter(WorldTickCounter);
             Rebases = new Rebases();
-            Rebases.Add(new WorldRebase<Character>(charactersWorld, WorldTickCounter));
-            Rebases.Add(new WorldRebase<Bullet>(bulletWorld, WorldTickCounter));
-            Rebases.Add(new WorldRebase<Enemy>(deathSpikeWorld, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Character>(characterRegistry, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Bullet>(bulletRegistry, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Enemy>(enemyRegistry, WorldTickCounter));
             Rebases.Add(RebaseCounter);
         }
 

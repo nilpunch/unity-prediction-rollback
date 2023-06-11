@@ -31,7 +31,7 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
-            EntityId characterId = UnitySimulation.CharacterWorld.GetEntityId(_character);
+            TargetId characterId = UnitySimulation.CharacterRegistry.GetTargetId(_character);
 
             UnitySimulation.CharacterMovement.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
             UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), characterId);

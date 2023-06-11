@@ -8,15 +8,15 @@ namespace UPR.Samples
     /// </summary>
     public class EntityFactory<TEntity> : IFactory<TEntity>, IMispredictionCleanup where TEntity : ITickCounter, IReusableEntity
     {
-        private readonly IEntityWorld<TEntity> _entityWorld;
+        private readonly ICommandTargetRegistry<TEntity> _commandTargetRegistry;
         private readonly IIdGenerator _idGenerator;
         private readonly IPool<TEntity> _pool;
 
         private readonly List<TEntity> _createdEntities = new List<TEntity>();
 
-        public EntityFactory(IEntityWorld<TEntity> entityWorld, IIdGenerator idGenerator, IFactory<TEntity> factory)
+        public EntityFactory(ICommandTargetRegistry<TEntity> commandTargetRegistry, IIdGenerator idGenerator, IFactory<TEntity> factory)
         {
-            _entityWorld = entityWorld;
+            _commandTargetRegistry = commandTargetRegistry;
             _idGenerator = idGenerator;
             _pool = new Pool<TEntity>(factory);
         }
@@ -34,7 +34,7 @@ namespace UPR.Samples
             var entityId = _idGenerator.Generate();
             TEntity entity = _pool.Get();
             _createdEntities.Add(entity);
-            _entityWorld.RegisterEntity(entity, entityId);
+            _commandTargetRegistry.Add(entity, entityId);
             return entity;
         }
 
@@ -43,7 +43,7 @@ namespace UPR.Samples
             ReturnNonExistedEntitiesToPool();
         }
 
-        public void Cleanup()
+        public void CleanUp()
         {
             ReturnNonExistedEntitiesToPool();
         }

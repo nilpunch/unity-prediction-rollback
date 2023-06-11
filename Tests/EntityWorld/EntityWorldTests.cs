@@ -10,14 +10,14 @@ namespace UPR.Tests
         public void RollbackZero_AppliesLastSavedState()
         {
             // Arrange
-            var entityWorld = new EntityWorld<TestEntity>();
-            var worldHistory = new WorldHistory<TestEntity>(entityWorld);
-            var worldRollback = new WorldRollback<TestEntity>(entityWorld);
+            var entityWorld = new CommandTargetRegistry<TestCommandTarget>();
+            var worldHistory = new CollectionHistory(entityWorld);
+            var worldRollback = new CollectionRollback(entityWorld);
             int originalValue = 11;
-            var testEntity = new TestEntity(originalValue);
+            var testEntity = new TestCommandTarget(originalValue);
 
             // Act
-            entityWorld.RegisterEntity(testEntity, new EntityId(0));
+            entityWorld.Add(testEntity, new TargetId(0));
             worldHistory.SaveStep();
             testEntity.StoredValue = 22;
             worldRollback.Rollback(0);
@@ -30,14 +30,14 @@ namespace UPR.Tests
         public void Rollback_WithSavedStep_AppliesPreviousState()
         {
             // Arrange
-            var entityWorld = new EntityWorld<TestEntity>();
-            var worldHistory = new WorldHistory<TestEntity>(entityWorld);
-            var worldRollback = new WorldRollback<TestEntity>(entityWorld);
+            var entityWorld = new CommandTargetRegistry<TestCommandTarget>();
+            var worldHistory = new CollectionHistory(entityWorld);
+            var worldRollback = new CollectionRollback(entityWorld);
             int originalValue = 11;
-            var testEntity = new TestEntity(originalValue);
+            var testEntity = new TestCommandTarget(originalValue);
 
             // Act
-            entityWorld.RegisterEntity(testEntity, new EntityId(0));
+            entityWorld.Add(testEntity, new TargetId(0));
             worldHistory.SaveStep();
 
             int newValue = 22;

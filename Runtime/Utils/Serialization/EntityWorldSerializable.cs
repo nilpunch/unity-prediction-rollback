@@ -5,19 +5,19 @@ namespace UPR.Utils
 {
     public class EntityWorldSerializable<TEntity> : ISerializable where TEntity : ITickCounter, ISerializable
     {
-        private readonly IEntityWorld<TEntity> _entityWorld;
+        private readonly ICommandTargetRegistry<TEntity> _commandTargetRegistry;
 
-        public EntityWorldSerializable(IEntityWorld<TEntity> entityWorld)
+        public EntityWorldSerializable(ICommandTargetRegistry<TEntity> commandTargetRegistry)
         {
-            _entityWorld = entityWorld;
+            _commandTargetRegistry = commandTargetRegistry;
         }
 
         public void Serialize(IWriteHandle writeHandle)
         {
-            new IntSerializable(_entityWorld.Entities.Count).Serialize(writeHandle);
-            foreach (TEntity entity in _entityWorld.Entities)
+            new IntSerializable(_commandTargetRegistry.Entries.Count).Serialize(writeHandle);
+            foreach (TEntity entity in _commandTargetRegistry.Entries)
             {
-                new IntSerializable(_entityWorld.GetEntityId(entity).Value).Serialize(writeHandle);
+                new IntSerializable(_commandTargetRegistry.GetTargetId(entity).Value).Serialize(writeHandle);
                 entity.Serialize(writeHandle);
             }
         }

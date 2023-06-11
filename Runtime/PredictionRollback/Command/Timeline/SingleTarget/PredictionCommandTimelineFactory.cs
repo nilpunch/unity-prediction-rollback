@@ -1,0 +1,17 @@
+﻿namespace UPR.PredictionRollback
+{
+    public class PredictionCommandTimelineFactory<TCommand> : ICommandTimelineFactory<TCommand>
+    {
+        private readonly ICommandRouter<TCommand> _commandRouter;
+
+        public PredictionCommandTimelineFactory(ICommandRouter<TCommand> commandRouter)
+        {
+            _commandRouter = commandRouter;
+        }
+
+        public ICommandTimeline<TCommand> CreateForEntity(TargetId targetId)
+        {
+            return new PredictionCommandTimeline<TCommand>(new CommandTimeline<TCommand>(_commandRouter, targetId));
+        }
+    }
+}

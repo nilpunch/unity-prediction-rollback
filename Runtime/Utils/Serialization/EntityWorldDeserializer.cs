@@ -3,7 +3,7 @@ using UPR.Serialization;
 
 namespace UPR.Utils
 {
-    public class EntityWorldDeserializer<TEntity> : IDeserializer<EntityWorld<TEntity>> where TEntity : ITickCounter
+    public class EntityWorldDeserializer<TEntity> : IDeserializer<CommandTargetRegistry<TEntity>> where TEntity : ITickCounter
     {
         private readonly IDeserializer<int> _intDeserializer = new IntDeserializer();
         private readonly IDeserializer<TEntity> _entityDeserializer;
@@ -13,16 +13,16 @@ namespace UPR.Utils
             _entityDeserializer = entityDeserializer;
         }
 
-        public EntityWorld<TEntity> Deserialize(IReadHandle readHandle)
+        public CommandTargetRegistry<TEntity> Deserialize(IReadHandle readHandle)
         {
-            var entityWorld = new EntityWorld<TEntity>();
+            var entityWorld = new CommandTargetRegistry<TEntity>();
 
             int entitiesCount = _intDeserializer.Deserialize(readHandle);
             for (int i = 0; i < entitiesCount; i++)
             {
-                var entityId = new EntityId(_intDeserializer.Deserialize(readHandle));
+                var entityId = new TargetId(_intDeserializer.Deserialize(readHandle));
                 var entity = _entityDeserializer.Deserialize(readHandle);
-                entityWorld.RegisterEntity(entity, entityId);
+                entityWorld.Add(entity, entityId);
             }
 
             return entityWorld;

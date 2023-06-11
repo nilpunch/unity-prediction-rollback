@@ -8,7 +8,7 @@ namespace UPR.PredictionRollback
         private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
         private readonly IRollback _worldRollback;
-        private readonly List<IWorldCommandTimeline> _commandTimelines = new List<IWorldCommandTimeline>();
+        private readonly List<IMultiTargetCommandTimeline> _commandTimelines = new List<IMultiTargetCommandTimeline>();
 
         private int CurrentTick { get; set; }
 
@@ -19,9 +19,9 @@ namespace UPR.PredictionRollback
             _worldRollback = worldRollback;
         }
 
-        public void AddCommandsTimeline(IWorldCommandTimeline worldCommandTimeline)
+        public void AddCommandsTimeline(IMultiTargetCommandTimeline multiTargetCommandTimeline)
         {
-            _commandTimelines.Add(worldCommandTimeline);
+            _commandTimelines.Add(multiTargetCommandTimeline);
         }
 
         public void FastForwardToTick(int targetTick)
