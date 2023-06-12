@@ -9,15 +9,23 @@
             _commandTimeline = commandTimeline;
         }
 
-        public int GetLatestTickWithCommand(int tick)
+        public int GetLatestTickWithCommandInclusiveBefore(int tick)
         {
+            if (_commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick) == -1)
+                return -1;
+
             return tick;
         }
 
-        public void ExecuteCommand(int tick)
+        public bool HasCommand(int tick)
         {
-            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommand(tick);
-            _commandTimeline.ExecuteCommand(lastTickWithCommand);
+            return _commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick) != -1;
+        }
+
+        public TCommand GetCommand(int tick)
+        {
+            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick);
+            return _commandTimeline.GetCommand(lastTickWithCommand);
         }
 
         public void RemoveAllCommandsDownTo(int tick)

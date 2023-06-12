@@ -4,24 +4,41 @@ using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
-    public class Character : UnityEntity,
-        ICommandTarget<CharacterMoveCommand>,
-        ICommandTarget<CharacterShootCommand>
+    public class Character : UnityEntity, ICommandPlayer
     {
         [SerializeField] private Lifetime _lifetime;
         [SerializeField] private CharacterMovement _characterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
-        public void ExecuteCommand(in CharacterMoveCommand command)
+        private ICommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
+        private ICommandTimeline<CharacterShootCommand> _shootCommandTimeline;
+
+        public ICommandTimeline<CharacterMoveCommand> MoveCommandTimeline => _moveCommandTimeline;
+        public ICommandTimeline<CharacterShootCommand> ShootCommandTimeline => _shootCommandTimeline;
+
+        public override void Initialize()
         {
-            if (_lifetime.IsAlive)
-                _characterMovement?.SetMoveDirection(command.MoveDirection);
+            base.Initialize();
+
+            _moveCommandTimeline = new PredictionCommandTimeline<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
+            _shootCommandTimeline = new PredictionCommandTimeline<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
         }
 
-        public void ExecuteCommand(in CharacterShootCommand command)
+        public void ExecuteCommands(int tick)
         {
-            if (_lifetime.IsAlive)
+            if (!_lifetime.IsAlive)
+                return;
+
+            if (_moveCommandTimeline.HasCommand(tick))
             {
+                var command = _moveCommandTimeline.GetCommand(tick);
+                _characterMovement?.SetMoveDirection(command.MoveDirection);
+            }
+
+            if (_shootCommandTimeline.HasCommand(tick))
+            {
+                var command = _shootCommandTimeline.GetCommand(tick);
+
                 _characterShooting.SetShootingDirection(command.Direction);
                 if (command.IsShooting)
                 {

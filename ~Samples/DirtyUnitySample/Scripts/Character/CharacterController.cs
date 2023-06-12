@@ -33,19 +33,21 @@ namespace UPR.Samples
 
             TargetId characterId = UnitySimulation.CharacterRegistry.GetTargetId(_character);
 
-            UnitySimulation.CharacterMovement.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
-            UnitySimulation.CharacterMovement.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized), characterId);
+            _character.MoveCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
+            _character.MoveCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized));
 
-            UnitySimulation.CharacterShooting.RemoveCommandForEntityAt(UnitySimulation.CurrentTick, characterId);
+            _character.ShootCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
             if (Input.GetMouseButton(0))
             {
                 Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.transform.position, Vector3.forward).normalized;
-                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true), characterId);
+                _character.ShootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true));
             }
             else
             {
-                UnitySimulation.CharacterShooting.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false), characterId);
+                _character.ShootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false));
             }
+
+            UnitySimulation.TimeTravelMachine.UpdateEarliestApprovedTick(UnitySimulation.CurrentTick);
         }
     }
 }

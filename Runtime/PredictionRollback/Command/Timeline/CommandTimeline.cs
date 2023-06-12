@@ -4,19 +4,10 @@ namespace UPR.PredictionRollback
 {
     public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
-        private readonly ICommandRouter<TCommand> _commandRouter;
-        private readonly TargetId _targetId;
-
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();
 
-        public CommandTimeline(ICommandRouter<TCommand> commandRouter, TargetId targetId)
-        {
-            _commandRouter = commandRouter;
-            _targetId = targetId;
-        }
-
-        public int GetLatestTickWithCommand(int tick)
+        public int GetLatestTickWithCommandInclusiveBefore(int tick)
         {
             int tickIndex = _filledTicksInOrder.BinarySearch(tick);
 
@@ -33,12 +24,14 @@ namespace UPR.PredictionRollback
             return _filledTicksInOrder[tickIndex];
         }
 
-        public void ExecuteCommand(int tick)
+        public bool HasCommand(int tick)
         {
-            if (_timeline.TryGetValue(tick, out var command))
-            {
-                _commandRouter.ForwardCommand(command, _targetId);
-            }
+            return _timeline.ContainsKey(tick);
+        }
+
+        public TCommand GetCommand(int tick)
+        {
+            return _timeline[tick];
         }
 
         public void RemoveAllCommandsDownTo(int tick)

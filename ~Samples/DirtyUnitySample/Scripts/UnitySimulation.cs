@@ -13,8 +13,6 @@ namespace UPR.Samples
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
         public static TimeTravelMachine TimeTravelMachine { get; private set; }
-        public static IMultiTargetCommandTimeline<CharacterMoveCommand> CharacterMovement { get; private set; }
-        public static IMultiTargetCommandTimeline<CharacterShootCommand> CharacterShooting { get; private set; }
 
         public static ICommandTargetRegistry<Character> CharacterRegistry { get; private set; }
         public static ICommandTargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
@@ -89,17 +87,10 @@ namespace UPR.Samples
             worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Enemy>(enemyRegistry)));
             worldRollbacks.Add(new MispredictionCleanupAfterRollback(BulletsFactory));
 
-            TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks);
+            var worldCommandsPlayers = new CommandPlayers();
+            worldCommandsPlayers.Add(new CollectionCommandPlayer(characterRegistry));
 
-            CharacterMovement = new MultiTargetCommandTimeline<CharacterMoveCommand>(
-                new PredictionCommandTimelineFactory<CharacterMoveCommand>(
-                    new CommandRouter<CharacterMoveCommand>(CharacterRegistry)));
-            CharacterShooting = new MultiTargetCommandTimeline<CharacterShootCommand>(
-                new PredictionCommandTimelineFactory<CharacterShootCommand>(
-                    new CommandRouter<CharacterShootCommand>(CharacterRegistry)));
-
-            TimeTravelMachine.AddCommandsTimeline(CharacterMovement);
-            TimeTravelMachine.AddCommandsTimeline(CharacterShooting);
+            TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks, worldCommandsPlayers);
 
             RebaseCounter = new RebaseCounter(WorldTickCounter);
             Rebases = new Rebases();

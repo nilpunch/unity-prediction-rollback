@@ -8,20 +8,25 @@ namespace UPR.PredictionRollback
         private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
         private readonly IRollback _worldRollback;
-        private readonly List<IMultiTargetCommandTimeline> _commandTimelines = new List<IMultiTargetCommandTimeline>();
+        private readonly ICommandPlayer _worldCommandPlayer;
 
         private int CurrentTick { get; set; }
+        private int EarliestApprovedTick { get; set; }
 
-        public TimeTravelMachine(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback)
+        public TimeTravelMachine(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback, ICommandPlayer worldCommandPlayer)
         {
             _worldHistory = worldHistory;
             _worldSimulation = worldSimulation;
             _worldRollback = worldRollback;
+            _worldCommandPlayer = worldCommandPlayer;
         }
 
-        public void AddCommandsTimeline(IMultiTargetCommandTimeline multiTargetCommandTimeline)
+        public void UpdateEarliestApprovedTick(int tick)
         {
-            _commandTimelines.Add(multiTargetCommandTimeline);
+            if (EarliestApprovedTick > tick)
+            {
+                EarliestApprovedTick = tick;
+            }
         }
 
         public void FastForwardToTick(int targetTick)
@@ -29,7 +34,7 @@ namespace UPR.PredictionRollback
             if (targetTick < 0)
                 throw new ArgumentOutOfRangeException(nameof(targetTick), "Target tick should not be negative!");
 
-            int earliestTick = Math.Min(targetTick, EarliestCommandChange());
+            int earliestTick = Math.Min(targetTick, EarliestApprovedTick);
             int stepsToRollback = Math.Max(CurrentTick - earliestTick, 0);
 
             _worldRollback.Rollback(stepsToRollback);
@@ -37,30 +42,13 @@ namespace UPR.PredictionRollback
 
             while (CurrentTick < targetTick)
             {
-                foreach (var commandTimeline in _commandTimelines)
-                {
-                    commandTimeline.ExecuteCommands(CurrentTick);
-                }
-
+                _worldCommandPlayer.ExecuteCommands(CurrentTick);
                 _worldSimulation.StepForward();
                 _worldHistory.SaveStep();
                 CurrentTick += 1;
             }
 
-            foreach (var commandTimeline in _commandTimelines)
-            {
-                commandTimeline.ApproveChangesUpTo(targetTick);
-            }
-        }
-
-        private int EarliestCommandChange()
-        {
-            int earliestCommandChange = int.MaxValue;
-            foreach (var commandTimeline in _commandTimelines)
-            {
-                earliestCommandChange = Math.Min(earliestCommandChange, commandTimeline.EarliestCommandChange);
-            }
-            return earliestCommandChange;
+            EarliestApprovedTick = CurrentTick;
         }
     }
 }

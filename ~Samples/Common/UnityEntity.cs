@@ -6,7 +6,7 @@ using UPR.PredictionRollback;
 namespace UPR.Samples
 {
     [DisallowMultipleComponent]
-    public class UnityEntity : MonoBehaviour, IReusableEntity, ISimulation, IHistory, IRollback, IRebase, ITickCounter
+    public class UnityEntity : MonoBehaviour, IReusableEntity, IInitialize, ISimulation, IHistory, IRollback, IRebase, ITickCounter
     {
         protected Simulations LocalSimulations { get; } = new Simulations();
 
@@ -21,6 +21,11 @@ namespace UPR.Samples
         public virtual bool CanBeReused => false;
 
         private void Awake()
+        {
+            Initialize();
+        }
+
+        public virtual void Initialize()
         {
             var components = GetComponentsInChildren<MonoBehaviour>()
                 .Where(component => component != this)

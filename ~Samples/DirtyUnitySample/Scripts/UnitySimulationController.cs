@@ -62,8 +62,7 @@ namespace UPR.Samples
             _slider.gameObject.SetActive(false);
 
             UnitySimulation.ElapsedTime = (tick + 0.5f) * (UnitySimulation.SimulationSpeed.SecondsPerTick);
-            UnitySimulation.CharacterShooting.RemoveAllCommandsDownTo(tick);
-            UnitySimulation.CharacterMovement.RemoveAllCommandsDownTo(tick);
+            UnitySimulation.TimeTravelMachine.UpdateEarliestApprovedTick(tick);
         }
     }
 }
