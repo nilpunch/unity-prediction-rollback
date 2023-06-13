@@ -1,4 +1,5 @@
 using UnityEngine;
+using UPR.Networking;
 using UPR.PredictionRollback;
 using UPR.Utils;
 
@@ -12,11 +13,11 @@ namespace UPR.Samples
 
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
-        public static TimeTravelMachine TimeTravelMachine { get; private set; }
+        public static WorldTimeline WorldTimeline { get; private set; }
 
-        public static ICommandTargetRegistry<Character> CharacterRegistry { get; private set; }
-        public static ICommandTargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
-        public static ICommandTargetRegistry<Bullet> BulletsRegistry { get; private set; }
+        public static ITargetRegistry<Character> CharacterRegistry { get; private set; }
+        public static ITargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
+        public static ITargetRegistry<Bullet> BulletsRegistry { get; private set; }
         public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
@@ -26,19 +27,22 @@ namespace UPR.Samples
         public static int CurrentTick => Mathf.FloorToInt(ElapsedTime * SimulationSpeed.TicksPerSecond);
 
         private static Rebases Rebases { get; set; }
-        private static RebaseCounter RebaseCounter { get; set; }
+        public static RebaseCounter RebaseCounter { get; set; }
 
         private void Start()
         {
+            Application.targetFrameRate = 0;
+            QualitySettings.vSyncCount = 0;
+
             Physics.autoSyncTransforms = true;
 
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
 
-            var characterRegistry = new CommandTargetRegistry<Character>();
+            var characterRegistry = new TargetRegistry<Character>();
             CharacterRegistry = characterRegistry;
-            var bulletRegistry = new CommandTargetRegistry<Bullet>();
+            var bulletRegistry = new TargetRegistry<Bullet>();
             BulletsRegistry = bulletRegistry;
-            var enemyRegistry = new CommandTargetRegistry<Enemy>();
+            var enemyRegistry = new TargetRegistry<Enemy>();
             DeathSpikeRegistry = enemyRegistry;
 
             int entityIndex = 0;
@@ -82,15 +86,15 @@ namespace UPR.Samples
             worldRollbacks.Add(new CollectionRollback(characterRegistry));
             worldRollbacks.Add(new CollectionRollback(bulletRegistry));
             worldRollbacks.Add(new CollectionRollback(enemyRegistry));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Character>(characterRegistry)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Bullet>(bulletRegistry)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegisterCleanup<Enemy>(enemyRegistry)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Character>(characterRegistry)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Bullet>(bulletRegistry)));
+            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Enemy>(enemyRegistry)));
             worldRollbacks.Add(new MispredictionCleanupAfterRollback(BulletsFactory));
 
-            var worldCommandsPlayers = new CommandPlayers();
-            worldCommandsPlayers.Add(new CollectionCommandPlayer(characterRegistry));
+            var worldCommandPlayers = new CommandPlayers();
+            worldCommandPlayers.Add(new CollectionCommandPlayer(characterRegistry));
 
-            TimeTravelMachine = new TimeTravelMachine(worldHistories, worldSimulation, worldRollbacks, worldCommandsPlayers);
+            WorldTimeline = new WorldTimeline(worldHistories, worldSimulation, worldRollbacks, worldCommandPlayers);
 
             RebaseCounter = new RebaseCounter(WorldTickCounter);
             Rebases = new Rebases();
@@ -102,9 +106,9 @@ namespace UPR.Samples
 
         private void Update()
         {
-            ElapsedTime += UnityEngine.Time.deltaTime * _simulationSpeed;
+            ElapsedTime += Time.deltaTime * _simulationSpeed;
 
-            TimeTravelMachine.FastForwardToTick(CurrentTick);
+            WorldTimeline.FastForwardToTick(CurrentTick);
         }
 
         public static void ForgetFromBegin(int steps)

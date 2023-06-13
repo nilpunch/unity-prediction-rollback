@@ -2,7 +2,7 @@
 
 namespace UPR.PredictionRollback
 {
-    public interface ICollection<out TEntry>
+    public interface IReadOnlyCollection<out TEntry>
     {
         IReadOnlyList<TEntry> Entries { get; }
     }

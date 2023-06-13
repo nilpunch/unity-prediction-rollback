@@ -9,7 +9,7 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var testEntity = new TestCommandTarget(originalValue);
+            var testEntity = new TestEntity(originalValue);
 
             // Act
             testEntity.SaveStep();
@@ -25,7 +25,7 @@ namespace UPR.Tests
         {
             // Arrange
             int originalValue = 11;
-            var testEntity = new TestCommandTarget(originalValue);
+            var testEntity = new TestEntity(originalValue);
 
             // Act
             testEntity.SaveStep();

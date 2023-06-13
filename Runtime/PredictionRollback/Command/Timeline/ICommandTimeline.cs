@@ -2,7 +2,7 @@
 {
     public interface IReadOnlyCommandTimeline<TCommand>
     {
-        int GetLatestTickWithCommandInclusiveBefore(int tick);
+        int GetLatestTickWithCommandBefore(int tickInclusive);
         bool HasCommand(int tick);
         TCommand GetCommand(int tick);
     }

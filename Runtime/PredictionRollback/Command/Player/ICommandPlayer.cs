@@ -2,6 +2,6 @@
 {
     public interface ICommandPlayer
     {
-        void ExecuteCommands(int tick);
+        void PlayCommands(int tick);
     }
 }

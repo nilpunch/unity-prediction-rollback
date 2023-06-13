@@ -39,7 +39,7 @@ namespace UPR.Samples
 
             if (_simulationStopped)
             {
-                UnitySimulation.TimeTravelMachine.FastForwardToTick(Mathf.RoundToInt(_slider.value));
+                UnitySimulation.WorldTimeline.FastForwardToTick(Mathf.RoundToInt(_slider.value));
             }
         }
 
@@ -50,7 +50,7 @@ namespace UPR.Samples
 
             _slider.gameObject.SetActive(true);
             _slider.maxValue = UnitySimulation.CurrentTick;
-            _slider.minValue = 0f;
+            _slider.minValue = UnitySimulation.CurrentTick - UnitySimulation.RebaseCounter.StepsSaved;
             _slider.wholeNumbers = true;
             _slider.value = UnitySimulation.CurrentTick;
         }
@@ -62,7 +62,7 @@ namespace UPR.Samples
             _slider.gameObject.SetActive(false);
 
             UnitySimulation.ElapsedTime = (tick + 0.5f) * (UnitySimulation.SimulationSpeed.SecondsPerTick);
-            UnitySimulation.TimeTravelMachine.UpdateEarliestApprovedTick(tick);
+            UnitySimulation.WorldTimeline.UpdateEarliestApprovedTick(tick);
         }
     }
 }

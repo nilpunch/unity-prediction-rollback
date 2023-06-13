@@ -15,11 +15,11 @@ namespace UPR.PredictionRollback
             _commandsPlayers.Add(commandPlayer);
         }
 
-        public void ExecuteCommands(int tick)
+        public void PlayCommands(int tick)
         {
             foreach (var commandsPlayer in _commandsPlayers)
             {
-                commandsPlayer.ExecuteCommands(tick);
+                commandsPlayer.PlayCommands(tick);
             }
         }
     }

@@ -1,13 +1,12 @@
-﻿using UPR.PredictionRollback;
-using UPR.Utils;
+﻿using UPR.Utils;
 
 namespace UPR.Tests
 {
-    public class TestCommandTarget : CommandTarget
+    public class TestEntity : Entity
     {
         private readonly FrequentlyChangingValue<int> _storedValue;
 
-        public TestCommandTarget(int value)
+        public TestEntity(int value)
         {
             _storedValue = new FrequentlyChangingValue<int>(value);
 

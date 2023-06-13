@@ -1,11 +1,10 @@
-﻿using UPR.PredictionRollback;
-using UPR.Serialization;
+﻿using UPR.Networking;
 
 namespace UPR.Samples
 {
     public class CharacterWorldRawFactory
     {
-        public CommandTargetRegistry<Character> Create(byte[] bytes)
+        public TargetRegistry<Character> Create(byte[] bytes)
         {
             return null;
         }

@@ -1,4 +1,6 @@
-﻿namespace UPR.PredictionRollback
+﻿using UPR.PredictionRollback;
+
+namespace UPR.Utils
 {
     public class MispredictionCleanupAfterRollback : IRollback
     {

@@ -1,9 +1,9 @@
-﻿using UPR.PredictionRollback;
+﻿using UPR.Networking;
 using UPR.Utils;
 
 namespace UPR.Samples
 {
-    public class IdGenerator : CommandTarget, IIdGenerator
+    public class IdGenerator : Entity, IIdGenerator
     {
         private readonly RarelyChangingValue<int> _idCounter;
 

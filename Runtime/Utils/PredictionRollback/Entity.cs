@@ -6,7 +6,7 @@ namespace UPR.Utils
     /// <summary>
     /// Code reusal.
     /// </summary>
-    public abstract class CommandTarget : ISimulation, IHistory, IRollback, IRebase, ITickCounter
+    public abstract class Entity : ISimulation, IHistory, IRollback, IRebase, ITickCounter
     {
         public int CurrentTick { get; private set; }
 

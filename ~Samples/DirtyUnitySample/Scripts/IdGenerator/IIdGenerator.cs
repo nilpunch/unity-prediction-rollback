@@ -1,4 +1,4 @@
-﻿using UPR.PredictionRollback;
+﻿using UPR.Networking;
 
 namespace UPR.Samples
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using UPR.PredictionRollback;
 using UPR.Utils;
 
 namespace UPR.Tests

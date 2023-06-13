@@ -4,9 +4,9 @@ namespace UPR.PredictionRollback
 {
     public class CollectionRollback : IRollback
     {
-        private readonly ICollection<IRollback> _collection;
+        private readonly IReadOnlyCollection<IRollback> _collection;
 
-        public CollectionRollback(ICollection<IRollback> collection)
+        public CollectionRollback(IReadOnlyCollection<IRollback> collection)
         {
             _collection = collection;
         }

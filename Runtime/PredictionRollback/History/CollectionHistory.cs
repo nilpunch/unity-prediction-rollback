@@ -2,9 +2,9 @@
 {
     public class CollectionHistory : IHistory
     {
-        private readonly ICollection<IHistory> _collection;
+        private readonly IReadOnlyCollection<IHistory> _collection;
 
-        public CollectionHistory(ICollection<IHistory> collection)
+        public CollectionHistory(IReadOnlyCollection<IHistory> collection)
         {
             _collection = collection;
         }

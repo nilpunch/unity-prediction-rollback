@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UPR.PredictionRollback;
 
 namespace UPR.Samples
@@ -24,7 +23,7 @@ namespace UPR.Samples
             _shootCommandTimeline = new PredictionCommandTimeline<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
         }
 
-        public void ExecuteCommands(int tick)
+        public void PlayCommands(int tick)
         {
             if (!_lifetime.IsAlive)
                 return;

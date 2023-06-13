@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UPR.Samples
+﻿namespace UPR.Samples
 {
     public class Enemy : UnityEntity
     {

@@ -2,9 +2,9 @@
 {
     public class CollectionSimulation : ISimulation
     {
-        private readonly ICollection<ISimulation> _collection;
+        private readonly IReadOnlyCollection<ISimulation> _collection;
 
-        public CollectionSimulation(ICollection<ISimulation> collection)
+        public CollectionSimulation(IReadOnlyCollection<ISimulation> collection)
         {
             _collection = collection;
         }

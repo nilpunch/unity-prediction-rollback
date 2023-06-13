@@ -1,6 +1,6 @@
-namespace UPR.PredictionRollback
+namespace UPR.Networking
 {
-    public interface ICommandTargetFinder<out TTarget>
+    public interface ITargetFinder<out TTarget>
     {
         TTarget GetTarget(TargetId targetId);
         bool IsTargetIdExists(TargetId targetId);

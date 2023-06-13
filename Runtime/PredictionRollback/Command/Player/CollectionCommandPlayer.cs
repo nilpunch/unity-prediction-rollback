@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UPR.PredictionRollback
+﻿namespace UPR.PredictionRollback
 {
     public class CollectionCommandPlayer : ICommandPlayer
     {
-        private readonly ICollection<ICommandPlayer> _collection;
+        private readonly IReadOnlyCollection<ICommandPlayer> _collection;
 
-        public CollectionCommandPlayer(ICollection<ICommandPlayer> collection)
+        public CollectionCommandPlayer(IReadOnlyCollection<ICommandPlayer> collection)
         {
             _collection = collection;
         }
 
-        public void ExecuteCommands(int tick)
+        public void PlayCommands(int tick)
         {
             foreach (var commandsPlayer in _collection.Entries)
             {
-                commandsPlayer.ExecuteCommands(tick);
+                commandsPlayer.PlayCommands(tick);
             }
         }
     }

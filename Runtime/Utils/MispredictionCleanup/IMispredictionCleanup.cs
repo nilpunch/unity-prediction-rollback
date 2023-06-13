@@ -1,4 +1,4 @@
-﻿namespace UPR.PredictionRollback
+﻿namespace UPR.Utils
 {
     public interface IMispredictionCleanup
     {

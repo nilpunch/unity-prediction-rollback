@@ -1,23 +1,24 @@
-﻿using UPR.PredictionRollback;
+﻿using UPR.Networking;
+using UPR.PredictionRollback;
 using UPR.Serialization;
 
 namespace UPR.Utils
 {
     public class EntityWorldSerializable<TEntity> : ISerializable where TEntity : ITickCounter, ISerializable
     {
-        private readonly ICommandTargetRegistry<TEntity> _commandTargetRegistry;
+        private readonly ITargetRegistry<TEntity> _targetRegistry;
 
-        public EntityWorldSerializable(ICommandTargetRegistry<TEntity> commandTargetRegistry)
+        public EntityWorldSerializable(ITargetRegistry<TEntity> targetRegistry)
         {
-            _commandTargetRegistry = commandTargetRegistry;
+            _targetRegistry = targetRegistry;
         }
 
         public void Serialize(IWriteHandle writeHandle)
         {
-            new IntSerializable(_commandTargetRegistry.Entries.Count).Serialize(writeHandle);
-            foreach (TEntity entity in _commandTargetRegistry.Entries)
+            new IntSerializable(_targetRegistry.Entries.Count).Serialize(writeHandle);
+            foreach (TEntity entity in _targetRegistry.Entries)
             {
-                new IntSerializable(_commandTargetRegistry.GetTargetId(entity).Value).Serialize(writeHandle);
+                new IntSerializable(_targetRegistry.GetTargetId(entity).Value).Serialize(writeHandle);
                 entity.Serialize(writeHandle);
             }
         }

@@ -9,22 +9,22 @@
             _commandTimeline = commandTimeline;
         }
 
-        public int GetLatestTickWithCommandInclusiveBefore(int tick)
+        public int GetLatestTickWithCommandBefore(int tickInclusive)
         {
-            if (_commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick) == -1)
+            if (_commandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
                 return -1;
 
-            return tick;
+            return tickInclusive;
         }
 
         public bool HasCommand(int tick)
         {
-            return _commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick) != -1;
+            return _commandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
         }
 
         public TCommand GetCommand(int tick)
         {
-            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommandInclusiveBefore(tick);
+            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommandBefore(tick);
             return _commandTimeline.GetCommand(lastTickWithCommand);
         }
 

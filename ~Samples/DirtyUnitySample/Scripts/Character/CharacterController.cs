@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UPR.PredictionRollback;
+using UPR.Networking;
 
 namespace UPR.Samples
 {
@@ -47,7 +47,7 @@ namespace UPR.Samples
                 _character.ShootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false));
             }
 
-            UnitySimulation.TimeTravelMachine.UpdateEarliestApprovedTick(UnitySimulation.CurrentTick);
+            UnitySimulation.WorldTimeline.UpdateEarliestApprovedTick(UnitySimulation.CurrentTick);
         }
     }
 }

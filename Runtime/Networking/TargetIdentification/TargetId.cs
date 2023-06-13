@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UPR.PredictionRollback
+namespace UPR.Networking
 {
     public readonly struct TargetId : IEquatable<TargetId>
     {

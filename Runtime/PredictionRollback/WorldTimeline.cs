@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
-    public class TimeTravelMachine
+    public class WorldTimeline
     {
         private readonly IHistory _worldHistory;
         private readonly ISimulation _worldSimulation;
@@ -13,7 +12,7 @@ namespace UPR.PredictionRollback
         private int CurrentTick { get; set; }
         private int EarliestApprovedTick { get; set; }
 
-        public TimeTravelMachine(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback, ICommandPlayer worldCommandPlayer)
+        public WorldTimeline(IHistory worldHistory, ISimulation worldSimulation, IRollback worldRollback, ICommandPlayer worldCommandPlayer)
         {
             _worldHistory = worldHistory;
             _worldSimulation = worldSimulation;
@@ -42,7 +41,7 @@ namespace UPR.PredictionRollback
 
             while (CurrentTick < targetTick)
             {
-                _worldCommandPlayer.ExecuteCommands(CurrentTick);
+                _worldCommandPlayer.PlayCommands(CurrentTick);
                 _worldSimulation.StepForward();
                 _worldHistory.SaveStep();
                 CurrentTick += 1;

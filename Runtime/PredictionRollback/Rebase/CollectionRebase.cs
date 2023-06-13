@@ -4,10 +4,10 @@ namespace UPR.PredictionRollback
 {
     public class CollectionRebase<TEntity> : IRebase where TEntity : ITickCounter, IRebase
     {
-        private readonly ICollection<TEntity> _collection;
+        private readonly IReadOnlyCollection<TEntity> _collection;
         private readonly ITickCounter _worldTickCounter;
 
-        public CollectionRebase(ICollection<TEntity> collection, ITickCounter worldTickCounter)
+        public CollectionRebase(IReadOnlyCollection<TEntity> collection, ITickCounter worldTickCounter)
         {
             _collection = collection;
             _worldTickCounter = worldTickCounter;
