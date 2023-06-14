@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UPR.Networking;
 using UPR.PredictionRollback;
-using UPR.Utils;
+using UPR.Useful;
 
 namespace UPR.Samples
 {

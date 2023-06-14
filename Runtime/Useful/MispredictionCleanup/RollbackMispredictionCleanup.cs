@@ -1,12 +1,12 @@
 ﻿using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
-    public class MispredictionCleanupAfterRollback : IRollback
+    public class RollbackMispredictionCleanup : IRollback
     {
         private readonly IMispredictionCleanup _mispredictionCleanup;
 
-        public MispredictionCleanupAfterRollback(IMispredictionCleanup mispredictionCleanup)
+        public RollbackMispredictionCleanup(IMispredictionCleanup mispredictionCleanup)
         {
             _mispredictionCleanup = mispredictionCleanup;
         }

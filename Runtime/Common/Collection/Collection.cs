@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UPR.PredictionRollback
+namespace UPR.Common
 {
     public class Collection<TEntry> : ICollection<TEntry>
     {

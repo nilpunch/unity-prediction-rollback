@@ -1,6 +1,6 @@
 ﻿using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     public class RebaseCounter : IRebase
     {

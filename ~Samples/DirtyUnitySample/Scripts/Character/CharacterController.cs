@@ -31,11 +31,11 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
-            TargetId characterId = UnitySimulation.CharacterRegistry.GetTargetId(_character);
-
+            _character.MoveCommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
             _character.MoveCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
             _character.MoveCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized));
 
+            _character.ShootCommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
             _character.ShootCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
             if (Input.GetMouseButton(0))
             {

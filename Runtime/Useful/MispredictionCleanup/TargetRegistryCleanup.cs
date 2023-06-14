@@ -1,7 +1,7 @@
 ﻿using UPR.Networking;
 using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     public class TargetRegistryCleanup<TTarget> : IMispredictionCleanup where TTarget : ITickCounter
     {

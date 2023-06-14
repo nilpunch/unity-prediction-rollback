@@ -1,7 +1,7 @@
 ﻿using System;
 using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     /// <summary>
     /// Code reusal.

@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35236787}
-  - component: {fileID: 35236786}
   - component: {fileID: 35236785}
   - component: {fileID: 35236783}
   - component: {fileID: 35236782}
@@ -201,20 +200,6 @@ MonoBehaviour:
   _lifetime: {fileID: 35236780}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 35236782}
---- !u!114 &35236786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35236779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 35236785}
-  _camera: {fileID: 1892181429}
 --- !u!4 &35236787
 Transform:
   m_ObjectHideFlags: 0
@@ -258,7 +243,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 42012185}
-  - component: {fileID: 42012184}
   - component: {fileID: 42012183}
   - component: {fileID: 42012181}
   - component: {fileID: 42012180}
@@ -327,20 +311,6 @@ MonoBehaviour:
   _lifetime: {fileID: 42012178}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 42012180}
---- !u!114 &42012184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42012177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 42012183}
-  _camera: {fileID: 1892181429}
 --- !u!4 &42012185
 Transform:
   m_ObjectHideFlags: 0
@@ -384,7 +354,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 45416692}
-  - component: {fileID: 45416691}
   - component: {fileID: 45416690}
   - component: {fileID: 45416688}
   - component: {fileID: 45416687}
@@ -453,20 +422,6 @@ MonoBehaviour:
   _lifetime: {fileID: 45416685}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 45416687}
---- !u!114 &45416691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45416684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 45416690}
-  _camera: {fileID: 1892181429}
 --- !u!4 &45416692
 Transform:
   m_ObjectHideFlags: 0
@@ -593,7 +548,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 80203574}
-  - component: {fileID: 80203573}
   - component: {fileID: 80203572}
   - component: {fileID: 80203570}
   - component: {fileID: 80203569}
@@ -662,20 +616,6 @@ MonoBehaviour:
   _lifetime: {fileID: 80203567}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 80203569}
---- !u!114 &80203573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80203566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 80203572}
-  _camera: {fileID: 1892181429}
 --- !u!4 &80203574
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +742,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 162105674}
-  - component: {fileID: 162105673}
   - component: {fileID: 162105672}
   - component: {fileID: 162105670}
   - component: {fileID: 162105669}
@@ -871,20 +810,6 @@ MonoBehaviour:
   _lifetime: {fileID: 162105667}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 162105669}
---- !u!114 &162105673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162105666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 162105672}
-  _camera: {fileID: 1892181429}
 --- !u!4 &162105674
 Transform:
   m_ObjectHideFlags: 0
@@ -1094,7 +1019,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 183669243}
-  - component: {fileID: 183669242}
   - component: {fileID: 183669241}
   - component: {fileID: 183669239}
   - component: {fileID: 183669238}
@@ -1163,20 +1087,6 @@ MonoBehaviour:
   _lifetime: {fileID: 183669236}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 183669238}
---- !u!114 &183669242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183669235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 183669241}
-  _camera: {fileID: 1892181429}
 --- !u!4 &183669243
 Transform:
   m_ObjectHideFlags: 0
@@ -1220,7 +1130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 214568160}
-  - component: {fileID: 214568159}
   - component: {fileID: 214568158}
   - component: {fileID: 214568156}
   - component: {fileID: 214568155}
@@ -1289,20 +1198,6 @@ MonoBehaviour:
   _lifetime: {fileID: 214568153}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 214568155}
---- !u!114 &214568159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214568152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 214568158}
-  _camera: {fileID: 1892181429}
 --- !u!4 &214568160
 Transform:
   m_ObjectHideFlags: 0
@@ -1346,7 +1241,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 235429924}
-  - component: {fileID: 235429923}
   - component: {fileID: 235429922}
   - component: {fileID: 235429920}
   - component: {fileID: 235429919}
@@ -1415,20 +1309,6 @@ MonoBehaviour:
   _lifetime: {fileID: 235429917}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 235429919}
---- !u!114 &235429923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235429916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 235429922}
-  _camera: {fileID: 1892181429}
 --- !u!4 &235429924
 Transform:
   m_ObjectHideFlags: 0
@@ -1555,7 +1435,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 281317762}
-  - component: {fileID: 281317761}
   - component: {fileID: 281317760}
   - component: {fileID: 281317758}
   - component: {fileID: 281317757}
@@ -1624,20 +1503,6 @@ MonoBehaviour:
   _lifetime: {fileID: 281317755}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 281317757}
---- !u!114 &281317761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281317754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 281317760}
-  _camera: {fileID: 1892181429}
 --- !u!4 &281317762
 Transform:
   m_ObjectHideFlags: 0
@@ -1681,7 +1546,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284091783}
-  - component: {fileID: 284091782}
   - component: {fileID: 284091781}
   - component: {fileID: 284091779}
   - component: {fileID: 284091778}
@@ -1750,20 +1614,6 @@ MonoBehaviour:
   _lifetime: {fileID: 284091776}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 284091778}
---- !u!114 &284091782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284091775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 284091781}
-  _camera: {fileID: 1892181429}
 --- !u!4 &284091783
 Transform:
   m_ObjectHideFlags: 0
@@ -1953,7 +1803,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 316454184}
-  - component: {fileID: 316454183}
   - component: {fileID: 316454182}
   - component: {fileID: 316454180}
   - component: {fileID: 316454179}
@@ -2022,20 +1871,6 @@ MonoBehaviour:
   _lifetime: {fileID: 316454177}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 316454179}
---- !u!114 &316454183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316454176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 316454182}
-  _camera: {fileID: 1892181429}
 --- !u!4 &316454184
 Transform:
   m_ObjectHideFlags: 0
@@ -2162,7 +1997,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 339795097}
-  - component: {fileID: 339795096}
   - component: {fileID: 339795095}
   - component: {fileID: 339795093}
   - component: {fileID: 339795092}
@@ -2231,20 +2065,6 @@ MonoBehaviour:
   _lifetime: {fileID: 339795090}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 339795092}
---- !u!114 &339795096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339795089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 339795095}
-  _camera: {fileID: 1892181429}
 --- !u!4 &339795097
 Transform:
   m_ObjectHideFlags: 0
@@ -2288,7 +2108,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355830056}
-  - component: {fileID: 355830055}
   - component: {fileID: 355830054}
   - component: {fileID: 355830052}
   - component: {fileID: 355830051}
@@ -2357,20 +2176,6 @@ MonoBehaviour:
   _lifetime: {fileID: 355830049}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 355830051}
---- !u!114 &355830055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355830048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 355830054}
-  _camera: {fileID: 1892181429}
 --- !u!4 &355830056
 Transform:
   m_ObjectHideFlags: 0
@@ -2497,7 +2302,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415441263}
-  - component: {fileID: 415441262}
   - component: {fileID: 415441261}
   - component: {fileID: 415441259}
   - component: {fileID: 415441258}
@@ -2566,20 +2370,6 @@ MonoBehaviour:
   _lifetime: {fileID: 415441256}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 415441258}
---- !u!114 &415441262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415441255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 415441261}
-  _camera: {fileID: 1892181429}
 --- !u!4 &415441263
 Transform:
   m_ObjectHideFlags: 0
@@ -2623,7 +2413,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464121528}
-  - component: {fileID: 464121527}
   - component: {fileID: 464121526}
   - component: {fileID: 464121524}
   - component: {fileID: 464121523}
@@ -2692,20 +2481,6 @@ MonoBehaviour:
   _lifetime: {fileID: 464121521}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 464121523}
---- !u!114 &464121527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464121520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 464121526}
-  _camera: {fileID: 1892181429}
 --- !u!4 &464121528
 Transform:
   m_ObjectHideFlags: 0
@@ -2832,7 +2607,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 480528710}
-  - component: {fileID: 480528709}
   - component: {fileID: 480528708}
   - component: {fileID: 480528706}
   - component: {fileID: 480528705}
@@ -2901,20 +2675,6 @@ MonoBehaviour:
   _lifetime: {fileID: 480528703}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 480528705}
---- !u!114 &480528709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480528702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 480528708}
-  _camera: {fileID: 1892181429}
 --- !u!4 &480528710
 Transform:
   m_ObjectHideFlags: 0
@@ -3078,7 +2838,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 532458485}
-  - component: {fileID: 532458484}
   - component: {fileID: 532458483}
   - component: {fileID: 532458481}
   - component: {fileID: 532458480}
@@ -3147,20 +2906,6 @@ MonoBehaviour:
   _lifetime: {fileID: 532458478}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 532458480}
---- !u!114 &532458484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532458477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 532458483}
-  _camera: {fileID: 1892181429}
 --- !u!4 &532458485
 Transform:
   m_ObjectHideFlags: 0
@@ -3204,7 +2949,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 552693171}
-  - component: {fileID: 552693170}
   - component: {fileID: 552693169}
   - component: {fileID: 552693167}
   - component: {fileID: 552693166}
@@ -3273,20 +3017,6 @@ MonoBehaviour:
   _lifetime: {fileID: 552693164}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 552693166}
---- !u!114 &552693170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552693163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 552693169}
-  _camera: {fileID: 1892181429}
 --- !u!4 &552693171
 Transform:
   m_ObjectHideFlags: 0
@@ -3579,7 +3309,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 621110048}
-  - component: {fileID: 621110047}
   - component: {fileID: 621110046}
   - component: {fileID: 621110044}
   - component: {fileID: 621110043}
@@ -3648,20 +3377,6 @@ MonoBehaviour:
   _lifetime: {fileID: 621110041}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 621110043}
---- !u!114 &621110047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621110040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 621110046}
-  _camera: {fileID: 1892181429}
 --- !u!4 &621110048
 Transform:
   m_ObjectHideFlags: 0
@@ -3788,7 +3503,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 649430536}
-  - component: {fileID: 649430535}
   - component: {fileID: 649430534}
   - component: {fileID: 649430532}
   - component: {fileID: 649430531}
@@ -3857,20 +3571,6 @@ MonoBehaviour:
   _lifetime: {fileID: 649430529}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 649430531}
---- !u!114 &649430535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 649430528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 649430534}
-  _camera: {fileID: 1892181429}
 --- !u!4 &649430536
 Transform:
   m_ObjectHideFlags: 0
@@ -3914,7 +3614,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 703288238}
-  - component: {fileID: 703288237}
   - component: {fileID: 703288236}
   - component: {fileID: 703288234}
   - component: {fileID: 703288233}
@@ -3983,20 +3682,6 @@ MonoBehaviour:
   _lifetime: {fileID: 703288231}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 703288233}
---- !u!114 &703288237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703288230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 703288236}
-  _camera: {fileID: 1892181429}
 --- !u!4 &703288238
 Transform:
   m_ObjectHideFlags: 0
@@ -4263,7 +3948,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733024320}
-  - component: {fileID: 733024319}
   - component: {fileID: 733024318}
   - component: {fileID: 733024316}
   - component: {fileID: 733024315}
@@ -4332,20 +4016,6 @@ MonoBehaviour:
   _lifetime: {fileID: 733024313}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 733024315}
---- !u!114 &733024319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733024312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 733024318}
-  _camera: {fileID: 1892181429}
 --- !u!4 &733024320
 Transform:
   m_ObjectHideFlags: 0
@@ -4622,7 +4292,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 797250690}
-  - component: {fileID: 797250689}
   - component: {fileID: 797250688}
   - component: {fileID: 797250686}
   - component: {fileID: 797250685}
@@ -4691,20 +4360,6 @@ MonoBehaviour:
   _lifetime: {fileID: 797250683}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 797250685}
---- !u!114 &797250689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797250682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 797250688}
-  _camera: {fileID: 1892181429}
 --- !u!4 &797250690
 Transform:
   m_ObjectHideFlags: 0
@@ -4748,7 +4403,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 847632150}
-  - component: {fileID: 847632149}
   - component: {fileID: 847632148}
   - component: {fileID: 847632146}
   - component: {fileID: 847632145}
@@ -4817,20 +4471,6 @@ MonoBehaviour:
   _lifetime: {fileID: 847632143}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 847632145}
---- !u!114 &847632149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847632142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 847632148}
-  _camera: {fileID: 1892181429}
 --- !u!4 &847632150
 Transform:
   m_ObjectHideFlags: 0
@@ -4874,7 +4514,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850445844}
-  - component: {fileID: 850445843}
   - component: {fileID: 850445842}
   - component: {fileID: 850445840}
   - component: {fileID: 850445839}
@@ -4943,20 +4582,6 @@ MonoBehaviour:
   _lifetime: {fileID: 850445837}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 850445839}
---- !u!114 &850445843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850445836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 850445842}
-  _camera: {fileID: 1892181429}
 --- !u!4 &850445844
 Transform:
   m_ObjectHideFlags: 0
@@ -5000,7 +4625,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 865613505}
-  - component: {fileID: 865613504}
   - component: {fileID: 865613503}
   - component: {fileID: 865613501}
   - component: {fileID: 865613500}
@@ -5069,20 +4693,6 @@ MonoBehaviour:
   _lifetime: {fileID: 865613498}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 865613500}
---- !u!114 &865613504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865613497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 865613503}
-  _camera: {fileID: 1892181429}
 --- !u!4 &865613505
 Transform:
   m_ObjectHideFlags: 0
@@ -5209,7 +4819,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 893774468}
-  - component: {fileID: 893774467}
   - component: {fileID: 893774466}
   - component: {fileID: 893774464}
   - component: {fileID: 893774463}
@@ -5278,20 +4887,6 @@ MonoBehaviour:
   _lifetime: {fileID: 893774461}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 893774463}
---- !u!114 &893774467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893774460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 893774466}
-  _camera: {fileID: 1892181429}
 --- !u!4 &893774468
 Transform:
   m_ObjectHideFlags: 0
@@ -5418,7 +5013,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 958602577}
-  - component: {fileID: 958602576}
   - component: {fileID: 958602575}
   - component: {fileID: 958602573}
   - component: {fileID: 958602572}
@@ -5487,20 +5081,6 @@ MonoBehaviour:
   _lifetime: {fileID: 958602570}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 958602572}
---- !u!114 &958602576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958602569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 958602575}
-  _camera: {fileID: 1892181429}
 --- !u!4 &958602577
 Transform:
   m_ObjectHideFlags: 0
@@ -5710,7 +5290,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 982031316}
-  - component: {fileID: 982031315}
   - component: {fileID: 982031314}
   - component: {fileID: 982031312}
   - component: {fileID: 982031311}
@@ -5779,20 +5358,6 @@ MonoBehaviour:
   _lifetime: {fileID: 982031309}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 982031311}
---- !u!114 &982031315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982031308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 982031314}
-  _camera: {fileID: 1892181429}
 --- !u!4 &982031316
 Transform:
   m_ObjectHideFlags: 0
@@ -6002,7 +5567,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999361005}
-  - component: {fileID: 999361004}
   - component: {fileID: 999361003}
   - component: {fileID: 999361001}
   - component: {fileID: 999361000}
@@ -6071,20 +5635,6 @@ MonoBehaviour:
   _lifetime: {fileID: 999360998}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 999361000}
---- !u!114 &999361004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999360997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 999361003}
-  _camera: {fileID: 1892181429}
 --- !u!4 &999361005
 Transform:
   m_ObjectHideFlags: 0
@@ -6294,7 +5844,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049282518}
-  - component: {fileID: 1049282517}
   - component: {fileID: 1049282516}
   - component: {fileID: 1049282514}
   - component: {fileID: 1049282513}
@@ -6363,20 +5912,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1049282511}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1049282513}
---- !u!114 &1049282517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049282510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1049282516}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1049282518
 Transform:
   m_ObjectHideFlags: 0
@@ -6857,7 +6392,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1094547237}
-  - component: {fileID: 1094547236}
   - component: {fileID: 1094547235}
   - component: {fileID: 1094547233}
   - component: {fileID: 1094547232}
@@ -6926,20 +6460,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1094547230}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1094547232}
---- !u!114 &1094547236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094547229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1094547235}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1094547237
 Transform:
   m_ObjectHideFlags: 0
@@ -7474,7 +6994,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1207603978}
-  - component: {fileID: 1207603977}
   - component: {fileID: 1207603976}
   - component: {fileID: 1207603974}
   - component: {fileID: 1207603973}
@@ -7543,20 +7062,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1207603971}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1207603973}
---- !u!114 &1207603977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207603970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1207603976}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1207603978
 Transform:
   m_ObjectHideFlags: 0
@@ -7600,7 +7105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1212841041}
-  - component: {fileID: 1212841040}
   - component: {fileID: 1212841039}
   - component: {fileID: 1212841037}
   - component: {fileID: 1212841036}
@@ -7669,20 +7173,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1212841034}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1212841036}
---- !u!114 &1212841040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212841033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1212841039}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1212841041
 Transform:
   m_ObjectHideFlags: 0
@@ -7726,7 +7216,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1214292496}
-  - component: {fileID: 1214292495}
   - component: {fileID: 1214292494}
   - component: {fileID: 1214292492}
   - component: {fileID: 1214292491}
@@ -7795,20 +7284,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1214292489}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1214292491}
---- !u!114 &1214292495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214292488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1214292494}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1214292496
 Transform:
   m_ObjectHideFlags: 0
@@ -8101,7 +7576,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1241271433}
-  - component: {fileID: 1241271432}
   - component: {fileID: 1241271431}
   - component: {fileID: 1241271429}
   - component: {fileID: 1241271428}
@@ -8170,20 +7644,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1241271426}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1241271428}
---- !u!114 &1241271432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241271425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1241271431}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1241271433
 Transform:
   m_ObjectHideFlags: 0
@@ -8310,7 +7770,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305117506}
-  - component: {fileID: 1305117505}
   - component: {fileID: 1305117504}
   - component: {fileID: 1305117502}
   - component: {fileID: 1305117501}
@@ -8379,20 +7838,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1305117499}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1305117501}
---- !u!114 &1305117505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305117498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1305117504}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1305117506
 Transform:
   m_ObjectHideFlags: 0
@@ -8685,7 +8130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1381698621}
-  - component: {fileID: 1381698620}
   - component: {fileID: 1381698619}
   - component: {fileID: 1381698617}
   - component: {fileID: 1381698616}
@@ -8754,20 +8198,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1381698614}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1381698616}
---- !u!114 &1381698620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381698613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1381698619}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1381698621
 Transform:
   m_ObjectHideFlags: 0
@@ -8894,7 +8324,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393488602}
-  - component: {fileID: 1393488601}
   - component: {fileID: 1393488600}
   - component: {fileID: 1393488598}
   - component: {fileID: 1393488597}
@@ -8963,20 +8392,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1393488595}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1393488597}
---- !u!114 &1393488601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393488594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1393488600}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1393488602
 Transform:
   m_ObjectHideFlags: 0
@@ -9020,7 +8435,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1445450149}
-  - component: {fileID: 1445450148}
   - component: {fileID: 1445450147}
   - component: {fileID: 1445450145}
   - component: {fileID: 1445450144}
@@ -9089,20 +8503,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1445450142}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1445450144}
---- !u!114 &1445450148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445450141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1445450147}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1445450149
 Transform:
   m_ObjectHideFlags: 0
@@ -9229,7 +8629,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1470333994}
-  - component: {fileID: 1470333993}
   - component: {fileID: 1470333992}
   - component: {fileID: 1470333990}
   - component: {fileID: 1470333989}
@@ -9298,20 +8697,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1470333987}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1470333989}
---- !u!114 &1470333993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470333986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1470333992}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1470333994
 Transform:
   m_ObjectHideFlags: 0
@@ -9604,7 +8989,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1514935438}
-  - component: {fileID: 1514935437}
   - component: {fileID: 1514935436}
   - component: {fileID: 1514935434}
   - component: {fileID: 1514935433}
@@ -9673,20 +9057,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1514935431}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1514935433}
---- !u!114 &1514935437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514935430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1514935436}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1514935438
 Transform:
   m_ObjectHideFlags: 0
@@ -10113,7 +9483,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1626597604}
-  - component: {fileID: 1626597603}
   - component: {fileID: 1626597602}
   - component: {fileID: 1626597600}
   - component: {fileID: 1626597599}
@@ -10182,20 +9551,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1626597597}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1626597599}
---- !u!114 &1626597603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626597596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1626597602}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1626597604
 Transform:
   m_ObjectHideFlags: 0
@@ -10239,7 +9594,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1661542044}
-  - component: {fileID: 1661542043}
   - component: {fileID: 1661542042}
   - component: {fileID: 1661542040}
   - component: {fileID: 1661542039}
@@ -10308,20 +9662,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1661542037}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1661542039}
---- !u!114 &1661542043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661542036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1661542042}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1661542044
 Transform:
   m_ObjectHideFlags: 0
@@ -10448,7 +9788,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1688494087}
-  - component: {fileID: 1688494086}
   - component: {fileID: 1688494085}
   - component: {fileID: 1688494083}
   - component: {fileID: 1688494082}
@@ -10517,20 +9856,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1688494080}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1688494082}
---- !u!114 &1688494086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688494079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1688494085}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1688494087
 Transform:
   m_ObjectHideFlags: 0
@@ -10574,7 +9899,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1696292261}
-  - component: {fileID: 1696292260}
   - component: {fileID: 1696292259}
   - component: {fileID: 1696292257}
   - component: {fileID: 1696292256}
@@ -10643,20 +9967,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1696292254}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1696292256}
---- !u!114 &1696292260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696292253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1696292259}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1696292261
 Transform:
   m_ObjectHideFlags: 0
@@ -10700,7 +10010,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1697881404}
-  - component: {fileID: 1697881403}
   - component: {fileID: 1697881402}
   - component: {fileID: 1697881400}
   - component: {fileID: 1697881399}
@@ -10769,20 +10078,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1697881397}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1697881399}
---- !u!114 &1697881403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697881396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1697881402}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1697881404
 Transform:
   m_ObjectHideFlags: 0
@@ -10826,7 +10121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1713920461}
-  - component: {fileID: 1713920460}
   - component: {fileID: 1713920459}
   - component: {fileID: 1713920457}
   - component: {fileID: 1713920456}
@@ -10895,20 +10189,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1713920454}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1713920456}
---- !u!114 &1713920460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713920453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1713920459}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1713920461
 Transform:
   m_ObjectHideFlags: 0
@@ -11035,7 +10315,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766041753}
-  - component: {fileID: 1766041752}
   - component: {fileID: 1766041751}
   - component: {fileID: 1766041749}
   - component: {fileID: 1766041748}
@@ -11104,20 +10383,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1766041746}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1766041748}
---- !u!114 &1766041752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1766041745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1766041751}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1766041753
 Transform:
   m_ObjectHideFlags: 0
@@ -11244,7 +10509,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1782745342}
-  - component: {fileID: 1782745341}
   - component: {fileID: 1782745340}
   - component: {fileID: 1782745338}
   - component: {fileID: 1782745337}
@@ -11313,20 +10577,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1782745335}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1782745337}
---- !u!114 &1782745341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782745334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1782745340}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1782745342
 Transform:
   m_ObjectHideFlags: 0
@@ -11453,7 +10703,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797323934}
-  - component: {fileID: 1797323933}
   - component: {fileID: 1797323932}
   - component: {fileID: 1797323930}
   - component: {fileID: 1797323929}
@@ -11522,20 +10771,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1797323927}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1797323929}
---- !u!114 &1797323933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797323926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1797323932}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1797323934
 Transform:
   m_ObjectHideFlags: 0
@@ -11662,7 +10897,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1812036677}
-  - component: {fileID: 1812036676}
   - component: {fileID: 1812036675}
   - component: {fileID: 1812036673}
   - component: {fileID: 1812036672}
@@ -11731,20 +10965,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1812036670}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1812036672}
---- !u!114 &1812036676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812036669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1812036675}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1812036677
 Transform:
   m_ObjectHideFlags: 0
@@ -11954,7 +11174,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1848771266}
-  - component: {fileID: 1848771265}
   - component: {fileID: 1848771264}
   - component: {fileID: 1848771262}
   - component: {fileID: 1848771261}
@@ -12023,20 +11242,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1848771259}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1848771261}
---- !u!114 &1848771265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848771258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1848771264}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1848771266
 Transform:
   m_ObjectHideFlags: 0
@@ -12080,7 +11285,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1848958492}
-  - component: {fileID: 1848958491}
   - component: {fileID: 1848958490}
   - component: {fileID: 1848958488}
   - component: {fileID: 1848958487}
@@ -12149,20 +11353,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1848958485}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1848958487}
---- !u!114 &1848958491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848958484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1848958490}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1848958492
 Transform:
   m_ObjectHideFlags: 0
@@ -12547,7 +11737,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1910390606}
-  - component: {fileID: 1910390605}
   - component: {fileID: 1910390604}
   - component: {fileID: 1910390602}
   - component: {fileID: 1910390601}
@@ -12616,20 +11805,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1910390599}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1910390601}
---- !u!114 &1910390605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1910390598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1910390604}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1910390606
 Transform:
   m_ObjectHideFlags: 0
@@ -12756,7 +11931,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1958149938}
-  - component: {fileID: 1958149937}
   - component: {fileID: 1958149936}
   - component: {fileID: 1958149934}
   - component: {fileID: 1958149933}
@@ -12825,20 +11999,6 @@ MonoBehaviour:
   _lifetime: {fileID: 1958149931}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 1958149933}
---- !u!114 &1958149937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958149930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 1958149936}
-  _camera: {fileID: 1892181429}
 --- !u!4 &1958149938
 Transform:
   m_ObjectHideFlags: 0
@@ -13214,7 +12374,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2020724746}
-  - component: {fileID: 2020724745}
   - component: {fileID: 2020724744}
   - component: {fileID: 2020724742}
   - component: {fileID: 2020724741}
@@ -13283,20 +12442,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2020724739}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2020724741}
---- !u!114 &2020724745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020724738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2020724744}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2020724746
 Transform:
   m_ObjectHideFlags: 0
@@ -13340,7 +12485,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039093877}
-  - component: {fileID: 2039093876}
   - component: {fileID: 2039093875}
   - component: {fileID: 2039093873}
   - component: {fileID: 2039093872}
@@ -13409,20 +12553,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2039093870}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2039093872}
---- !u!114 &2039093876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039093869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2039093875}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2039093877
 Transform:
   m_ObjectHideFlags: 0
@@ -13466,7 +12596,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2048372863}
-  - component: {fileID: 2048372862}
   - component: {fileID: 2048372861}
   - component: {fileID: 2048372859}
   - component: {fileID: 2048372858}
@@ -13535,20 +12664,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2048372856}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2048372858}
---- !u!114 &2048372862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048372855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2048372861}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2048372863
 Transform:
   m_ObjectHideFlags: 0
@@ -13592,7 +12707,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2049099538}
-  - component: {fileID: 2049099537}
   - component: {fileID: 2049099536}
   - component: {fileID: 2049099534}
   - component: {fileID: 2049099533}
@@ -13661,20 +12775,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2049099531}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2049099533}
---- !u!114 &2049099537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049099530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2049099536}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2049099538
 Transform:
   m_ObjectHideFlags: 0
@@ -13718,7 +12818,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061085966}
-  - component: {fileID: 2061085965}
   - component: {fileID: 2061085964}
   - component: {fileID: 2061085962}
   - component: {fileID: 2061085961}
@@ -13787,20 +12886,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2061085959}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2061085961}
---- !u!114 &2061085965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061085958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2061085964}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2061085966
 Transform:
   m_ObjectHideFlags: 0
@@ -13844,7 +12929,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2064612192}
-  - component: {fileID: 2064612191}
   - component: {fileID: 2064612190}
   - component: {fileID: 2064612188}
   - component: {fileID: 2064612187}
@@ -13913,20 +12997,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2064612185}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2064612187}
---- !u!114 &2064612191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064612184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2064612190}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2064612192
 Transform:
   m_ObjectHideFlags: 0
@@ -14136,7 +13206,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114648161}
-  - component: {fileID: 2114648160}
   - component: {fileID: 2114648159}
   - component: {fileID: 2114648157}
   - component: {fileID: 2114648156}
@@ -14205,20 +13274,6 @@ MonoBehaviour:
   _lifetime: {fileID: 2114648154}
   _characterMovement: {fileID: 0}
   _characterShooting: {fileID: 2114648156}
---- !u!114 &2114648160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2114648153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 2114648159}
-  _camera: {fileID: 1892181429}
 --- !u!4 &2114648161
 Transform:
   m_ObjectHideFlags: 0

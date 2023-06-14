@@ -2,11 +2,11 @@
     "name": "UPR.Tests",
     "rootNamespace": "",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "UPR.PredictionRollback",
-        "UPR.Common",
-        "UPR.Utils"
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:c11b41b18272cce45a1d4fad7c4ecd81",
+        "GUID:1b69f91aadc9db84a897f205a57d541c",
+        "GUID:bf3062ab7dcd05c4b8949f83b90166dd"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

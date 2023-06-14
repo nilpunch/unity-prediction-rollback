@@ -1,4 +1,4 @@
-﻿namespace UPR.PredictionRollback
+﻿namespace UPR.Common
 {
     public interface ICollection<TEntry> : IReadOnlyCollection<TEntry>
     {

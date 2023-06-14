@@ -2,7 +2,7 @@
 using UPR.PredictionRollback;
 using UPR.Serialization;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     public class EntityWorldSerializable<TEntity> : ISerializable where TEntity : ITickCounter, ISerializable
     {

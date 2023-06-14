@@ -1,4 +1,4 @@
-﻿namespace UPR.Utils
+﻿namespace UPR.Useful
 {
     public interface IMispredictionCleanup
     {

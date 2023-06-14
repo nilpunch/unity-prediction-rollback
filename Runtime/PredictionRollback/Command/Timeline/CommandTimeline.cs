@@ -2,7 +2,7 @@
 
 namespace UPR.PredictionRollback
 {
-    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>, IReadOnlyCommandTimeline<TCommand>
+    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UPR.Networking;
 using UPR.PredictionRollback;
-using UPR.Utils;
+using UPR.Useful;
 
 namespace UPR.Samples
 {
@@ -86,10 +86,10 @@ namespace UPR.Samples
             worldRollbacks.Add(new CollectionRollback(characterRegistry));
             worldRollbacks.Add(new CollectionRollback(bulletRegistry));
             worldRollbacks.Add(new CollectionRollback(enemyRegistry));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Character>(characterRegistry)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Bullet>(bulletRegistry)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(new TargetRegistryCleanup<Enemy>(enemyRegistry)));
-            worldRollbacks.Add(new MispredictionCleanupAfterRollback(BulletsFactory));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Character>(characterRegistry)));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Bullet>(bulletRegistry)));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Enemy>(enemyRegistry)));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(BulletsFactory));
 
             var worldCommandPlayers = new CommandPlayers();
             worldCommandPlayers.Add(new CollectionCommandPlayer(characterRegistry));

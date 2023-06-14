@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     public class RarelyChangingValue<TValue> : IHistory, IRollback, IRebase where TValue : IEquatable<TValue>
     {

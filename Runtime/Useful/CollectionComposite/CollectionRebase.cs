@@ -1,6 +1,8 @@
 ﻿using System;
+using UPR.Common;
+using UPR.PredictionRollback;
 
-namespace UPR.PredictionRollback
+namespace UPR.Useful
 {
     public class CollectionRebase<TEntity> : IRebase where TEntity : ITickCounter, IRebase
     {

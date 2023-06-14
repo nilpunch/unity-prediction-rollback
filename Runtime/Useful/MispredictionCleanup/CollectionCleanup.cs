@@ -1,6 +1,7 @@
-﻿using UPR.PredictionRollback;
+﻿using UPR.Common;
+using UPR.PredictionRollback;
 
-namespace UPR.Utils
+namespace UPR.Useful
 {
     public class CollectionCleanup<TTarget> : IMispredictionCleanup where TTarget : ITickCounter
     {
