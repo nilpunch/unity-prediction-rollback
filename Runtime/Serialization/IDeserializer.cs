@@ -2,6 +2,6 @@
 {
     public interface IDeserializer<out TObject>
     {
-        TObject Deserialize(IReadHandle readHandle);
+        TObject Deserialize(ReadHandle readHandle);
     }
 }

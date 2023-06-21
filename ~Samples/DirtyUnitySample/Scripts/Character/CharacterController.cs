@@ -5,7 +5,7 @@ namespace UPR.Samples
 {
     public class CharacterController : MonoBehaviour
     {
-        [SerializeField] private Character _character;
+        [SerializeField] private Character[] _characters;
         [SerializeField] private Camera _camera;
 
         private void Update()
@@ -31,20 +31,25 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
-            _character.MoveCommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
-            _character.MoveCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
-            _character.MoveCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized));
+            foreach (Character character in _characters)
+            {
+                ICommandTarget<CharacterMoveCommand> moveCommandTarget = character;
+                moveCommandTarget.CommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
+                moveCommandTarget.CommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
+                moveCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized));
 
-            _character.ShootCommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
-            _character.ShootCommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
-            if (Input.GetMouseButton(0))
-            {
-                Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - _character.transform.position, Vector3.forward).normalized;
-                _character.ShootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true));
-            }
-            else
-            {
-                _character.ShootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false));
+                ICommandTarget<CharacterShootCommand> shootCommandTarget = character;
+                shootCommandTarget.CommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
+                shootCommandTarget.CommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
+                if (Input.GetMouseButton(0))
+                {
+                    Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - character.transform.position, Vector3.forward).normalized;
+                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true));
+                }
+                else
+                {
+                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false));
+                }
             }
 
             UnitySimulation.WorldTimeline.UpdateEarliestApprovedTick(UnitySimulation.CurrentTick);

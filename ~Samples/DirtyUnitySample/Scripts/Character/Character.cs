@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UPR.Networking;
 using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
-    public class Character : UnityEntity, ICommandPlayer
+    public class Character : UnityEntity, ICommandPlayer,
+        ICommandTarget<CharacterMoveCommand>,
+        ICommandTarget<CharacterShootCommand>
     {
         [SerializeField] private Lifetime _lifetime;
         [SerializeField] private CharacterMovement _characterMovement;
@@ -11,9 +14,12 @@ namespace UPR.Samples
 
         private ICommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
         private ICommandTimeline<CharacterShootCommand> _shootCommandTimeline;
+        private ICommandTimeline<CharacterMoveCommand> _commandTimeline;
+        private ICommandTimeline<CharacterShootCommand> _commandTimeline1;
 
-        public ICommandTimeline<CharacterMoveCommand> MoveCommandTimeline => _moveCommandTimeline;
-        public ICommandTimeline<CharacterShootCommand> ShootCommandTimeline => _shootCommandTimeline;
+        ICommandTimeline<CharacterMoveCommand> ICommandTarget<CharacterMoveCommand>.CommandTimeline => _moveCommandTimeline;
+
+        ICommandTimeline<CharacterShootCommand> ICommandTarget<CharacterShootCommand>.CommandTimeline => _shootCommandTimeline;
 
         public override void Initialize()
         {

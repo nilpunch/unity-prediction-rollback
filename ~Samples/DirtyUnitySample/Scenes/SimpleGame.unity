@@ -9209,7 +9209,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32deccd2596451e81b93179214552a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _character: {fileID: 1521243471}
+  _characters:
+  - {fileID: 1521243471}
+  - {fileID: 415441261}
+  - {fileID: 1848771264}
+  - {fileID: 850445842}
+  - {fileID: 464121526}
+  - {fileID: 162105672}
+  - {fileID: 1812036675}
+  - {fileID: 1688494085}
+  - {fileID: 35236785}
+  - {fileID: 958602575}
+  - {fileID: 1049282516}
+  - {fileID: 1697881402}
+  - {fileID: 982031314}
+  - {fileID: 1212841039}
+  - {fileID: 703288236}
+  - {fileID: 214568158}
+  - {fileID: 649430534}
+  - {fileID: 235429922}
+  - {fileID: 339795095}
+  - {fileID: 1626597602}
+  - {fileID: 2039093875}
+  - {fileID: 80203572}
+  - {fileID: 1445450147}
+  - {fileID: 1661542042}
+  - {fileID: 1696292259}
+  - {fileID: 1094547235}
+  - {fileID: 1241271431}
+  - {fileID: 2061085964}
+  - {fileID: 1958149936}
+  - {fileID: 797250688}
+  - {fileID: 532458483}
+  - {fileID: 1381698619}
+  - {fileID: 2048372861}
+  - {fileID: 1713920459}
+  - {fileID: 1305117504}
+  - {fileID: 1797323932}
+  - {fileID: 1207603976}
+  - {fileID: 2064612190}
+  - {fileID: 2114648159}
+  - {fileID: 1514935436}
+  - {fileID: 733024318}
+  - {fileID: 183669241}
+  - {fileID: 480528708}
+  - {fileID: 284091781}
+  - {fileID: 1910390604}
+  - {fileID: 552693169}
+  - {fileID: 865613503}
+  - {fileID: 316454182}
+  - {fileID: 42012183}
+  - {fileID: 621110046}
+  - {fileID: 1214292494}
+  - {fileID: 847632148}
+  - {fileID: 1782745340}
+  - {fileID: 1766041751}
+  - {fileID: 893774466}
+  - {fileID: 2049099536}
+  - {fileID: 1470333992}
+  - {fileID: 999361003}
+  - {fileID: 2020724744}
+  - {fileID: 1848958490}
+  - {fileID: 45416690}
+  - {fileID: 1393488600}
+  - {fileID: 355830054}
+  - {fileID: 281317760}
   _camera: {fileID: 1892181429}
 --- !u!114 &1521243471
 MonoBehaviour:
