@@ -6,6 +6,11 @@ namespace UPR.Common
     {
         private readonly List<TEntry> _entries = new List<TEntry>();
 
+        public Collection(int capacity = 32)
+        {
+            _entries = new List<TEntry>(capacity);
+        }
+
         public IReadOnlyList<TEntry> Entries => _entries;
 
         public void Add(TEntry entry)

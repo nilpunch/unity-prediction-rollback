@@ -8,10 +8,10 @@ namespace UPR.Serialization
 
         private int _index;
 
-        public WriteHandle(byte[] data, int startOffset)
+        public WriteHandle(byte[] data, int start)
         {
             _data = data;
-            _index = startOffset;
+            _index = start;
         }
 
         public bool IsEnded => _index < _data.Length;

@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
-    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
+    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand> where TCommand : IEquatable<TCommand>
     {
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();
 
-        public int GetLatestTickWithCommandBefore(int tickInclusive)
+        public IReadOnlyList<TCommand> SolidUnpredictedCommands => new ReadOnlyCommandList<TCommand>(_timeline, _filledTicksInOrder);
+
+        public int GetLatestTickWithSolidCommandBefore(int tickInclusive)
         {
             int tickIndex = _filledTicksInOrder.BinarySearch(tickInclusive);
 
@@ -29,6 +32,16 @@ namespace UPR.PredictionRollback
             return _timeline.ContainsKey(tick);
         }
 
+        public bool HasSameCommand(int tick, TCommand command)
+        {
+            if (_timeline.TryGetValue(tick, out var existedCommand))
+            {
+                return existedCommand.Equals(command);
+            }
+
+            return false;
+        }
+
         public TCommand GetCommand(int tick)
         {
             return _timeline[tick];
@@ -45,6 +58,33 @@ namespace UPR.PredictionRollback
                 _timeline.Remove(currentTick);
                 _filledTicksInOrder.RemoveAt(tickIndex);
             }
+        }
+
+        public void RemoveAllCommandsInRange(int fromTickInclusive, int toTickInclusive)
+        {
+            int earliestTickIndex = _filledTicksInOrder.BinarySearch(fromTickInclusive);
+            if (earliestTickIndex < 0)
+            {
+                earliestTickIndex = ~earliestTickIndex - 1;
+
+                if (earliestTickIndex < 0)
+                {
+                    return;
+                }
+            }
+
+            int latestTickIndex = _filledTicksInOrder.BinarySearch(toTickInclusive);
+            if (latestTickIndex < 0)
+            {
+                latestTickIndex = ~latestTickIndex;
+            }
+
+            for (int tickIndex = earliestTickIndex; tickIndex <= latestTickIndex; tickIndex++)
+            {
+                _timeline.Remove(_filledTicksInOrder[tickIndex]);
+            }
+
+            _filledTicksInOrder.RemoveRange(earliestTickIndex, latestTickIndex - earliestTickIndex);
         }
 
         public void RemoveCommand(int tick)

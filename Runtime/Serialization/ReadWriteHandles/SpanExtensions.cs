@@ -20,6 +20,11 @@ namespace UPR.Serialization
             Write(span, encoded);
         }
 
+        public static void Write(this Span<byte> span, byte value)
+        {
+            span[0] = value;
+        }
+
         public static void Write(this Span<byte> span, short value)
         {
             if (BitConverter.IsLittleEndian)
@@ -88,6 +93,11 @@ namespace UPR.Serialization
         public static double ReadDouble(this ReadOnlySpan<byte> span)
         {
             return BitConverter.Int64BitsToDouble(ReadLong(span));
+        }
+
+        public static byte ReadByte(this ReadOnlySpan<byte> span)
+        {
+            return span[0];
         }
 
         public static short ReadShort(this ReadOnlySpan<byte> span)

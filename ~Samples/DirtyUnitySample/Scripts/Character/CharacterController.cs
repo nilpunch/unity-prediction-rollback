@@ -10,6 +10,11 @@ namespace UPR.Samples
 
         private void Update()
         {
+            if (Input.GetKey(KeyCode.P))
+            {
+                return;
+            }
+
             Vector3 input = Vector3.zero;
 
             // input = Vector3.down * Mathf.Sin(UnitySimulation.ElapsedTime) + Vector3.right * Mathf.Cos(UnitySimulation.ElapsedTime);
@@ -31,24 +36,33 @@ namespace UPR.Samples
                 input += Vector3.right;
             }
 
+            input = input.normalized;
+
             foreach (Character character in _characters)
             {
                 ICommandTarget<CharacterMoveCommand> moveCommandTarget = character;
-                moveCommandTarget.CommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
-                moveCommandTarget.CommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
-                moveCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input.normalized));
+                int lastMoveCommandTick = moveCommandTarget.CommandTimeline.GetLatestTickWithSolidCommandBefore(UnitySimulation.CurrentTick);
+                int ticksPassedFromLastMoveCommand = UnitySimulation.CurrentTick - lastMoveCommandTick;
+                if (ticksPassedFromLastMoveCommand > 10 || !moveCommandTarget.CommandTimeline.HasSameCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input)))
+                {
+                    moveCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input));
+                }
 
                 ICommandTarget<CharacterShootCommand> shootCommandTarget = character;
-                shootCommandTarget.CommandTimeline.RemoveAllCommandsDownTo(UnitySimulation.CurrentTick);
-                shootCommandTarget.CommandTimeline.RemoveCommand(UnitySimulation.CurrentTick);
+                CharacterShootCommand characterShootCommand;
                 if (Input.GetMouseButton(0))
                 {
                     Vector3 shootDirection = Vector3.ProjectOnPlane(_camera.ScreenToWorldPoint(Input.mousePosition) - character.transform.position, Vector3.forward).normalized;
-                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(shootDirection, true));
+                    characterShootCommand = new CharacterShootCommand(shootDirection, true);
                 }
                 else
                 {
-                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterShootCommand(Vector3.zero, false));
+                    characterShootCommand = new CharacterShootCommand(Vector3.zero, false);
+                }
+
+                if (!shootCommandTarget.CommandTimeline.HasSameCommand(UnitySimulation.CurrentTick, characterShootCommand))
+                {
+                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, characterShootCommand);
                 }
             }
 

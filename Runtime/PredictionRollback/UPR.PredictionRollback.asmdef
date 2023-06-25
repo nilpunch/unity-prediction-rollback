@@ -1,7 +1,7 @@
 {
     "name": "UPR.PredictionRollback",
     "rootNamespace": "",
-    "references": [],
+    "references": ["GUID:1b69f91aadc9db84a897f205a57d541c"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

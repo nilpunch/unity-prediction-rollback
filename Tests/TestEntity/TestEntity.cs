@@ -9,13 +9,15 @@ namespace UPR.Tests
     {
         private readonly FrequentlyChangingValue<int> _storedValue;
 
-        public ICommandTimeline<IncreaseValueCommand> CommandTimeline { get; }
+        private readonly ICommandTimeline<IncreaseValueCommand> _commandTimeline;
+
+        public ICommandTimeline<IncreaseValueCommand> CommandTimeline => _commandTimeline;
 
         public TestEntity(int value)
         {
             _storedValue = new FrequentlyChangingValue<int>(value);
 
-            CommandTimeline = new CommandTimeline<IncreaseValueCommand>();
+            _commandTimeline = new CommandTimeline<IncreaseValueCommand>();
 
             LocalHistories.Add(_storedValue);
             LocalRollbacks.Add(_storedValue);
@@ -36,9 +38,9 @@ namespace UPR.Tests
 
         public void PlayCommands(int tick)
         {
-            if (CommandTimeline.HasCommand(tick))
+            if (_commandTimeline.HasCommand(tick))
             {
-                var increaseValueCommand = CommandTimeline.GetCommand(tick);
+                var increaseValueCommand = _commandTimeline.GetCommand(tick);
 
                 StoredValue += increaseValueCommand.Delta;
             }

@@ -14,8 +14,6 @@ namespace UPR.Samples
 
         private ICommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
         private ICommandTimeline<CharacterShootCommand> _shootCommandTimeline;
-        private ICommandTimeline<CharacterMoveCommand> _commandTimeline;
-        private ICommandTimeline<CharacterShootCommand> _commandTimeline1;
 
         ICommandTimeline<CharacterMoveCommand> ICommandTarget<CharacterMoveCommand>.CommandTimeline => _moveCommandTimeline;
 
@@ -25,8 +23,8 @@ namespace UPR.Samples
         {
             base.Initialize();
 
-            _moveCommandTimeline = new PredictionCommandTimeline<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
-            _shootCommandTimeline = new PredictionCommandTimeline<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
+            _moveCommandTimeline = new DecayPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
+            _shootCommandTimeline = new RepeatPrediction<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
         }
 
         public void PlayCommands(int tick)
