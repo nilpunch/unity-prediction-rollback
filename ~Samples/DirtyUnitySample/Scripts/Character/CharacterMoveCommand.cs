@@ -4,7 +4,7 @@ using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
-    public readonly struct CharacterMoveCommand : IEquatable<CharacterMoveCommand>, IDecayedCommand<CharacterMoveCommand>
+    public readonly struct CharacterMoveCommand : IEquatable<CharacterMoveCommand>, IDecayingCommand<CharacterMoveCommand>
     {
         public CharacterMoveCommand(Vector3 moveDirection)
         {

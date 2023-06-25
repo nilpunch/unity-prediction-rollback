@@ -43,7 +43,7 @@ namespace UPR.Samples
                 ICommandTarget<CharacterMoveCommand> moveCommandTarget = character;
                 int lastMoveCommandTick = moveCommandTarget.CommandTimeline.GetLatestTickWithSolidCommandBefore(UnitySimulation.CurrentTick);
                 int ticksPassedFromLastMoveCommand = UnitySimulation.CurrentTick - lastMoveCommandTick;
-                if (ticksPassedFromLastMoveCommand > 10 || !moveCommandTarget.CommandTimeline.HasSameCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input)))
+                if (ticksPassedFromLastMoveCommand > 10 || !moveCommandTarget.CommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input)))
                 {
                     moveCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input));
                 }
@@ -60,7 +60,7 @@ namespace UPR.Samples
                     characterShootCommand = new CharacterShootCommand(Vector3.zero, false);
                 }
 
-                if (!shootCommandTarget.CommandTimeline.HasSameCommand(UnitySimulation.CurrentTick, characterShootCommand))
+                if (!shootCommandTarget.CommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, characterShootCommand))
                 {
                     shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, characterShootCommand);
                 }

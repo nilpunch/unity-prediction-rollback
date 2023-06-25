@@ -2,12 +2,12 @@
 
 namespace UPR.PredictionRollback
 {
-    public class DecayPrediction<TCommand> : CommandTimelineDecorator<TCommand> where TCommand : IEquatable<TCommand>, IDecayedCommand<TCommand>
+    public class FadeOutPrediction<TCommand> : CommandTimelineDecorator<TCommand> where TCommand : IEquatable<TCommand>, IDecayingCommand<TCommand>
     {
         private readonly int _startDecayTick;
         private readonly int _decayDurationTicks;
 
-        public DecayPrediction(ICommandTimeline<TCommand> commandTimeline, int startDecayTick = 20, int decayDurationTicks = 60) : base(commandTimeline)
+        public FadeOutPrediction(ICommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60) : base(commandTimeline)
         {
             if (startDecayTick <= 0)
                 throw new ArgumentOutOfRangeException(nameof(startDecayTick));
@@ -24,7 +24,7 @@ namespace UPR.PredictionRollback
             return CommandTimeline.GetLatestTickWithSolidCommandBefore(tick) != -1;
         }
 
-        public override bool HasSameCommand(int tick, TCommand command)
+        public override bool HasExactCommand(int tick, TCommand command)
         {
             return HasCommand(tick) && GetCommand(tick).Equals(command);
         }
@@ -35,9 +35,9 @@ namespace UPR.PredictionRollback
 
             int ticksPassed = tick - lastTickWithCommand;
 
-            float commandDecay = Math.Clamp(ticksPassed - _startDecayTick, 0, _decayDurationTicks) / (float)_decayDurationTicks;
+            float fadeOutPrecent = Math.Clamp(ticksPassed - _startDecayTick, 0, _decayDurationTicks) / (float)_decayDurationTicks;
 
-            return CommandTimeline.GetCommand(lastTickWithCommand).FadeOutPercent(commandDecay);
+            return CommandTimeline.GetCommand(lastTickWithCommand).FadeOutPercent(fadeOutPrecent);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace UPD.Networking.Tests
 
             // var timelineSerializer = new CollectionSerializer<IncreaseValueCommand>();
 
-            var increaseValueSerializer = new NetCommandSerializer<IncreaseValueCommand>(new IncreaseValueCommandSerializer());
-            var increaseValueDeserializer = new NetCommandDeserializer<IncreaseValueCommand>(new IncreaseValueCommandDeserializer());
+            // var increaseValueSerializer = new NetCommandSerializer<IncreaseValueCommand>(new IncreaseValueCommandSerializer());
+            // var increaseValueDeserializer = new NetCommandDeserializer<IncreaseValueCommand>(new IncreaseValueCommandDeserializer());
 
             var commandRouter = new CommandRouter<IncreaseValueCommand>(targetRegistry);
 

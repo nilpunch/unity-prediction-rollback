@@ -16,6 +16,11 @@ namespace UPR.Serialization
 
         public bool IsEnded => _index < _data.Length;
 
+        public void WriteByte(byte value)
+        {
+            GetSpan(1).Write(value);
+        }
+
         public void WriteInt(int value)
         {
             GetSpan(4).Write(value);

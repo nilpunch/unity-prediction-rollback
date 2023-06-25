@@ -1,6 +1,6 @@
 ﻿namespace UPR.PredictionRollback
 {
-    public interface IDecayedCommand<TCommand> where TCommand : IDecayedCommand<TCommand>
+    public interface IDecayingCommand<TCommand> where TCommand : IDecayingCommand<TCommand>
     {
         /// <summary>
         /// Transform command magnitude to achieve smooth fading out.

@@ -32,7 +32,7 @@ namespace UPR.PredictionRollback
             return _timeline.ContainsKey(tick);
         }
 
-        public bool HasSameCommand(int tick, TCommand command)
+        public bool HasExactCommand(int tick, TCommand command)
         {
             if (_timeline.TryGetValue(tick, out var existedCommand))
             {
@@ -47,12 +47,12 @@ namespace UPR.PredictionRollback
             return _timeline[tick];
         }
 
-        public void RemoveAllCommandsDownTo(int tick)
+        public void RemoveAllCommandsDownTo(int tickExclusive)
         {
             for (int tickIndex = _filledTicksInOrder.Count - 1; tickIndex >= 0; tickIndex--)
             {
                 int currentTick = _filledTicksInOrder[tickIndex];
-                if (currentTick <= tick)
+                if (currentTick <= tickExclusive)
                     break;
 
                 _timeline.Remove(currentTick);

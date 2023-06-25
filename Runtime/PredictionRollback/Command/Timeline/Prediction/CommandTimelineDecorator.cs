@@ -26,9 +26,9 @@ namespace UPR.PredictionRollback
             return CommandTimeline.HasCommand(tick);
         }
 
-        public virtual bool HasSameCommand(int tick, TCommand command)
+        public virtual bool HasExactCommand(int tick, TCommand command)
         {
-            return CommandTimeline.HasSameCommand(tick, command);
+            return CommandTimeline.HasExactCommand(tick, command);
         }
 
         public virtual TCommand GetCommand(int tick)
@@ -41,9 +41,9 @@ namespace UPR.PredictionRollback
             CommandTimeline.RemoveAllCommandsInRange(fromTickInclusive, toTickInclusive);
         }
 
-        public void RemoveAllCommandsDownTo(int tick)
+        public void RemoveAllCommandsDownTo(int tickExclusive)
         {
-            CommandTimeline.RemoveAllCommandsDownTo(tick);
+            CommandTimeline.RemoveAllCommandsDownTo(tickExclusive);
         }
 
         public void RemoveCommand(int tick)

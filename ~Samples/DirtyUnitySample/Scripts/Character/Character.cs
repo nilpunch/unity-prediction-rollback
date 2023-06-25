@@ -23,7 +23,7 @@ namespace UPR.Samples
         {
             base.Initialize();
 
-            _moveCommandTimeline = new DecayPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
+            _moveCommandTimeline = new FadeOutPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
             _shootCommandTimeline = new RepeatPrediction<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
         }
 

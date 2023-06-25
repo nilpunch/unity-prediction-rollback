@@ -1,7 +1,9 @@
 # unity-prediction-rollback - Work in progress
 Deterministic prediction-rollback netcode library for fast-paced games.
 
-Does not reference Unity Engine, so it could be used in a regular C# project.
+Library does not reference Unity Engine, so it could be used in a regular C# project.
+
+P.S. currently, only samples references Unity Engine.
 
 ## Goals
 
@@ -13,21 +15,23 @@ Does not reference Unity Engine, so it could be used in a regular C# project.
 
 ## Overview
 
-It is a **library**, not a framework. So, the user is in control of everything.
+This is a **library**, not a framework. Thus, the user controls everything that happens.
 
 Implemented features:
 
 1. Prediction-rollback with zero GC allocations
-2. Live command timeline - make changes in the past and see immediate changes in the future
+2. Live command timeline - make changes in the past and see immediate effect upon the future
 3. Distributed simulation - killer feature, allowing for many great things
-4. Algorithmic command prediction - replication, fading out, anything is possible!
-5. Snapshots memory recycling, if needed
+4. Algorithmic command prediction
+   * Input replication
+   * Input decay (fading out)
+5. Snapshots memory recycling on demand
 6. Replays with command history
 
 TODO:
 
 1. Commands serialization
-2. Late-joins via distributed state serialization
+2. State serialization for late-joins
 3. Actual networking
 
 ## Recent progress

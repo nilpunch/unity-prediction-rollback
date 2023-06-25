@@ -13,7 +13,7 @@ namespace UPR.PredictionRollback
             return CommandTimeline.GetLatestTickWithSolidCommandBefore(tick) != -1;
         }
 
-        public override bool HasSameCommand(int tick, TCommand command)
+        public override bool HasExactCommand(int tick, TCommand command)
         {
             return HasCommand(tick) && GetCommand(tick).Equals(command);
         }
