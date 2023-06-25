@@ -36,6 +36,12 @@ TODO:
 
 ## Recent progress
 
-Here is some simple shooter with live simulation replay.
+Here is some simple shooter with prediction-rollback features.
+
+Input prediction sample. When there is no input from the player, the movement is fading out, and the shooting repeates in the last direction.
+
+https://github.com/nilpunch/unity-prediction-rollback/assets/69798762/d2231a6d-28a7-4ae7-840f-ae9a2982e8cc
+
+Live simulation replay sample.
 
 https://github.com/nilpunch/unity-prediction-rollback/assets/69798762/574b9dac-3b13-4032-9524-b2339ea46fd8
