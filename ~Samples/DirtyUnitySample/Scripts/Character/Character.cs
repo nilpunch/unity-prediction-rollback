@@ -1,30 +1,23 @@
 ﻿using UnityEngine;
-using UPR.Networking;
 using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
-    public class Character : UnityEntity, ICommandPlayer,
-        ICommandTarget<CharacterMoveCommand>,
-        ICommandTarget<CharacterShootCommand>
+    public class Character : UnityEntity, ICommandPlayer
     {
         [SerializeField] private Lifetime _lifetime;
         [SerializeField] private CharacterMovement _characterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
-        private ICommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
-        private ICommandTimeline<CharacterShootCommand> _shootCommandTimeline;
+        private IReadOnlyCommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
+        private IReadOnlyCommandTimeline<CharacterShootCommand> _shootCommandTimeline;
 
-        ICommandTimeline<CharacterMoveCommand> ICommandTarget<CharacterMoveCommand>.CommandTimeline => _moveCommandTimeline;
-
-        ICommandTimeline<CharacterShootCommand> ICommandTarget<CharacterShootCommand>.CommandTimeline => _shootCommandTimeline;
-
-        public override void Initialize()
+        public void InitializeCommandTimelines(
+            IReadOnlyCommandTimeline<CharacterMoveCommand> moveCommandTimeline,
+            IReadOnlyCommandTimeline<CharacterShootCommand> shootCommandTimeline)
         {
-            base.Initialize();
-
-            _moveCommandTimeline = new FadeOutPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>());
-            _shootCommandTimeline = new RepeatPrediction<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
+            _moveCommandTimeline = moveCommandTimeline;
+            _shootCommandTimeline = shootCommandTimeline;
         }
 
         public void PlayCommands(int tick)

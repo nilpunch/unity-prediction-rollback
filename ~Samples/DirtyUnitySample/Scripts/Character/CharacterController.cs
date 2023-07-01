@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UPR.Networking;
+using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
@@ -40,15 +40,17 @@ namespace UPR.Samples
 
             foreach (Character character in _characters)
             {
-                ICommandTarget<CharacterMoveCommand> moveCommandTarget = character;
-                int lastMoveCommandTick = moveCommandTarget.CommandTimeline.GetLatestTickWithSolidCommandBefore(UnitySimulation.CurrentTick);
+                ICommandTimeline<CharacterMoveCommand> moveCommandTimeline =
+                    UnitySimulation.MoveCommandTimelineRegistery.GetTarget(UnitySimulation.CharacterRegistry.GetTargetId(character));
+                int lastMoveCommandTick = moveCommandTimeline.GetLatestTickWithCommandBefore(UnitySimulation.CurrentTick);
                 int ticksPassedFromLastMoveCommand = UnitySimulation.CurrentTick - lastMoveCommandTick;
-                if (ticksPassedFromLastMoveCommand > 10 || !moveCommandTarget.CommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input)))
+                if (ticksPassedFromLastMoveCommand > 10 || !moveCommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input)))
                 {
-                    moveCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input));
+                    moveCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, new CharacterMoveCommand(input));
                 }
 
-                ICommandTarget<CharacterShootCommand> shootCommandTarget = character;
+                ICommandTimeline<CharacterShootCommand> shootCommandTimeline =
+                    UnitySimulation.ShootCommandTimelineRegistery.GetTarget(UnitySimulation.CharacterRegistry.GetTargetId(character));
                 CharacterShootCommand characterShootCommand;
                 if (Input.GetMouseButton(0))
                 {
@@ -60,9 +62,9 @@ namespace UPR.Samples
                     characterShootCommand = new CharacterShootCommand(Vector3.zero, false);
                 }
 
-                if (!shootCommandTarget.CommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, characterShootCommand))
+                if (!shootCommandTimeline.HasExactCommand(UnitySimulation.CurrentTick, characterShootCommand))
                 {
-                    shootCommandTarget.CommandTimeline.InsertCommand(UnitySimulation.CurrentTick, characterShootCommand);
+                    shootCommandTimeline.InsertCommand(UnitySimulation.CurrentTick, characterShootCommand);
                 }
             }
 

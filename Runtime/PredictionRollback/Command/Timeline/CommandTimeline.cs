@@ -8,9 +8,9 @@ namespace UPR.PredictionRollback
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();
 
-        public IReadOnlyList<TCommand> SolidUnpredictedCommands => new ReadOnlyCommandList<TCommand>(_timeline, _filledTicksInOrder);
+        public IReadOnlyList<TCommand> FilledCommands => new ReadOnlyCommandList<TCommand>(_timeline, _filledTicksInOrder);
 
-        public int GetLatestTickWithSolidCommandBefore(int tickInclusive)
+        public int GetLatestTickWithCommandBefore(int tickInclusive)
         {
             int tickIndex = _filledTicksInOrder.BinarySearch(tickInclusive);
 

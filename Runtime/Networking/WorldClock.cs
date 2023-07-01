@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UPR.Networking
+﻿namespace UPR.Networking
 {
     public class WorldClock
     {

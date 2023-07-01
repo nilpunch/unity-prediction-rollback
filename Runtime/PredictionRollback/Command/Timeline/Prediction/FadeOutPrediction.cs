@@ -19,9 +19,17 @@ namespace UPR.PredictionRollback
             _decayDurationTicks = decayDurationTicks;
         }
 
+        public override int GetLatestTickWithCommandBefore(int tickInclusive)
+        {
+            if (CommandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
+                return -1;
+
+            return tickInclusive;
+        }
+
         public override bool HasCommand(int tick)
         {
-            return CommandTimeline.GetLatestTickWithSolidCommandBefore(tick) != -1;
+            return CommandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
         }
 
         public override bool HasExactCommand(int tick, TCommand command)
@@ -31,7 +39,7 @@ namespace UPR.PredictionRollback
 
         public override TCommand GetCommand(int tick)
         {
-            int lastTickWithCommand = CommandTimeline.GetLatestTickWithSolidCommandBefore(tick);
+            int lastTickWithCommand = CommandTimeline.GetLatestTickWithCommandBefore(tick);
 
             int ticksPassed = tick - lastTickWithCommand;
 

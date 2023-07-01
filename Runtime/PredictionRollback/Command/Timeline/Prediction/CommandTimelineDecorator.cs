@@ -14,11 +14,11 @@ namespace UPR.PredictionRollback
 
         protected ICommandTimeline<TCommand> CommandTimeline { get; }
 
-        public IReadOnlyList<TCommand> SolidUnpredictedCommands => CommandTimeline.SolidUnpredictedCommands;
+        public IReadOnlyList<TCommand> FilledCommands => CommandTimeline.FilledCommands;
 
-        public virtual int GetLatestTickWithSolidCommandBefore(int tickInclusive)
+        public virtual int GetLatestTickWithCommandBefore(int tickInclusive)
         {
-            return CommandTimeline.GetLatestTickWithSolidCommandBefore(tickInclusive);
+            return CommandTimeline.GetLatestTickWithCommandBefore(tickInclusive);
         }
 
         public virtual bool HasCommand(int tick)

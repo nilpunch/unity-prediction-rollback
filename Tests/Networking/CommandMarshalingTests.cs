@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using UPR.Networking;
 using UPR.Tests;
-using UPR.Useful;
 
 namespace UPD.Networking.Tests
 {

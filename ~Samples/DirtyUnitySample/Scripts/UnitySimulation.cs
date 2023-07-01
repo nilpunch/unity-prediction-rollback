@@ -15,6 +15,8 @@ namespace UPR.Samples
 
         public static WorldTimeline WorldTimeline { get; private set; }
 
+        public static TargetRegistry<ICommandTimeline<CharacterMoveCommand>> MoveCommandTimelineRegistery { get; private set; }
+        public static TargetRegistry<ICommandTimeline<CharacterShootCommand>> ShootCommandTimelineRegistery { get; private set; }
         public static ITargetRegistry<Character> CharacterRegistry { get; private set; }
         public static ITargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
         public static ITargetRegistry<Bullet> BulletsRegistry { get; private set; }
@@ -45,12 +47,21 @@ namespace UPR.Samples
             var enemyRegistry = new TargetRegistry<Enemy>();
             DeathSpikeRegistry = enemyRegistry;
 
+            MoveCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterMoveCommand>>();
+            ShootCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterShootCommand>>();
+
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
             {
                 switch (unityEntity)
                 {
                     case Character character:
+                        var moveCommandTimeline = new FadeOutPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>(), 30, 30);
+                        var shootCommandTimeline = new RepeatPrediction<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
+                        character.InitializeCommandTimelines(moveCommandTimeline, shootCommandTimeline);
+
+                        MoveCommandTimelineRegistery.Add(moveCommandTimeline, new TargetId(entityIndex));
+                        ShootCommandTimelineRegistery.Add(shootCommandTimeline, new TargetId(entityIndex));
                         CharacterRegistry.Add(character, new TargetId(entityIndex));
                         break;
                     case Enemy deathSpike:
