@@ -2,34 +2,39 @@
 
 namespace UPR.PredictionRollback
 {
-    public class RepeatPrediction<TCommand> : CommandTimelineDecorator<TCommand> where TCommand : IEquatable<TCommand>
+    public class RepeatPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IEquatable<TCommand>
     {
-        public RepeatPrediction(ICommandTimeline<TCommand> commandTimeline) : base(commandTimeline)
+        private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
+
+        public RepeatPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline)
         {
+            _commandTimeline = commandTimeline;
         }
 
-        public override int GetLatestTickWithCommandBefore(int tickInclusive)
+        public int GetLatestTickWithCommandBefore(int tickInclusive)
         {
-            if (CommandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
+            if (_commandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
+            {
                 return -1;
+            }
 
             return tickInclusive;
         }
 
-        public override bool HasCommand(int tick)
+        public bool HasCommand(int tick)
         {
-            return CommandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
+            return _commandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
         }
 
-        public override bool HasExactCommand(int tick, TCommand command)
+        public bool HasExactCommand(int tick, TCommand command)
         {
             return HasCommand(tick) && GetCommand(tick).Equals(command);
         }
 
-        public override TCommand GetCommand(int tick)
+        public TCommand GetCommand(int tick)
         {
-            int lastTickWithCommand = CommandTimeline.GetLatestTickWithCommandBefore(tick);
-            return CommandTimeline.GetCommand(lastTickWithCommand);
+            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommandBefore(tick);
+            return _commandTimeline.GetCommand(lastTickWithCommand);
         }
     }
 }

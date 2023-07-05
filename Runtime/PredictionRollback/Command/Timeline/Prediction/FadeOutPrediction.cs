@@ -2,12 +2,13 @@
 
 namespace UPR.PredictionRollback
 {
-    public class FadeOutPrediction<TCommand> : CommandTimelineDecorator<TCommand> where TCommand : IEquatable<TCommand>, IDecayingCommand<TCommand>
+    public class FadeOutPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IEquatable<TCommand>, IDecayingCommand<TCommand>
     {
+        private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
         private readonly int _startDecayTick;
         private readonly int _decayDurationTicks;
 
-        public FadeOutPrediction(ICommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60) : base(commandTimeline)
+        public FadeOutPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60)
         {
             if (startDecayTick <= 0)
                 throw new ArgumentOutOfRangeException(nameof(startDecayTick));
@@ -15,37 +16,40 @@ namespace UPR.PredictionRollback
             if (decayDurationTicks <= 0)
                 throw new ArgumentOutOfRangeException(nameof(decayDurationTicks));
 
+            _commandTimeline = commandTimeline;
             _startDecayTick = startDecayTick;
             _decayDurationTicks = decayDurationTicks;
         }
 
-        public override int GetLatestTickWithCommandBefore(int tickInclusive)
+        public int GetLatestTickWithCommandBefore(int tickInclusive)
         {
-            if (CommandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
+            if (_commandTimeline.GetLatestTickWithCommandBefore(tickInclusive) == -1)
+            {
                 return -1;
+            }
 
             return tickInclusive;
         }
 
-        public override bool HasCommand(int tick)
+        public bool HasCommand(int tick)
         {
-            return CommandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
+            return _commandTimeline.GetLatestTickWithCommandBefore(tick) != -1;
         }
 
-        public override bool HasExactCommand(int tick, TCommand command)
+        public bool HasExactCommand(int tick, TCommand command)
         {
             return HasCommand(tick) && GetCommand(tick).Equals(command);
         }
 
-        public override TCommand GetCommand(int tick)
+        public TCommand GetCommand(int tick)
         {
-            int lastTickWithCommand = CommandTimeline.GetLatestTickWithCommandBefore(tick);
+            int lastTickWithCommand = _commandTimeline.GetLatestTickWithCommandBefore(tick);
 
             int ticksPassed = tick - lastTickWithCommand;
 
-            float fadeOutPrecent = Math.Clamp(ticksPassed - _startDecayTick, 0, _decayDurationTicks) / (float)_decayDurationTicks;
+            float fadeOutPercent = Math.Clamp(ticksPassed - _startDecayTick, 0, _decayDurationTicks) / (float)_decayDurationTicks;
 
-            return CommandTimeline.GetCommand(lastTickWithCommand).FadeOutPercent(fadeOutPrecent);
+            return _commandTimeline.GetCommand(lastTickWithCommand).FadeOutPercent(fadeOutPercent);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace UPD.Networking.Tests
             const int originalValue = 999;
 
 
-            var targetRegistry = new TargetRegistry<TestEntity>();
-            var testEntity = new TestEntity(originalValue);
-            targetRegistry.Add(testEntity, new TargetId(0));
+            // var targetRegistry = new TargetRegistry<TestEntity>();
+            // var testEntity = new TestEntity(originalValue);
+            // targetRegistry.Add(testEntity, new CommandTimelineId(0));
 
             // ...
 
@@ -23,7 +23,7 @@ namespace UPD.Networking.Tests
             // var increaseValueSerializer = new NetCommandSerializer<IncreaseValueCommand>(new IncreaseValueCommandSerializer());
             // var increaseValueDeserializer = new NetCommandDeserializer<IncreaseValueCommand>(new IncreaseValueCommandDeserializer());
 
-            var commandRouter = new CommandRouter<IncreaseValueCommand>(targetRegistry);
+            // var commandRouter = new CommandRouter<IncreaseValueCommand>(targetRegistry);
 
             // ...
         }

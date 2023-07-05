@@ -9,15 +9,15 @@ namespace UPR.Samples
         [SerializeField] private CharacterMovement _characterMovement;
         [SerializeField] private CharacterShooting _characterShooting;
 
-        private IReadOnlyCommandTimeline<CharacterMoveCommand> _moveCommandTimeline;
-        private IReadOnlyCommandTimeline<CharacterShootCommand> _shootCommandTimeline;
+        public ICommandTimeline<CharacterMoveCommand> MoveCommandTimeline { get; private set; }
+        public ICommandTimeline<CharacterShootCommand> ShootCommandTimeline { get; private set; }
 
         public void InitializeCommandTimelines(
-            IReadOnlyCommandTimeline<CharacterMoveCommand> moveCommandTimeline,
-            IReadOnlyCommandTimeline<CharacterShootCommand> shootCommandTimeline)
+            ICommandTimeline<CharacterMoveCommand> moveCommandTimeline,
+            ICommandTimeline<CharacterShootCommand> shootCommandTimeline)
         {
-            _moveCommandTimeline = moveCommandTimeline;
-            _shootCommandTimeline = shootCommandTimeline;
+            MoveCommandTimeline = moveCommandTimeline;
+            ShootCommandTimeline = shootCommandTimeline;
         }
 
         public void PlayCommands(int tick)
@@ -25,15 +25,15 @@ namespace UPR.Samples
             if (!_lifetime.IsAlive)
                 return;
 
-            if (_moveCommandTimeline.HasCommand(tick))
+            if (MoveCommandTimeline.HasCommand(tick))
             {
-                var command = _moveCommandTimeline.GetCommand(tick);
+                var command = MoveCommandTimeline.GetCommand(tick);
                 _characterMovement?.SetMoveDirection(command.MoveDirection);
             }
 
-            if (_shootCommandTimeline.HasCommand(tick))
+            if (ShootCommandTimeline.HasCommand(tick))
             {
-                var command = _shootCommandTimeline.GetCommand(tick);
+                var command = ShootCommandTimeline.GetCommand(tick);
 
                 _characterShooting.SetShootingDirection(command.Direction);
                 if (command.IsShooting)

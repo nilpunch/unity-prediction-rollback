@@ -17,9 +17,6 @@ namespace UPR.Samples
 
         public static TargetRegistry<ICommandTimeline<CharacterMoveCommand>> MoveCommandTimelineRegistery { get; private set; }
         public static TargetRegistry<ICommandTimeline<CharacterShootCommand>> ShootCommandTimelineRegistery { get; private set; }
-        public static ITargetRegistry<Character> CharacterRegistry { get; private set; }
-        public static ITargetRegistry<Enemy> DeathSpikeRegistry { get; private set; }
-        public static ITargetRegistry<Bullet> BulletsRegistry { get; private set; }
         public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
@@ -41,11 +38,8 @@ namespace UPR.Samples
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
 
             var characterRegistry = new TargetRegistry<Character>();
-            CharacterRegistry = characterRegistry;
             var bulletRegistry = new TargetRegistry<Bullet>();
-            BulletsRegistry = bulletRegistry;
             var enemyRegistry = new TargetRegistry<Enemy>();
-            DeathSpikeRegistry = enemyRegistry;
 
             MoveCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterMoveCommand>>();
             ShootCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterShootCommand>>();
@@ -56,16 +50,16 @@ namespace UPR.Samples
                 switch (unityEntity)
                 {
                     case Character character:
-                        var moveCommandTimeline = new FadeOutPrediction<CharacterMoveCommand>(new CommandTimeline<CharacterMoveCommand>(), 30, 30);
-                        var shootCommandTimeline = new RepeatPrediction<CharacterShootCommand>(new CommandTimeline<CharacterShootCommand>());
+                        var moveCommandTimeline = new CommandTimeline<CharacterMoveCommand>().AppendFadeOutPrediction(30, 30);
+                        var shootCommandTimeline = new CommandTimeline<CharacterShootCommand>().AppendRepeatPrediction();
                         character.InitializeCommandTimelines(moveCommandTimeline, shootCommandTimeline);
 
                         MoveCommandTimelineRegistery.Add(moveCommandTimeline, new TargetId(entityIndex));
                         ShootCommandTimelineRegistery.Add(shootCommandTimeline, new TargetId(entityIndex));
-                        CharacterRegistry.Add(character, new TargetId(entityIndex));
+                        characterRegistry.Add(character, new TargetId(entityIndex));
                         break;
                     case Enemy deathSpike:
-                        DeathSpikeRegistry.Add(deathSpike, new TargetId(entityIndex));
+                        enemyRegistry.Add(deathSpike, new TargetId(entityIndex));
                         break;
                 }
 

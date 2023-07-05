@@ -1,19 +1,21 @@
-﻿namespace UPR.Networking
+﻿using UPR.PredictionRollback;
+
+namespace UPR.Networking
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {
-        private readonly ITargetFinder<ICommandTarget<TCommand>> _targetFinder;
+        private readonly ITargetFinder<ICommandTimeline<TCommand>> _targetFinder;
 
-        public CommandRouter(ITargetFinder<ICommandTarget<TCommand>> targetFinder)
+        public CommandRouter(ITargetFinder<ICommandTimeline<TCommand>> targetFinder)
         {
             _targetFinder = targetFinder;
         }
 
-        public void ForwardCommand(TCommand command, TargetId targetId, int tick)
+        public void ForwardCommand(TargetId targetId, TCommand command, int tick)
         {
             if (_targetFinder.IsTargetIdExists(targetId))
             {
-                _targetFinder.GetTarget(targetId).CommandTimeline.InsertCommand(tick, command);
+                _targetFinder.GetTarget(targetId).InsertCommand(tick, command);
             }
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface ICommandRouter<TCommand>
     {
-        public void ForwardCommand(TCommand command, TargetId targetId, int tick);
+        public void ForwardCommand(TargetId targetId, TCommand command, int tick);
     }
 }
