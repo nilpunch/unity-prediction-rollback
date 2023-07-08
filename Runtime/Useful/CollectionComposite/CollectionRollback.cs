@@ -6,11 +6,11 @@ namespace UPR.Useful
 {
     public class CollectionRollback : IRollback
     {
-        private readonly IReadOnlyCollection<IRollback> _collection;
+        private readonly IReadOnlyContainer<IRollback> _container;
 
-        public CollectionRollback(IReadOnlyCollection<IRollback> collection)
+        public CollectionRollback(IReadOnlyContainer<IRollback> container)
         {
-            _collection = collection;
+            _container = container;
         }
 
         public void Rollback(int steps)
@@ -18,7 +18,7 @@ namespace UPR.Useful
             if (steps < 0)
                 throw new ArgumentOutOfRangeException(nameof(steps));
 
-            foreach (var entity in _collection.Entries)
+            foreach (var entity in _container.Entries)
             {
                 entity.Rollback(steps);
             }

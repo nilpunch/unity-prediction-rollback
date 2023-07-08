@@ -3,7 +3,7 @@ using UPR.Serialization;
 
 namespace UPR.Useful
 {
-    public class CollectionSerializer<TEntry> : ISerializer<ICollection<TEntry>>
+    public class CollectionSerializer<TEntry> : ISerializer<IContainer<TEntry>>
     {
         private readonly ISerializer<TEntry> _serializer;
 
@@ -12,7 +12,7 @@ namespace UPR.Useful
             _serializer = serializer;
         }
 
-        public void Serialize(WriteHandle writeHandle, ICollection<TEntry> value)
+        public void Serialize(WriteHandle writeHandle, IContainer<TEntry> value)
         {
             writeHandle.WriteInt(value.Entries.Count);
             foreach (var entry in value.Entries)

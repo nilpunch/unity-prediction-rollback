@@ -5,16 +5,16 @@ namespace UPR.Useful
 {
     public class CollectionCommandPlayer : ICommandPlayer
     {
-        private readonly IReadOnlyCollection<ICommandPlayer> _collection;
+        private readonly IReadOnlyContainer<ICommandPlayer> _container;
 
-        public CollectionCommandPlayer(IReadOnlyCollection<ICommandPlayer> collection)
+        public CollectionCommandPlayer(IReadOnlyContainer<ICommandPlayer> container)
         {
-            _collection = collection;
+            _container = container;
         }
 
         public void PlayCommands(int tick)
         {
-            foreach (var commandsPlayer in _collection.Entries)
+            foreach (var commandsPlayer in _container.Entries)
             {
                 commandsPlayer.PlayCommands(tick);
             }

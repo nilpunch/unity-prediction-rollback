@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using UnityEngine;
+using UPR.Useful;
 
 namespace UPR.Samples
 {

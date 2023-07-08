@@ -2,7 +2,7 @@
 
 namespace UPR.Common
 {
-    public interface IReadOnlyCollection<out TEntry>
+    public interface IReadOnlyContainer<out TEntry>
     {
         IReadOnlyList<TEntry> Entries { get; }
     }

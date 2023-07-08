@@ -2,7 +2,7 @@
 
 namespace UPR.PredictionRollback
 {
-    public class RepeatPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IEquatable<TCommand>
+    public class RepeatPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand>
     {
         private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
 

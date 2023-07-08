@@ -5,16 +5,16 @@ namespace UPR.Useful
 {
     public class CollectionHistory : IHistory
     {
-        private readonly IReadOnlyCollection<IHistory> _collection;
+        private readonly IReadOnlyContainer<IHistory> _container;
 
-        public CollectionHistory(IReadOnlyCollection<IHistory> collection)
+        public CollectionHistory(IReadOnlyContainer<IHistory> container)
         {
-            _collection = collection;
+            _container = container;
         }
 
         public void SaveStep()
         {
-            foreach (var entity in _collection.Entries)
+            foreach (var entity in _container.Entries)
             {
                 entity.SaveStep();
             }

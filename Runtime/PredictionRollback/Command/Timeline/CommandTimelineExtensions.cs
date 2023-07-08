@@ -6,18 +6,17 @@ namespace UPR.PredictionRollback
     public static class CommandTimelineExtensions
     {
         public static ICommandTimeline<TCommand> AppendRepeatPrediction<TCommand>(this ICommandTimeline<TCommand> commandTimeline)
-            where TCommand : IEquatable<TCommand>
         {
             return new DecorateReadOnlyPart<TCommand>(commandTimeline, new RepeatPrediction<TCommand>(commandTimeline));
         }
-        
+
         public static ICommandTimeline<TCommand> AppendFadeOutPrediction<TCommand>(this ICommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60)
-            where TCommand : IEquatable<TCommand>, IDecayingCommand<TCommand>
+            where TCommand : IDecayingCommand<TCommand>
         {
             return new DecorateReadOnlyPart<TCommand>(commandTimeline, new FadeOutPrediction<TCommand>(commandTimeline, startDecayTick, decayDurationTicks));
         }
 
-        private class DecorateReadOnlyPart<TCommand> : ICommandTimeline<TCommand>
+        public class DecorateReadOnlyPart<TCommand> : ICommandTimeline<TCommand>
         {
             private readonly ICommandTimeline<TCommand> _commandTimeline;
             private readonly IReadOnlyCommandTimeline<TCommand> _readOnlyCommandTimeline;
@@ -27,7 +26,7 @@ namespace UPR.PredictionRollback
                 _commandTimeline = commandTimeline;
                 _readOnlyCommandTimeline = readOnlyCommandTimeline;
             }
-            
+
             public int GetLatestTickWithCommandBefore(int tickInclusive)
             {
                 return _readOnlyCommandTimeline.GetLatestTickWithCommandBefore(tickInclusive);
@@ -49,7 +48,7 @@ namespace UPR.PredictionRollback
             }
 
             public IReadOnlyList<TCommand> FilledCommands => _commandTimeline.FilledCommands;
-            
+
             public void RemoveAllCommandsInRange(int fromTickInclusive, int toTickInclusive)
             {
                 _commandTimeline.RemoveAllCommandsInRange(fromTickInclusive, toTickInclusive);

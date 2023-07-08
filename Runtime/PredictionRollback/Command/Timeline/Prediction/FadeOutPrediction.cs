@@ -2,7 +2,7 @@
 
 namespace UPR.PredictionRollback
 {
-    public class FadeOutPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IEquatable<TCommand>, IDecayingCommand<TCommand>
+    public class FadeOutPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IDecayingCommand<TCommand>
     {
         private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
         private readonly int _startDecayTick;

@@ -40,11 +40,6 @@ namespace UPR.Samples
             return entity;
         }
 
-        public void Rollback(int steps)
-        {
-            ReturnNonExistedEntitiesToPool();
-        }
-
         public void CleanUp()
         {
             ReturnNonExistedEntitiesToPool();

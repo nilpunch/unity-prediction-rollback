@@ -1,4 +1,4 @@
-﻿namespace UPR.Samples
+﻿namespace UPR.Useful
 {
     public interface IPool<TItem> : IPoolReturn<TItem>
     {

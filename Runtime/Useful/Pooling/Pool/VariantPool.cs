@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UPR.Samples
+namespace UPR.Useful
 {
 	public class VariantPool<TKey, TItem> : IVariantPool<TKey, TItem>
 	{

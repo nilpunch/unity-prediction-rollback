@@ -5,18 +5,18 @@ namespace UPR.Useful
 {
     public class CollectionSimulation : ISimulation
     {
-        private readonly IReadOnlyCollection<ISimulation> _collection;
+        private readonly IReadOnlyContainer<ISimulation> _container;
 
-        public CollectionSimulation(IReadOnlyCollection<ISimulation> collection)
+        public CollectionSimulation(IReadOnlyContainer<ISimulation> container)
         {
-            _collection = collection;
+            _container = container;
         }
 
         public void StepForward()
         {
-            for (int i = 0; i < _collection.Entries.Count; i++)
+            for (int i = 0; i < _container.Entries.Count; i++)
             {
-                _collection.Entries[i].StepForward();
+                _container.Entries[i].StepForward();
             }
         }
     }

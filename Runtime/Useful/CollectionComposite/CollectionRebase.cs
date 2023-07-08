@@ -6,12 +6,12 @@ namespace UPR.Useful
 {
     public class CollectionRebase<TEntity> : IRebase where TEntity : ITickCounter, IRebase
     {
-        private readonly IReadOnlyCollection<TEntity> _collection;
+        private readonly IReadOnlyContainer<TEntity> _container;
         private readonly ITickCounter _worldTickCounter;
 
-        public CollectionRebase(IReadOnlyCollection<TEntity> collection, ITickCounter worldTickCounter)
+        public CollectionRebase(IReadOnlyContainer<TEntity> container, ITickCounter worldTickCounter)
         {
-            _collection = collection;
+            _container = container;
             _worldTickCounter = worldTickCounter;
             HistoryBeginningTick = _worldTickCounter.CurrentTick;
         }
@@ -30,7 +30,7 @@ namespace UPR.Useful
 
             HistoryBeginningTick += steps;
 
-            foreach (var entity in _collection.Entries)
+            foreach (var entity in _container.Entries)
             {
                 int entityHistoryBegin = _worldTickCounter.CurrentTick - entity.CurrentTick;
                 int canForgetSteps = Math.Max(HistoryBeginningTick - entityHistoryBegin, 0);

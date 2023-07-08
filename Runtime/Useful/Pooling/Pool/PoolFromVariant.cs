@@ -1,4 +1,4 @@
-﻿namespace UPR.Samples
+﻿namespace UPR.Useful
 {
 	/// <summary>
 	/// Adapter from VariantPool to basic Pool.

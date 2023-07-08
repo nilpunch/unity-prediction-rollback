@@ -3,7 +3,7 @@ using UPR.Serialization;
 
 namespace UPR.Useful
 {
-    public class CollectionDeserializer<TEntry> : IDeserializer<ICollection<TEntry>>
+    public class CollectionDeserializer<TEntry> : IDeserializer<IContainer<TEntry>>
     {
         private readonly IDeserializer<TEntry> _objectDeserializer;
 
@@ -12,13 +12,13 @@ namespace UPR.Useful
             _objectDeserializer = objectDeserializer;
         }
 
-        public ICollection<TEntry> Deserialize(ReadHandle readHandle)
+        public IContainer<TEntry> Deserialize(ReadHandle readHandle)
         {
             int count = readHandle.ReadInt();
-            var collection = new Collection<TEntry>(count);
+            var collection = new Container<TEntry>(count);
             for (int index = 0; index < count; index++)
             {
-                collection.Add(_objectDeserializer.Deserialize(readHandle));
+                collection.Entries.Add(_objectDeserializer.Deserialize(readHandle));
             }
             return collection;
         }
