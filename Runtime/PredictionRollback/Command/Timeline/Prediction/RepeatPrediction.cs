@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
     public class RepeatPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand>
     {
         private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
+        private readonly IEqualityComparer<TCommand> _equalityComparer;
 
-        public RepeatPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline)
+        public RepeatPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline, IEqualityComparer<TCommand> equalityComparer = null)
         {
             _commandTimeline = commandTimeline;
+            _equalityComparer = equalityComparer ?? EqualityComparer<TCommand>.Default;
         }
 
         public int GetLatestTickWithCommandBefore(int tickInclusive)
@@ -28,7 +31,7 @@ namespace UPR.PredictionRollback
 
         public bool HasExactCommand(int tick, TCommand command)
         {
-            return HasCommand(tick) && GetCommand(tick).Equals(command);
+            return HasCommand(tick) && _equalityComparer.Equals(GetCommand(tick), command);
         }
 
         public TCommand GetCommand(int tick)

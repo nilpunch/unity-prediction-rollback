@@ -8,7 +8,7 @@ namespace UPR.Useful
     {
         private readonly List<TValue> _history;
 
-        public FrequentlyChangingValue(TValue initialValue)
+        public FrequentlyChangingValue(TValue initialValue = default)
         {
             Value = initialValue;
             _history = new List<TValue> { Value };

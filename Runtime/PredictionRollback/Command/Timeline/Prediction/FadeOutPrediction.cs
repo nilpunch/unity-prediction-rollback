@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
-    public class FadeOutPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IDecayingCommand<TCommand>
+    public class FadeOutPrediction<TCommand> : IReadOnlyCommandTimeline<TCommand> where TCommand : IFadingOutCommand<TCommand>
     {
         private readonly IReadOnlyCommandTimeline<TCommand> _commandTimeline;
         private readonly int _startDecayTick;
         private readonly int _decayDurationTicks;
+        private readonly IEqualityComparer<TCommand> _equalityComparer;
 
-        public FadeOutPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60)
+        public FadeOutPrediction(IReadOnlyCommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60, IEqualityComparer<TCommand> equalityComparer = null)
         {
             if (startDecayTick <= 0)
                 throw new ArgumentOutOfRangeException(nameof(startDecayTick));
@@ -19,6 +21,7 @@ namespace UPR.PredictionRollback
             _commandTimeline = commandTimeline;
             _startDecayTick = startDecayTick;
             _decayDurationTicks = decayDurationTicks;
+            _equalityComparer = equalityComparer ?? EqualityComparer<TCommand>.Default;
         }
 
         public int GetLatestTickWithCommandBefore(int tickInclusive)
@@ -38,7 +41,7 @@ namespace UPR.PredictionRollback
 
         public bool HasExactCommand(int tick, TCommand command)
         {
-            return HasCommand(tick) && GetCommand(tick).Equals(command);
+            return HasCommand(tick) && _equalityComparer.Equals(GetCommand(tick), command);
         }
 
         public TCommand GetCommand(int tick)
@@ -49,7 +52,7 @@ namespace UPR.PredictionRollback
 
             float fadeOutPercent = Math.Clamp(ticksPassed - _startDecayTick, 0, _decayDurationTicks) / (float)_decayDurationTicks;
 
-            return _commandTimeline.GetCommand(lastTickWithCommand).FadeOutPercent(fadeOutPercent);
+            return _commandTimeline.GetCommand(lastTickWithCommand).FadeOut(fadeOutPercent);
         }
     }
 }

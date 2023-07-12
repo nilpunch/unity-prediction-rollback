@@ -11,7 +11,7 @@ namespace UPR.PredictionRollback
         }
 
         public static ICommandTimeline<TCommand> AppendFadeOutPrediction<TCommand>(this ICommandTimeline<TCommand> commandTimeline, int startDecayTick = 30, int decayDurationTicks = 60)
-            where TCommand : IDecayingCommand<TCommand>
+            where TCommand : IFadingOutCommand<TCommand>
         {
             return new DecorateReadOnlyPart<TCommand>(commandTimeline, new FadeOutPrediction<TCommand>(commandTimeline, startDecayTick, decayDurationTicks));
         }

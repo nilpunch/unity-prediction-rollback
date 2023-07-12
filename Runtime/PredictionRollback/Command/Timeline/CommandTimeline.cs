@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 namespace UPR.PredictionRollback
 {
-    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand> where TCommand : IEquatable<TCommand>
+    public class CommandTimeline<TCommand> : ICommandTimeline<TCommand>
     {
+        private readonly IEqualityComparer<TCommand> _equalityComparer;
         private readonly Dictionary<int, TCommand> _timeline = new Dictionary<int, TCommand>();
         private readonly List<int> _filledTicksInOrder = new List<int>();
 
         public IReadOnlyList<TCommand> FilledCommands => new ReadOnlyCommandList<TCommand>(_timeline, _filledTicksInOrder);
+
+        public CommandTimeline(IEqualityComparer<TCommand> equalityComparer = null)
+        {
+            _equalityComparer = equalityComparer ?? EqualityComparer<TCommand>.Default;
+        }
 
         public int GetLatestTickWithCommandBefore(int tickInclusive)
         {
@@ -36,7 +42,7 @@ namespace UPR.PredictionRollback
         {
             if (_timeline.TryGetValue(tick, out var existedCommand))
             {
-                return existedCommand.Equals(command);
+                return _equalityComparer.Equals(existedCommand, command);
             }
 
             return false;

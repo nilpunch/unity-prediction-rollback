@@ -4,7 +4,7 @@ using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
-    public readonly struct CharacterMoveCommand : IEquatable<CharacterMoveCommand>, IDecayingCommand<CharacterMoveCommand>
+    public readonly struct CharacterMoveCommand : IEquatable<CharacterMoveCommand>, IFadingOutCommand<CharacterMoveCommand>
     {
         public CharacterMoveCommand(Vector3 moveDirection)
         {
@@ -13,7 +13,7 @@ namespace UPR.Samples
 
         public Vector3 MoveDirection { get; }
 
-        public CharacterMoveCommand FadeOutPercent(float percent)
+        public CharacterMoveCommand FadeOut(float percent)
         {
             return new CharacterMoveCommand(MoveDirection * (1f - percent));
         }

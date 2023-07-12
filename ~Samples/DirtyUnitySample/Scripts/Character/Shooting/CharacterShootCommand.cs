@@ -14,7 +14,6 @@ namespace UPR.Samples
         public Vector3 Direction { get; }
         public bool IsShooting { get; }
 
-
         public bool Equals(CharacterShootCommand other)
         {
             return Direction.Equals(other.Direction) && IsShooting == other.IsShooting;

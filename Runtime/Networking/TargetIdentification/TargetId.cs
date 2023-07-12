@@ -2,7 +2,7 @@
 
 namespace UPR.Networking
 {
-    public readonly struct TargetId : IEquatable<TargetId>
+    public readonly struct TargetId : IEquatable<TargetId>, IComparable<TargetId>
     {
         public TargetId(int value)
         {
@@ -39,6 +39,11 @@ namespace UPR.Networking
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public int CompareTo(TargetId other)
+        {
+            return Value.CompareTo(other.Value);
         }
     }
 }
