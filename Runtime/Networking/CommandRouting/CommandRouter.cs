@@ -4,18 +4,18 @@ namespace UPR.Networking
 {
     public class CommandRouter<TCommand> : ICommandRouter<TCommand>
     {
-        private readonly ITargetFinder<ICommandTimeline<TCommand>> _targetFinder;
+        private readonly ICommandTimelineFinder<ICommandTimeline<TCommand>> _commandTimelineFinder;
 
-        public CommandRouter(ITargetFinder<ICommandTimeline<TCommand>> targetFinder)
+        public CommandRouter(ICommandTimelineFinder<ICommandTimeline<TCommand>> commandTimelineFinder)
         {
-            _targetFinder = targetFinder;
+            _commandTimelineFinder = commandTimelineFinder;
         }
 
-        public void ForwardCommand(TargetId targetId, TCommand command, int tick)
+        public void ForwardCommand(CommandTimelineId commandTimelineId, TCommand command, int tick)
         {
-            if (_targetFinder.IsTargetIdExists(targetId))
+            if (_commandTimelineFinder.IsCommandTimelineExists(commandTimelineId))
             {
-                _targetFinder.GetTarget(targetId).InsertCommand(tick, command);
+                _commandTimelineFinder.GetCommandTimeline(commandTimelineId).InsertCommand(tick, command);
             }
         }
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UPR.Common;
 using UPR.Networking;
 using UPR.PredictionRollback;
 using UPR.Useful;
@@ -13,16 +14,16 @@ namespace UPR.Samples
 
         [Space, SerializeField] private int _simulateRollbackEveryFrame = 8;
 
-        private TargetRegistry<Character> _characterRegistry;
-        private TargetRegistry<Bullet> _bulletRegistry;
-        private TargetRegistry<Enemy> _enemyRegistry;
+        private IContainer<Character> _characters;
+        private IContainer<Bullet> _bullets;
+        private IContainer<Enemy> _enemies;
 
         public static SimulationSpeed SimulationSpeed { get; private set; }
 
         public static WorldTimeline WorldTimeline { get; private set; }
 
-        public static TargetRegistry<ICommandTimeline<CharacterMoveCommand>> MoveCommandTimelineRegistery { get; private set; }
-        public static TargetRegistry<ICommandTimeline<CharacterShootCommand>> ShootCommandTimelineRegistery { get; private set; }
+        public static CommandTimelineRegistry<ICommandTimeline<CharacterMoveCommand>> MoveCommandTimelineRegistery { get; private set; }
+        public static CommandTimelineRegistry<ICommandTimeline<CharacterShootCommand>> ShootCommandTimelineRegistery { get; private set; }
         public static EntityFactory<Bullet> BulletsFactory { get; private set; }
 
         public static float ElapsedTime { get; set; }
@@ -43,12 +44,12 @@ namespace UPR.Samples
 
             SimulationSpeed = new SimulationSpeed(_ticksPerSecond);
 
-            _characterRegistry = new TargetRegistry<Character>();
-            _bulletRegistry = new TargetRegistry<Bullet>();
-            _enemyRegistry = new TargetRegistry<Enemy>();
+            _characters = new Container<Character>();
+            _bullets = new Container<Bullet>();
+            _enemies = new Container<Enemy>();
 
-            MoveCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterMoveCommand>>();
-            ShootCommandTimelineRegistery = new TargetRegistry<ICommandTimeline<CharacterShootCommand>>();
+            MoveCommandTimelineRegistery = new CommandTimelineRegistry<ICommandTimeline<CharacterMoveCommand>>();
+            ShootCommandTimelineRegistery = new CommandTimelineRegistry<ICommandTimeline<CharacterShootCommand>>();
 
             int entityIndex = 0;
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
@@ -60,12 +61,12 @@ namespace UPR.Samples
                         var shootCommandTimeline = new CommandTimeline<CharacterShootCommand>().AppendRepeatPrediction();
                         character.InitializeCommandTimelines(moveCommandTimeline, shootCommandTimeline);
 
-                        MoveCommandTimelineRegistery.Add(moveCommandTimeline, new TargetId(entityIndex));
-                        ShootCommandTimelineRegistery.Add(shootCommandTimeline, new TargetId(entityIndex));
-                        _characterRegistry.Add(character, new TargetId(entityIndex));
+                        MoveCommandTimelineRegistery.Add(moveCommandTimeline, new CommandTimelineId(entityIndex));
+                        ShootCommandTimelineRegistery.Add(shootCommandTimeline, new CommandTimelineId(entityIndex));
+                        _characters.Entries.Add(character);
                         break;
                     case Enemy deathSpike:
-                        _enemyRegistry.Add(deathSpike, new TargetId(entityIndex));
+                        _enemies.Entries.Add(deathSpike);
                         break;
                 }
 
@@ -77,41 +78,41 @@ namespace UPR.Samples
 
             IdGenerator = new IdGenerator(entityIndex);
             WorldTickCounter = new TickCounter();
-            BulletsFactory = new EntityFactory<Bullet>(_bulletRegistry, IdGenerator, new PrefabFactory<Bullet>(_bulletPrefab));
+            BulletsFactory = new EntityFactory<Bullet>(_bullets, new PrefabFactory<Bullet>(_bulletPrefab));
 
             var worldSimulation = new Simulations();
             worldSimulation.Add(WorldTickCounter);
-            worldSimulation.Add(new CollectionSimulation(_characterRegistry));
-            worldSimulation.Add(new CollectionSimulation(_bulletRegistry));
-            worldSimulation.Add(new CollectionSimulation(_enemyRegistry));
+            worldSimulation.Add(new CollectionSimulation(_characters));
+            worldSimulation.Add(new CollectionSimulation(_bullets));
+            worldSimulation.Add(new CollectionSimulation(_enemies));
 
             var worldHistories = new Histories();
             worldHistories.Add(IdGenerator);
-            worldHistories.Add(new CollectionHistory(_characterRegistry));
-            worldHistories.Add(new CollectionHistory(_bulletRegistry));
-            worldHistories.Add(new CollectionHistory(_enemyRegistry));
+            worldHistories.Add(new CollectionHistory(_characters));
+            worldHistories.Add(new CollectionHistory(_bullets));
+            worldHistories.Add(new CollectionHistory(_enemies));
 
             var worldRollbacks = new Rollbacks();
             worldRollbacks.Add(IdGenerator);
             worldRollbacks.Add(WorldTickCounter);
-            worldRollbacks.Add(new CollectionRollback(_characterRegistry));
-            worldRollbacks.Add(new CollectionRollback(_bulletRegistry));
-            worldRollbacks.Add(new CollectionRollback(_enemyRegistry));
-            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Character>(_characterRegistry)));
-            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Bullet>(_bulletRegistry)));
-            worldRollbacks.Add(new RollbackMispredictionCleanup(new TargetRegistryCleanup<Enemy>(_enemyRegistry)));
+            worldRollbacks.Add(new CollectionRollback(_characters));
+            worldRollbacks.Add(new CollectionRollback(_bullets));
+            worldRollbacks.Add(new CollectionRollback(_enemies));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new CollectionCleanup<Character>(_characters)));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new CollectionCleanup<Bullet>(_bullets)));
+            worldRollbacks.Add(new RollbackMispredictionCleanup(new CollectionCleanup<Enemy>(_enemies)));
             worldRollbacks.Add(new RollbackMispredictionCleanup(BulletsFactory));
 
             var worldCommandPlayers = new CommandPlayers();
-            worldCommandPlayers.Add(new CollectionCommandPlayer(_characterRegistry));
+            worldCommandPlayers.Add(new CollectionCommandPlayer(_characters));
 
             WorldTimeline = new WorldTimeline(worldHistories, worldSimulation, worldRollbacks, worldCommandPlayers);
 
             RebaseCounter = new RebaseCounter(WorldTickCounter);
             Rebases = new Rebases();
-            Rebases.Add(new CollectionRebase<Character>(_characterRegistry, WorldTickCounter));
-            Rebases.Add(new CollectionRebase<Bullet>(_bulletRegistry, WorldTickCounter));
-            Rebases.Add(new CollectionRebase<Enemy>(_enemyRegistry, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Character>(_characters, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Bullet>(_bullets, WorldTickCounter));
+            Rebases.Add(new CollectionRebase<Enemy>(_enemies, WorldTickCounter));
             Rebases.Add(RebaseCounter);
         }
 
@@ -123,16 +124,16 @@ namespace UPR.Samples
             WorldTimeline.FastForwardToTick(CurrentTick);
         }
 
-        public static void ForgetFromBegin(int steps)
+        public void ForgetFromBegin(int steps)
         {
-            Rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(RebaseCounter.StepsSaved, steps), 0));
+            Rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(RebaseCounter.StepsSaved - _simulateRollbackEveryFrame, steps), 0));
         }
 
         public int ActiveEntitiesCount()
         {
             int idGenerator = 1;
             int worldCounter = 1;
-            return _characterRegistry.Entries.Count + _bulletRegistry.Entries.Count + _enemyRegistry.Entries.Count + idGenerator + worldCounter;
+            return _characters.Entries.Count + _bullets.Entries.Count + _enemies.Entries.Count + idGenerator + worldCounter;
         }
     }
 }

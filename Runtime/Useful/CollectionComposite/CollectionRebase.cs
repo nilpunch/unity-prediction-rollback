@@ -30,8 +30,9 @@ namespace UPR.Useful
 
             HistoryBeginningTick += steps;
 
-            foreach (var entity in _container.Entries)
+            for (int index = 0; index < _container.Entries.Count; index++)
             {
+                TEntity entity = _container.Entries[index];
                 int entityHistoryBegin = _worldTickCounter.CurrentTick - entity.CurrentTick;
                 int canForgetSteps = Math.Max(HistoryBeginningTick - entityHistoryBegin, 0);
                 entity.ForgetFromBeginning(Math.Min(canForgetSteps, steps));

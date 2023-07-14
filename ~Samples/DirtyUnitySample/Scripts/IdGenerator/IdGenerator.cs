@@ -15,11 +15,11 @@ namespace UPR.Samples
             LocalRebases.Add(_idCounter);
         }
 
-        public TargetId Generate()
+        public CommandTimelineId Generate()
         {
             int id = _idCounter.Value;
             _idCounter.Value += 1;
-            return new TargetId(id);
+            return new CommandTimelineId(id);
         }
     }
 }

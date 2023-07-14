@@ -2,8 +2,8 @@
 
 namespace UPR.Common
 {
-    public interface IContainer<TEntry>
+    public interface IContainer<TEntry> : IReadOnlyContainer<TEntry>
     {
-        public IList<TEntry> Entries { get; }
+        public new IList<TEntry> Entries { get; }
     }
 }

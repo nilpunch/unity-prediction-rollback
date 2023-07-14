@@ -2,7 +2,7 @@
 
 namespace UPR.Common
 {
-    public class Container<TEntry> : IContainer<TEntry>, IReadOnlyContainer<TEntry>
+    public class Container<TEntry> : IContainer<TEntry>
     {
         private readonly List<TEntry> _entries;
 

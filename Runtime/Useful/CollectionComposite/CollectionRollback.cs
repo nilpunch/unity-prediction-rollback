@@ -18,9 +18,9 @@ namespace UPR.Useful
             if (steps < 0)
                 throw new ArgumentOutOfRangeException(nameof(steps));
 
-            foreach (var entity in _container.Entries)
+            for (int index = 0; index < _container.Entries.Count; index++)
             {
-                entity.Rollback(steps);
+                _container.Entries[index].Rollback(steps);
             }
         }
     }

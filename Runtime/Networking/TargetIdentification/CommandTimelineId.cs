@@ -2,21 +2,21 @@
 
 namespace UPR.Networking
 {
-    public readonly struct TargetId : IEquatable<TargetId>, IComparable<TargetId>
+    public readonly struct CommandTimelineId : IEquatable<CommandTimelineId>, IComparable<CommandTimelineId>
     {
-        public TargetId(int value)
+        public CommandTimelineId(int value)
         {
             Value = value;
         }
 
         public int Value { get; }
 
-        public static bool operator ==(TargetId a, TargetId b)
+        public static bool operator ==(CommandTimelineId a, CommandTimelineId b)
         {
             return a.Equals(b);
         }
 
-        public static bool operator !=(TargetId a, TargetId b)
+        public static bool operator !=(CommandTimelineId a, CommandTimelineId b)
         {
             return !(a == b);
         }
@@ -26,14 +26,14 @@ namespace UPR.Networking
             return Value.GetHashCode();
         }
 
-        public bool Equals(TargetId other)
+        public bool Equals(CommandTimelineId other)
         {
             return Value.Equals(other.Value);
         }
 
         public override bool Equals(object obj)
         {
-            return obj is TargetId other && Equals(other);
+            return obj is CommandTimelineId other && Equals(other);
         }
 
         public override string ToString()
@@ -41,7 +41,7 @@ namespace UPR.Networking
             return Value.ToString();
         }
 
-        public int CompareTo(TargetId other)
+        public int CompareTo(CommandTimelineId other)
         {
             return Value.CompareTo(other.Value);
         }

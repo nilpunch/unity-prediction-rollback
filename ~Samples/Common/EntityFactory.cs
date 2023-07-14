@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using UPR.Networking;
+using UPR.Common;
 using UPR.PredictionRollback;
 using UPR.Useful;
 
@@ -10,16 +10,14 @@ namespace UPR.Samples
     /// </summary>
     public class EntityFactory<TEntity> : IFactory<TEntity>, IMispredictionCleanup where TEntity : ITickCounter, IReusableEntity
     {
-        private readonly ITargetRegistry<TEntity> _targetRegistry;
-        private readonly IIdGenerator _idGenerator;
+        private readonly IContainer<TEntity> _entities;
         private readonly IPool<TEntity> _pool;
 
         private readonly List<TEntity> _createdEntities = new List<TEntity>();
 
-        public EntityFactory(ITargetRegistry<TEntity> targetRegistry, IIdGenerator idGenerator, IFactory<TEntity> factory)
+        public EntityFactory(IContainer<TEntity> entities, IFactory<TEntity> factory)
         {
-            _targetRegistry = targetRegistry;
-            _idGenerator = idGenerator;
+            _entities = entities;
             _pool = new Pool<TEntity>(factory);
         }
 
@@ -33,10 +31,9 @@ namespace UPR.Samples
                 }
             }
 
-            var entityId = _idGenerator.Generate();
             TEntity entity = _pool.Get();
             _createdEntities.Add(entity);
-            _targetRegistry.Add(entity, entityId);
+            _entities.Entries.Add(entity);
             return entity;
         }
 

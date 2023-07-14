@@ -14,9 +14,9 @@ namespace UPR.Useful
 
         public void SaveStep()
         {
-            foreach (var entity in _container.Entries)
+            for (int index = 0; index < _container.Entries.Count; index++)
             {
-                entity.SaveStep();
+                _container.Entries[index].SaveStep();
             }
         }
     }

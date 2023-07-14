@@ -34,7 +34,7 @@ namespace UPR.Samples
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                UnitySimulation.ForgetFromBegin(60);
+                _unitySimulation.ForgetFromBegin(60);
             }
 
             if (_simulationStopped)
