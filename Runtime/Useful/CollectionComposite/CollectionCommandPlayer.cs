@@ -14,9 +14,9 @@ namespace UPR.Useful
 
         public void PlayCommands(int tick)
         {
-            foreach (var commandsPlayer in _container.Entries)
+            for (int index = 0; index < _container.Entries.Count; index++)
             {
-                commandsPlayer.PlayCommands(tick);
+                _container.Entries[index].PlayCommands(tick);
             }
         }
     }

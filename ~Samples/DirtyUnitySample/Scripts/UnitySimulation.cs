@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UPR.Common;
 using UPR.Networking;
 using UPR.PredictionRollback;
@@ -12,7 +13,7 @@ namespace UPR.Samples
         [SerializeField] private int _ticksPerSecond = 30;
         [SerializeField] private Bullet _bulletPrefab;
 
-        [Space, SerializeField] private int _simulateRollbackEveryFrame = 8;
+        [Space, SerializeField] private Slider _resimulationsSlider;
 
         private IContainer<Character> _characters;
         private IContainer<Bullet> _bullets;
@@ -37,7 +38,7 @@ namespace UPR.Samples
 
         private void Start()
         {
-            Application.targetFrameRate = 0;
+            Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
 
             Physics.autoSyncTransforms = true;
@@ -51,7 +52,8 @@ namespace UPR.Samples
             MoveCommandTimelineRegistery = new CommandTimelineRegistry<ICommandTimeline<CharacterMoveCommand>>();
             ShootCommandTimelineRegistery = new CommandTimelineRegistry<ICommandTimeline<CharacterShootCommand>>();
 
-            int entityIndex = 0;
+            IdGenerator = new IdGenerator(0);
+
             foreach (UnityEntity unityEntity in FindObjectsOfType<UnityEntity>(false))
             {
                 switch (unityEntity)
@@ -61,8 +63,8 @@ namespace UPR.Samples
                         var shootCommandTimeline = new CommandTimeline<CharacterShootCommand>().AppendRepeatPrediction();
                         character.InitializeCommandTimelines(moveCommandTimeline, shootCommandTimeline);
 
-                        MoveCommandTimelineRegistery.Add(moveCommandTimeline, new CommandTimelineId(entityIndex));
-                        ShootCommandTimelineRegistery.Add(shootCommandTimeline, new CommandTimelineId(entityIndex));
+                        MoveCommandTimelineRegistery.Add(moveCommandTimeline, IdGenerator.Generate());
+                        ShootCommandTimelineRegistery.Add(shootCommandTimeline, IdGenerator.Generate());
                         _characters.Entries.Add(character);
                         break;
                     case Enemy deathSpike:
@@ -72,11 +74,8 @@ namespace UPR.Samples
 
                 // Made entity persistent
                 unityEntity.SaveStep();
-
-                entityIndex += 1;
             }
 
-            IdGenerator = new IdGenerator(entityIndex);
             WorldTickCounter = new TickCounter();
             BulletsFactory = new EntityFactory<Bullet>(_bullets, new PrefabFactory<Bullet>(_bulletPrefab));
 
@@ -120,13 +119,13 @@ namespace UPR.Samples
         {
             ElapsedTime += Time.deltaTime * _simulationSpeed;
 
-            WorldTimeline.UpdateEarliestApprovedTick(Mathf.Max(CurrentTick - _simulateRollbackEveryFrame, 0));
+            WorldTimeline.UpdateEarliestApprovedTick(Mathf.Max(CurrentTick - (int)_resimulationsSlider.value, 0));
             WorldTimeline.FastForwardToTick(CurrentTick);
         }
 
         public void ForgetFromBegin(int steps)
         {
-            Rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(RebaseCounter.StepsSaved - _simulateRollbackEveryFrame, steps), 0));
+            Rebases.ForgetFromBeginning(Mathf.Max(Mathf.Min(RebaseCounter.StepsSaved - (int)_resimulationsSlider.value, steps), 0));
         }
 
         public int ActiveEntitiesCount()

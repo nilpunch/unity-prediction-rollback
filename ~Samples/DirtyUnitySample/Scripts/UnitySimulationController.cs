@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UPR.PredictionRollback;
 
 namespace UPR.Samples
 {
     public class UnitySimulationController : MonoBehaviour
     {
         [SerializeField] private Slider _slider;
+        [SerializeField] private Button _pauseButton;
+        [SerializeField] private Button _eraseSomeHistoryButton;
         [SerializeField] private UnitySimulation _unitySimulation;
         [SerializeField] private CharacterController _unityCharacterController;
 
@@ -14,11 +17,7 @@ namespace UPR.Samples
         private void Awake()
         {
             _slider.gameObject.SetActive(false);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
+            _pauseButton.onClick.AddListener(() =>
             {
                 _simulationStopped = !_simulationStopped;
 
@@ -30,13 +29,15 @@ namespace UPR.Samples
                 {
                     ContinueSimulationFrom(Mathf.RoundToInt(_slider.value));
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.F))
+            });
+            _eraseSomeHistoryButton.onClick.AddListener(() =>
             {
                 _unitySimulation.ForgetFromBegin(60);
-            }
+            });
+        }
 
+        private void Update()
+        {
             if (_simulationStopped)
             {
                 UnitySimulation.WorldTimeline.FastForwardToTick(Mathf.RoundToInt(_slider.value));
@@ -63,6 +64,10 @@ namespace UPR.Samples
 
             UnitySimulation.ElapsedTime = (tick + 0.5f) * (UnitySimulation.SimulationSpeed.SecondsPerTick);
             UnitySimulation.WorldTimeline.UpdateEarliestApprovedTick(tick);
+            foreach (var commandTimeline in UnitySimulation.MoveCommandTimelineRegistery.Entries)
+                commandTimeline.RemoveAllCommandsDownTo(tick);
+            foreach (var commandTimeline in UnitySimulation.ShootCommandTimelineRegistery.Entries)
+                commandTimeline.RemoveAllCommandsDownTo(tick);
         }
     }
 }

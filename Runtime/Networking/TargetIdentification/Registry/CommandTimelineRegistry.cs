@@ -3,11 +3,14 @@ using UPR.Common;
 
 namespace UPR.Networking
 {
-    public class CommandTimelineRegistry<TTarget> : ICommandTimelineRegistry<TTarget>, ICommandTimelineFinder<TTarget>
+    public class CommandTimelineRegistry<TTarget> : ICommandTimelineRegistry<TTarget>, ICommandTimelineFinder<TTarget>,
+        IReadOnlyContainer<TTarget>
     {
         private readonly List<TTarget> _targets = new List<TTarget>();
         private readonly Dictionary<CommandTimelineId, TTarget> _targetsById = new Dictionary<CommandTimelineId, TTarget>();
         private readonly Dictionary<TTarget, CommandTimelineId> _idsByTarget = new Dictionary<TTarget, CommandTimelineId>();
+
+        public IReadOnlyList<TTarget> Entries => _targets;
 
         public void Add(TTarget target, CommandTimelineId commandTimelineId)
         {

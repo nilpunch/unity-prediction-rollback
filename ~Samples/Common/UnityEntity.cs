@@ -84,8 +84,8 @@ namespace UPR.Samples
 
         public void Rollback(int steps)
         {
-            int stepsToRollback = Math.Max(Math.Min(CurrentTick, steps), 0);
-            LocalRollbacks.Rollback(stepsToRollback);
+            int stepsCanRollback = Math.Max(Math.Min(CurrentTick, steps), 0);
+            LocalRollbacks.Rollback(stepsCanRollback);
             CurrentTick -= steps;
         }
 
