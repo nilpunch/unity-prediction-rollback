@@ -1,19 +1,19 @@
 # unity-prediction-rollback - Work in progress
+
 Deterministic prediction-rollback netcode library for fast-paced games.
 
-Library does not reference Unity Engine, so it could be used in a regular C# project.
+UNSTABLE, DO NOT USE IN PRODUCTION. Stable version will come soon.
 
-P.S. currently, only samples references Unity Engine.
+Repository was reseted 28.01.2024. Previous version performs really well on memory consumption, but was awkward to work with and has many issues with CPU performance, and its structure is basically impossible to serialize.
 
 ## Goals
 
 1. Responsive controls with no delay
 2. Unlimited session length with late-joins
-3. Easy client-side coding with Unity (no ECS)
-4. Clean and simple OOP architecture
-5. Cross-platform determinism
+3. Clean and simple architecture
+4. Cross-platform determinism
 
-## Overview
+## Overview (before 28.01.2024)
 
 This is a **library**, not a framework. Thus, the user controls everything that happens.
 
@@ -34,7 +34,7 @@ TODO:
 2. State serialization for late-joins
 3. Actual networking
 
-## Recent progress
+## Progress (before 28.01.2024)
 
 Here is some simple shooter with prediction-rollback features.
 
