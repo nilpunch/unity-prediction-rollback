@@ -2,7 +2,7 @@
 
 Deterministic prediction-rollback netcode library for fast-paced games.
 
-UNSTABLE, DO NOT USE IN PRODUCTION. Stable version will come soon.
+UNSTABLE, DO NOT USE IN PRODUCTION. Stable version will come soon, and will be based on https://github.com/nilpunch/massive
 
 Repository was reseted 28.01.2024. Previous version performs really well on memory consumption, but was awkward to work with and has many issues with CPU performance, and its structure is basically impossible to serialize.
 
