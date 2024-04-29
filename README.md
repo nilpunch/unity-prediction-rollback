@@ -1,8 +1,14 @@
-# unity-prediction-rollback - Work in progress
-Deterministic prediction-rollback netcode library for fast-paced games.
+# unity-prediction-rollback
 
-Library does not reference Unity Engine, so it could be used in a regular C# project.
+> [!TIP]
+> There is a much simpler and more reliable solution for prediction-rollback - [Masssive ECS](https://github.com/nilpunch/massive-ecs)  
 
+---
+
+It was an interesting experiment, but there are many problems with it. So, **DO NOT USE IN PRODUCTION!**.
+
+Deterministic prediction-rollback netcode library for fast-paced games.  
+Library does not reference Unity Engine, so it could be used in a regular C# project.  
 P.S. currently, only samples references Unity Engine.
 
 ## Goals
