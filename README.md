@@ -1,6 +1,6 @@
 # unity-prediction-rollback
 
-> [!TIP]
+> [!IMPORTANT]
 > There is a much simpler and more reliable solution for prediction-rollback - [Masssive ECS](https://github.com/nilpunch/massive-ecs)  
 
 ---
